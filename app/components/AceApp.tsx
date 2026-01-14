@@ -12,6 +12,8 @@ import type {
 import { formatTimestamp } from "@/lib/time";
 
 const ANSWERS_KEY = "ace-evaluator-answers";
+const TRANSCRIPT_ENDPOINT = "/route/transcript";
+const EVALUATION_ENDPOINT = "/route/evaluate";
 export default function AceApp() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [activeView, setActiveView] = useState("view1");
@@ -33,7 +35,7 @@ export default function AceApp() {
   }, []);
 
   useEffect(() => {
-    fetch("/api/transcript")
+    fetch(TRANSCRIPT_ENDPOINT)
       .then((res) => res.json())
       .then((data: { segments: TranscriptSegment[] }) => {
         setTranscript(data.segments ?? []);
@@ -57,7 +59,7 @@ export default function AceApp() {
   }, [answers]);
 
   useEffect(() => {
-    fetch("/api/evaluate")
+    fetch(EVALUATION_ENDPOINT)
       .then((res) => (res.ok ? res.json() : null))
       .then((data: { evaluations?: AiEvaluation[] } | null) => {
         if (data?.evaluations && Array.isArray(data.evaluations)) {
@@ -76,7 +78,7 @@ export default function AceApp() {
       return;
     }
     setAiLoading(true);
-    fetch("/api/evaluate", {
+    fetch(EVALUATION_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ checklist, transcript })
