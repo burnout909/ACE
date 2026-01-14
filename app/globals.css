@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+:root {
+  --ace-bg: #f7f9fc;
+  --ace-panel: #ffffff;
+  --ace-ink: #0f2a3d;
+  --ace-muted: #5b6b7c;
+  --ace-accent: #1b5a95;
+  --ace-accent-soft: #d9e8f8;
+  --ace-border: #d8e1ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--ace-ink);
+  background:
+    radial-gradient(1200px 600px at 12% 8%, #fff8e9 0%, transparent 60%),
+    radial-gradient(900px 520px at 82% 12%, #e4f3ff 0%, transparent 58%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef4fb 100%);
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+    "Segoe UI", sans-serif;
+}
+
+.font-display {
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+    "Segoe UI", sans-serif;
+}

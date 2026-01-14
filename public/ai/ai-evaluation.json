@@ -1,0 +1,307 @@
+{
+  "evaluations": {
+    "answers": [
+      {
+        "id": "HX-01",
+        "answer": "Yes",
+        "evidence": [
+          "01:32",
+          "01:37",
+          "01:41"
+        ]
+      },
+      {
+        "id": "HX-02",
+        "answer": "Yes",
+        "evidence": [
+          "00:18",
+          "00:27",
+          "00:34",
+          "00:44",
+          "00:56"
+        ]
+      },
+      {
+        "id": "HX-03",
+        "answer": "Yes",
+        "evidence": [
+          "02:52",
+          "03:01",
+          "03:05"
+        ]
+      },
+      {
+        "id": "HX-04",
+        "answer": "No",
+        "evidence": [
+          "01:20",
+          "01:25"
+        ]
+      },
+      {
+        "id": "HX-05",
+        "answer": "No",
+        "evidence": [
+          "01:49"
+        ]
+      },
+      {
+        "id": "HX-06",
+        "answer": "No",
+        "evidence": []
+      },
+      {
+        "id": "HX-07",
+        "answer": "Yes",
+        "evidence": [
+          "02:31",
+          "02:39"
+        ]
+      },
+      {
+        "id": "HX-08",
+        "answer": "Yes",
+        "evidence": [
+          "02:08",
+          "02:15",
+          "02:45"
+        ]
+      },
+      {
+        "id": "HX-09",
+        "answer": "Yes",
+        "evidence": [
+          "04:56",
+          "04:59"
+        ]
+      },
+      {
+        "id": "HX-10",
+        "answer": "Yes",
+        "evidence": [
+          "03:27",
+          "03:35",
+          "03:38"
+        ]
+      },
+      {
+        "id": "HX-11",
+        "answer": "Yes",
+        "evidence": [
+          "00:58",
+          "04:08",
+          "04:14"
+        ]
+      },
+      {
+        "id": "HX-12",
+        "answer": "Yes",
+        "evidence": [
+          "04:22",
+          "05:03",
+          "05:10",
+          "05:13",
+          "05:20",
+          "05:28"
+        ]
+      },
+      {
+        "id": "HX-13",
+        "answer": "Yes",
+        "evidence": [
+          "03:55"
+        ]
+      },
+      {
+        "id": "HX-14",
+        "answer": "Yes",
+        "evidence": [
+          "03:40"
+        ]
+      },
+      {
+        "id": "HX-15",
+        "answer": "Yes",
+        "evidence": [
+          "05:33",
+          "05:52"
+        ]
+      },
+      {
+        "id": "HX-16",
+        "answer": "No",
+        "evidence": []
+      },
+      {
+        "id": "PE-01",
+        "answer": "No",
+        "evidence": []
+      },
+      {
+        "id": "PE-02",
+        "answer": "Yes",
+        "evidence": [
+          "06:33",
+          "06:37",
+          "06:57"
+        ]
+      },
+      {
+        "id": "PE-03",
+        "answer": "Yes",
+        "evidence": [
+          "09:28",
+          "09:36"
+        ]
+      },
+      {
+        "id": "PE-04",
+        "answer": "Yes",
+        "evidence": [
+          "07:12",
+          "07:25",
+          "07:31",
+          "07:45"
+        ]
+      },
+      {
+        "id": "PE-05",
+        "answer": "Yes",
+        "evidence": [
+          "08:42",
+          "08:52"
+        ]
+      },
+      {
+        "id": "PE-06",
+        "answer": "Yes",
+        "evidence": [
+          "08:16",
+          "07:45",
+          "08:27"
+        ]
+      },
+      {
+        "id": "ED-01",
+        "answer": "Yes",
+        "evidence": [
+          "09:58",
+          "10:00"
+        ]
+      },
+      {
+        "id": "ED-02",
+        "answer": "Yes",
+        "evidence": [
+          "10:24",
+          "10:36"
+        ]
+      },
+      {
+        "id": "ED-03",
+        "answer": "Yes",
+        "evidence": [
+          "11:21",
+          "11:46"
+        ]
+      },
+      {
+        "id": "ED-04",
+        "answer": "Yes",
+        "evidence": [
+          "11:02",
+          "11:08"
+        ]
+      },
+      {
+        "id": "ED-05",
+        "answer": "No",
+        "evidence": [
+          "11:57"
+        ]
+      },
+      {
+        "id": "PPI-01",
+        "answer": "Yes",
+        "evidence": [
+          "00:01"
+        ]
+      },
+      {
+        "id": "PPI-02",
+        "answer": "Yes",
+        "evidence": [
+          "00:04",
+          "00:07",
+          "00:08"
+        ]
+      },
+      {
+        "id": "PPI-03",
+        "answer": "Yes",
+        "evidence": [
+          "00:09"
+        ]
+      },
+      {
+        "id": "PPI-04",
+        "answer": "Yes",
+        "evidence": [
+          "00:42",
+          "01:13",
+          "02:03",
+          "03:07"
+        ]
+      },
+      {
+        "id": "PPI-05",
+        "answer": "Yes",
+        "evidence": [
+          "05:56"
+        ]
+      },
+      {
+        "id": "PPI-06",
+        "answer": "No",
+        "evidence": [
+          "06:27",
+          "06:33"
+        ]
+      },
+      {
+        "id": "PPI-07",
+        "answer": "Yes",
+        "evidence": [
+          "09:48",
+          "09:52"
+        ]
+      },
+      {
+        "id": "PPI-08",
+        "answer": "No",
+        "evidence": []
+      },
+      {
+        "id": "PPI-09",
+        "answer": "Yes",
+        "evidence": [
+          "11:02",
+          "11:08"
+        ]
+      },
+      {
+        "id": "PPI-10",
+        "answer": "No",
+        "evidence": []
+      },
+      {
+        "id": "PPI-11",
+        "answer": "Yes",
+        "evidence": [
+          "12:07"
+        ]
+      }
+    ]
+  },
+  "createdAt": "2026-01-14T00:50:05.327Z"
+}
