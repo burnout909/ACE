@@ -10,7 +10,7 @@ export default function VideoPanel({ videoRef, onTimeUpdate }: VideoPanelProps) 
     <div className="flex h-full items-center justify-center rounded-xl bg-slate-950">
       <video
         ref={videoRef}
-        src="/video1.mp4"
+        src={`https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com/video1.mp4`}
         className="h-full w-full rounded-xl object-cover"
         controls
         playsInline

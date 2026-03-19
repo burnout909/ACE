@@ -5,1723 +5,1969 @@
       "start": 0,
       "end": 13,
       "text": "안녕하세요. 저는 학생의사 유원욱이라고 합니다. 성함과 나이가 떻게 되실까요?",
-      "timestamp": "00:00"
+      "timestamp": "00:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-1",
       "start": 13,
       "end": 15,
       "text": "이영애이구요. 33세입니다.",
-      "timestamp": "00:13"
+      "timestamp": "00:13",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-2",
       "start": 15,
       "end": 21,
       "text": "네. 우리 병원까지 오시느라 고생 많으셨네요. 오늘 떤 일로 오셨을까요?",
-      "timestamp": "00:15"
+      "timestamp": "00:15",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-3",
       "start": 21,
       "end": 23,
       "text": "머리가 너무 아파가지고 왔 요.",
-      "timestamp": "00:21"
+      "timestamp": "00:21",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-4",
       "start": 23,
       "end": 25,
       "text": "언제부터 좀 머리가 아프셨을까요?",
-      "timestamp": "00:23"
+      "timestamp": "00:23",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-5",
       "start": 25,
       "end": 30,
       "text": "사실은 이게 엄청 오래됐거든요. 20대부터 그랬 요.",
-      "timestamp": "00:25"
+      "timestamp": "00:25",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-6",
       "start": 30,
       "end": 38,
       "text": "꽤 오래되셨네요. 머리가 한번 아프실 때 몇 분 정도 지속이 되실까요?",
-      "timestamp": "00:30"
+      "timestamp": "00:30",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-7",
       "start": 38,
       "end": 44,
       "text": "보통은 잠을 자면 나아지거든요. 심할 때는 한 3일 정도 가기도 해요.",
-      "timestamp": "00:38"
+      "timestamp": "00:38",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-8",
       "start": 44,
       "end": 48,
       "text": "3일 정도 끊임없이 이렇게 연속으로 아프신 적도 있으신가요?",
-      "timestamp": "00:44"
+      "timestamp": "00:44",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-9",
       "start": 48,
       "end": 49,
       "text": "네.",
-      "timestamp": "00:48"
+      "timestamp": "00:48",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-10",
       "start": 50,
       "end": 56,
       "text": "그럼 하루 중에 몇 차례 정도 머리가 아픈 것이 반복이 되고 있을까요?",
-      "timestamp": "00:50"
+      "timestamp": "00:50",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-11",
       "start": 56,
       "end": 65,
       "text": "하루에는 계속 아프면 계속 지속이 되는데요. 한 달에 3-4번 정도요.",
-      "timestamp": "00:56"
+      "timestamp": "00:56",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-12",
       "start": 65,
       "end": 68,
       "text": "혹시 진통제를 따로 드셔보셨을까요?",
-      "timestamp": "01:05"
+      "timestamp": "01:05",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-13",
       "start": 68,
       "end": 75,
       "text": "네. 타이레놀 먹었는데요. 옛날에는 좀 괜찮아졌거든요. 타이레놀 먹으면.",
-      "timestamp": "01:08"
+      "timestamp": "01:08",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-14",
       "start": 75,
       "end": 78,
       "text": "근데 지금은 먹 도 안 괜찮아졌 요.",
-      "timestamp": "01:15"
+      "timestamp": "01:15",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-15",
       "start": 78,
       "end": 84,
       "text": "요즘에도 더욱더 심해져서 찾아오셨군요. 많이 불편하셨을 것 같습니다.",
-      "timestamp": "01:18"
+      "timestamp": "01:18",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-16",
       "start": 84,
       "end": 89,
       "text": "혹시 머리가 아픈 느낌이 떤 느낌이 가까울까요? 전기가 찌릿한 느낌?",
-      "timestamp": "01:24"
+      "timestamp": "01:24",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-17",
       "start": 89,
       "end": 95,
       "text": "아니면 약간 띠를 조이는 느낌? 떤 느낌이 비슷할까요?",
-      "timestamp": "01:29"
+      "timestamp": "01:29",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-18",
       "start": 95,
       "end": 100,
       "text": "약간 후신후신하고요. 뛰는 듯한 느낌이에요.",
-      "timestamp": "01:35"
+      "timestamp": "01:35",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-19",
       "start": 100,
       "end": 104,
       "text": "머리가 아픈 곳이 특정 부위가 아프신가요?",
-      "timestamp": "01:40"
+      "timestamp": "01:40",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-20",
       "start": 104,
       "end": 106,
       "text": "네. 여기 이쪽이요. 왼쪽.",
-      "timestamp": "01:44"
+      "timestamp": "01:44",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-21",
       "start": 106,
       "end": 110,
       "text": "여기 좀 아프신가요? 이렇게 좀 골고루 전반적으로 아프신 거 아니에요?",
-      "timestamp": "01:46"
+      "timestamp": "01:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-22",
       "start": 110,
       "end": 117,
       "text": "왼쪽이 특히 아프네요. 아프실 때 아예 안 아팠을 때 0점, 죽을 만큼 아프다.",
-      "timestamp": "01:50"
+      "timestamp": "01:50",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-23",
       "start": 117,
       "end": 121,
       "text": "10점이라고 했을 때 몇 점 정도로 줄 수 있으실까요?",
-      "timestamp": "01:57"
+      "timestamp": "01:57",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-24",
       "start": 121,
       "end": 126,
       "text": "보통은 6점 정도 아프고요. 너무 심할 때는 8-9점.",
-      "timestamp": "02:01"
+      "timestamp": "02:01",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-25",
       "start": 126,
       "end": 131,
       "text": "많이 힘드셨을 것 같네요. 그럼 또 다른 증상은 없으신지 제가 여쭤볼게요.",
-      "timestamp": "02:06"
+      "timestamp": "02:06",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-26",
       "start": 131,
       "end": 135,
       "text": "지금 몸에 좀 열이 나거나 으슬으슬 떨리진 않으실까요?",
-      "timestamp": "02:11"
+      "timestamp": "02:11",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-27",
       "start": 135,
       "end": 136,
       "text": "그렇지는 않아요.",
-      "timestamp": "02:15"
+      "timestamp": "02:15",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-28",
       "start": 136,
       "end": 138,
       "text": "요즘들 체중이 변하지는 않으셨고요?",
-      "timestamp": "02:16"
+      "timestamp": "02:16",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-29",
       "start": 138,
       "end": 140,
       "text": "체중은 안 변했 요.",
-      "timestamp": "02:18"
+      "timestamp": "02:18",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-30",
       "start": 140,
       "end": 143,
       "text": "요즘 부쩍 피로하다. 이런 느낌은 없으실까요?",
-      "timestamp": "02:20"
+      "timestamp": "02:20",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-31",
       "start": 143,
       "end": 145,
       "text": "딱히 그렇지는 않아요.",
-      "timestamp": "02:23"
+      "timestamp": "02:23",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-32",
       "start": 145,
       "end": 148,
       "text": "최근에 감기 기운이 있지는 않으셨나요?",
-      "timestamp": "02:25"
+      "timestamp": "02:25",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-33",
       "start": 148,
       "end": 150,
       "text": "아니요. 없었는데요.",
-      "timestamp": "02:28"
+      "timestamp": "02:28",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-34",
       "start": 150,
       "end": 155,
       "text": "머리가 아픈 것과 별개로 팔다리에 힘이 빠진 것 같다. 이런 느낌 떠세요?",
-      "timestamp": "02:30"
+      "timestamp": "02:30",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-35",
       "start": 155,
       "end": 156,
       "text": "그렇지도 않았 요.",
-      "timestamp": "02:35"
+      "timestamp": "02:35",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-36",
       "start": 156,
       "end": 159,
       "text": "말이 좀 잘 안 나온다. 이런 느낌 없으셨나요?",
-      "timestamp": "02:36"
+      "timestamp": "02:36",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-37",
       "start": 159,
       "end": 161,
       "text": "아니요. 말이 잘 나와요.",
-      "timestamp": "02:39"
+      "timestamp": "02:39",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-38",
       "start": 162,
       "end": 167,
       "text": "약간 머리가 아프실 때 눈물이나 콧물이 같이 나오진 않으셨고요?",
-      "timestamp": "02:42"
+      "timestamp": "02:42",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-39",
       "start": 167,
       "end": 169,
       "text": "아니요. 안 그랬 요.",
-      "timestamp": "02:47"
+      "timestamp": "02:47",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-40",
       "start": 169,
       "end": 177,
       "text": "머리가 아프기 직전에 속이 메스컵다든지 아니면 눈앞에 뭔가 보인다든지 이런 건 없으셨을까요?",
-      "timestamp": "02:49"
+      "timestamp": "02:49",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-41",
       "start": 177,
       "end": 183,
       "text": "맞아요. 번쩍이면서 큰 점 같은 게 보일 때도 있고요.",
-      "timestamp": "02:57"
+      "timestamp": "02:57",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-42",
       "start": 183,
       "end": 187,
       "text": "메스컵할 때도 좀 있었 요.",
-      "timestamp": "03:03"
+      "timestamp": "03:03",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-43",
       "start": 187,
       "end": 190,
       "text": "많이 놀라셨을 것 같네요.",
-      "timestamp": "03:07"
+      "timestamp": "03:07",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-44",
       "start": 191,
       "end": 195,
       "text": "제가 좀 더 몇 가지만 더 여쭤볼게요.",
-      "timestamp": "03:11"
+      "timestamp": "03:11",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-45",
       "start": 195,
       "end": 200,
       "text": "약간 가슴이 두근거린다든가 식은땀이 난다. 이런 증상은 없으셨고요?",
-      "timestamp": "03:15"
+      "timestamp": "03:15",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-46",
       "start": 200,
       "end": 202,
       "text": "아니요. 그렇지 않았 요.",
-      "timestamp": "03:20"
+      "timestamp": "03:20",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-47",
       "start": 202,
       "end": 205,
       "text": "혹시 건강검진 받으신 적 있으실까요?",
-      "timestamp": "03:22"
+      "timestamp": "03:22",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-48",
       "start": 205,
       "end": 206,
       "text": "아니요. 없습니다.",
-      "timestamp": "03:25"
+      "timestamp": "03:25",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-49",
       "start": 206,
       "end": 207,
       "text": "한 번도 없으시고요?",
-      "timestamp": "03:26"
+      "timestamp": "03:26",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-50",
       "start": 207,
       "end": 208,
       "text": "네.",
-      "timestamp": "03:27"
+      "timestamp": "03:27",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-51",
       "start": 208,
       "end": 212,
       "text": "평상시에 고혈압, 당뇨, 고지혈증 중에 앓고 계신 병도 없으실까요?",
-      "timestamp": "03:28"
+      "timestamp": "03:28",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-52",
       "start": 212,
       "end": 213,
       "text": "아니요. 없 요.",
-      "timestamp": "03:32"
+      "timestamp": "03:32",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-53",
       "start": 213,
       "end": 215,
       "text": "결액이나 간염 앓으신 적 없으시고요?",
-      "timestamp": "03:33"
+      "timestamp": "03:33",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-54",
       "start": 215,
       "end": 216,
       "text": "아니요. 없습니다.",
-      "timestamp": "03:35"
+      "timestamp": "03:35",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-55",
       "start": 216,
       "end": 219,
       "text": "머리를 다치시거나 수술을 받아보신 적이 있으실까요?",
-      "timestamp": "03:36"
+      "timestamp": "03:36",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-56",
       "start": 219,
       "end": 220,
       "text": "아니요. 없습니다.",
-      "timestamp": "03:39"
+      "timestamp": "03:39",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-57",
       "start": 220,
       "end": 225,
       "text": "뇌질환 관련돼서 치료를 받으신 적도 없으시고요?",
-      "timestamp": "03:40"
+      "timestamp": "03:40",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-58",
       "start": 225,
       "end": 226,
       "text": "아니요. 없습니다.",
-      "timestamp": "03:45"
+      "timestamp": "03:45",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-59",
       "start": 226,
       "end": 233,
       "text": "가족분들 중에서도 머리가 아프다, 자주 아프다고 하시는 분이나 뇌질환 앓고 계신 분은 없으실까요?",
-      "timestamp": "03:46"
+      "timestamp": "03:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-60",
       "start": 233,
       "end": 234,
       "text": "뇌질환은 없었 요.",
-      "timestamp": "03:53"
+      "timestamp": "03:53",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-61",
       "start": 234,
       "end": 236,
       "text": "네. 알겠습니다.",
-      "timestamp": "03:54"
+      "timestamp": "03:54",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-62",
       "start": 236,
       "end": 240,
       "text": "지금 드시고 계신 약은 가끔씩 진통제 드시고",
-      "timestamp": "03:56"
+      "timestamp": "03:56",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-63",
       "start": 240,
       "end": 244,
       "text": "타이레놀 드시고 다른 거 전혀 없으시고요?",
-      "timestamp": "04:00"
+      "timestamp": "04:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-64",
       "start": 244,
       "end": 245,
       "text": "네.",
-      "timestamp": "04:04"
+      "timestamp": "04:04",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-65",
       "start": 246,
       "end": 249,
       "text": "드시다가 중단한 약도 없으신가요?",
-      "timestamp": "04:06"
+      "timestamp": "04:06",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-66",
       "start": 249,
       "end": 250,
       "text": "아니요. 없습니다.",
-      "timestamp": "04:09"
+      "timestamp": "04:09",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-67",
       "start": 254,
       "end": 256,
       "text": "직업이 지금 떻게 되시나요?",
-      "timestamp": "04:14"
+      "timestamp": "04:14",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-68",
       "start": 256,
       "end": 257,
       "text": "직업이에요.",
-      "timestamp": "04:16"
+      "timestamp": "04:16",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-69",
       "start": 257,
       "end": 260,
       "text": "요즘들 스트레스 받는 일이 많거나 하진 않으셨고요?",
-      "timestamp": "04:17"
+      "timestamp": "04:17",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-70",
       "start": 260,
       "end": 265,
       "text": "직장 문제로는 많긴 하는데 엄청 심하진 않아요.",
-      "timestamp": "04:20"
+      "timestamp": "04:20",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-71",
       "start": 265,
       "end": 272,
       "text": "그러면 조금 스트레스 받는 일이 있거나 고민이 생길 때 두통이 심해지진 않으셨나요?",
-      "timestamp": "04:25"
+      "timestamp": "04:25",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-72",
       "start": 272,
       "end": 274,
       "text": "스트레스는 아니에요.",
-      "timestamp": "04:32"
+      "timestamp": "04:32",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-73",
       "start": 275,
       "end": 282,
       "text": "두통이 하루 중에 특별히 아침에 심하다던가 아니면 밤에 심하다 이런 것도 따로 느끼셨고요?",
-      "timestamp": "04:35"
+      "timestamp": "04:35",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-74",
       "start": 282,
       "end": 285,
       "text": "심해지는 상황이 있기는 해요.",
-      "timestamp": "04:42"
+      "timestamp": "04:42",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-75",
       "start": 285,
       "end": 287,
       "text": "떤 상황에서 좀 심해질까요?",
-      "timestamp": "04:45"
+      "timestamp": "04:45",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-76",
       "start": 287,
       "end": 292,
       "text": "머리를 흔들거나 큰 소리를 듣거나 그러면 좀 심해져요.",
-      "timestamp": "04:47"
+      "timestamp": "04:47",
+      "speaker": "patient"
     },
     {
       "id": "seg-0-77",
       "start": 292,
       "end": 295,
       "text": "그런 상황에서 좀 힘드셨군요.",
-      "timestamp": "04:52"
+      "timestamp": "04:52",
+      "speaker": "doctor"
     },
     {
       "id": "seg-0-78",
       "start": 295,
       "end": 296,
       "text": "네.",
-      "timestamp": "04:55"
+      "timestamp": "04:55",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-0",
       "start": 300,
       "end": 302.40000009536743,
       "text": "식사는 좀 규칙적으로 잘 하고 계셨 요?",
-      "timestamp": "05:00"
+      "timestamp": "05:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-1",
       "start": 302.40000009536743,
       "end": 304.40000009536743,
       "text": "식사는 건강하게 하는 편이에요",
-      "timestamp": "05:02"
+      "timestamp": "05:02",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-2",
       "start": 304.40000009536743,
       "end": 308.6000003814697,
       "text": "물도 부족함 없이 잘, 깨끗하게 챙겨 드시고 계시구요?",
-      "timestamp": "05:04"
+      "timestamp": "05:04",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-3",
       "start": 308.6000003814697,
       "end": 309.30000019073486,
       "text": "네",
-      "timestamp": "05:08"
+      "timestamp": "05:08",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-4",
       "start": 309.30000019073486,
       "end": 311.30000019073486,
       "text": "술, 담배는 좀 하시는 편인가요?",
-      "timestamp": "05:09"
+      "timestamp": "05:09",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-5",
       "start": 311.30000019073486,
       "end": 312.3999996185303,
       "text": "담배는 안 하고요",
-      "timestamp": "05:11"
+      "timestamp": "05:11",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-6",
       "start": 312.3999996185303,
       "end": 317.3999996185303,
       "text": "술은 한 한 달에 한 맥주 한 캔 정도?",
-      "timestamp": "05:12"
+      "timestamp": "05:12",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-7",
       "start": 317.3999996185303,
       "end": 318.29999923706055,
       "text": "네",
-      "timestamp": "05:17"
+      "timestamp": "05:17",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-8",
       "start": 320.79999923706055,
       "end": 322.79999923706055,
       "text": "커피는 좀 자주 드시나요?",
-      "timestamp": "05:20"
+      "timestamp": "05:20",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-9",
       "start": 322.79999923706055,
       "end": 324.1000003814697,
       "text": "커피를 좀 좋아해요",
-      "timestamp": "05:22"
+      "timestamp": "05:22",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-10",
       "start": 324.1000003814697,
       "end": 325.79999923706055,
       "text": "커피 하루에 한 얼마 정도 드세요?",
-      "timestamp": "05:24"
+      "timestamp": "05:24",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-11",
       "start": 325.79999923706055,
       "end": 327.1000003814697,
       "text": "두세 잔은 꼭 먹 요",
-      "timestamp": "05:25"
+      "timestamp": "05:25",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-12",
       "start": 327.1000003814697,
       "end": 328.1000003814697,
       "text": "네",
-      "timestamp": "05:27"
+      "timestamp": "05:27",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-13",
       "start": 329.1000003814697,
       "end": 332.0999984741211,
       "text": "운동은 평상시 좀 잘 하시는 스타일이세요?",
-      "timestamp": "05:29"
+      "timestamp": "05:29",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-14",
       "start": 332.0999984741211,
       "end": 334.0999984741211,
       "text": "운동은 잘 못 하시구요",
-      "timestamp": "05:32"
+      "timestamp": "05:32",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-15",
       "start": 334.0999984741211,
       "end": 338.0999984741211,
       "text": "월경 주기는 좀 규칙적으로 일지되 계실까요?",
-      "timestamp": "05:34"
+      "timestamp": "05:34",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-16",
       "start": 338.0999984741211,
       "end": 341.0999984741211,
       "text": "월경통이나 월경량 특이사항 없으셨구요?",
-      "timestamp": "05:38"
+      "timestamp": "05:38",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-17",
       "start": 341.0999984741211,
       "end": 342.0999984741211,
       "text": "네",
-      "timestamp": "05:41"
+      "timestamp": "05:41",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-18",
       "start": 342.0999984741211,
       "end": 347.0999984741211,
       "text": "실례지만 임신이나 아니면 출산, 유산 경험이 있으실까요?",
-      "timestamp": "05:42"
+      "timestamp": "05:42",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-19",
       "start": 347.0999984741211,
       "end": 350.0999984741211,
       "text": "네, 아이 한 명 있구요",
-      "timestamp": "05:47"
+      "timestamp": "05:47",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-20",
       "start": 350.0999984741211,
       "end": 353.0999984741211,
       "text": "근데 지금 임신하지는 않았 요",
-      "timestamp": "05:50"
+      "timestamp": "05:50",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-21",
       "start": 353.0999984741211,
       "end": 355.0999984741211,
       "text": "네, 임신 가능성은 없으시구요?",
-      "timestamp": "05:53"
+      "timestamp": "05:53",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-22",
       "start": 355.0999984741211,
       "end": 356.0999984741211,
       "text": "네, 아직은",
-      "timestamp": "05:55"
+      "timestamp": "05:55",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-23",
       "start": 356.0999984741211,
       "end": 357.0999984741211,
       "text": "네, 알겠습니다",
-      "timestamp": "05:56"
+      "timestamp": "05:56",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-24",
       "start": 357.0999984741211,
       "end": 360.0999984741211,
       "text": "말씀해주신 내용을 종합을 해보면",
-      "timestamp": "05:57"
+      "timestamp": "05:57",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-25",
       "start": 360.0999984741211,
       "end": 366.0999984741211,
       "text": "20대 때부터 계속해서 조금 반복되고 있는 두통이 있으셔서 찾아오셨는데",
-      "timestamp": "06:00"
+      "timestamp": "06:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-26",
       "start": 366.0999984741211,
       "end": 368.0999984741211,
       "text": "한 달에 한 서너 차례 정도 있으신데",
-      "timestamp": "06:06"
+      "timestamp": "06:06",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-27",
       "start": 368.0999984741211,
       "end": 373.0999984741211,
       "text": "문제는 팔구정 정도 심할 경우 팔구정 정도 심한 두통에 해당이 되세요",
-      "timestamp": "06:08"
+      "timestamp": "06:08",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-28",
       "start": 373.0999984741211,
       "end": 378.0999984741211,
       "text": "특별히 왼쪽이 조금 아프신 것 같다 이렇게 얘기해주셨는데 혹시 맞으실까요?",
-      "timestamp": "06:13"
+      "timestamp": "06:13",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-29",
       "start": 378.0999984741211,
       "end": 379.0999984741211,
       "text": "네, 맞습니다",
-      "timestamp": "06:18"
+      "timestamp": "06:18",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-30",
       "start": 379.0999984741211,
       "end": 381.0999984741211,
       "text": "더 말씀해주실 부분이 있으실까요?",
-      "timestamp": "06:19"
+      "timestamp": "06:19",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-31",
       "start": 381.0999984741211,
       "end": 382.0999984741211,
       "text": "아니요, 없었습니다",
-      "timestamp": "06:21"
+      "timestamp": "06:21",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-32",
       "start": 382.0999984741211,
       "end": 386.0999984741211,
       "text": "그럼 지금부터 신체 진찰을 해서 느 부분이 좀 불편하신지 확인해볼게요",
-      "timestamp": "06:22"
+      "timestamp": "06:22",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-33",
       "start": 388.0999984741211,
       "end": 392.0999984741211,
       "text": "네, 먼저 머리를 전반적으로 좀 살펴보도록 하겠습니다",
-      "timestamp": "06:28"
+      "timestamp": "06:28",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-34",
       "start": 392.0999984741211,
       "end": 395.0999984741211,
       "text": "머리 쪽에 혹시 외상 흔적은 없으신지",
-      "timestamp": "06:32"
+      "timestamp": "06:32",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-35",
       "start": 395.0999984741211,
       "end": 397.0999984741211,
       "text": "왼쪽이 특별히 아프다고 하셨는데",
-      "timestamp": "06:35"
+      "timestamp": "06:35",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-36",
       "start": 397.0999984741211,
       "end": 399.0999984741211,
       "text": "제가 전반적으로 조금 눌러볼게요",
-      "timestamp": "06:37"
+      "timestamp": "06:37",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-37",
       "start": 399.0999984741211,
       "end": 402.0999984741211,
       "text": "누를 때 아프지 않으신지 말씀해주세요",
-      "timestamp": "06:39"
+      "timestamp": "06:39",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-38",
       "start": 402.0999984741211,
       "end": 403.0999984741211,
       "text": "괜찮으신가요?",
-      "timestamp": "06:42"
+      "timestamp": "06:42",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-39",
       "start": 403.0999984741211,
       "end": 404.0999984741211,
       "text": "네, 네",
-      "timestamp": "06:43"
+      "timestamp": "06:43",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-40",
       "start": 404.0999984741211,
       "end": 405.0999984741211,
       "text": "왼쪽도 누를 때 괜찮으시구요?",
-      "timestamp": "06:44"
+      "timestamp": "06:44",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-41",
       "start": 405.0999984741211,
       "end": 406.0999984741211,
       "text": "지금은 안 아프고",
-      "timestamp": "06:45"
+      "timestamp": "06:45",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-42",
       "start": 406.0999984741211,
       "end": 407.0999984741211,
       "text": "지금은 안 아프셔서 괜찮으세요?",
-      "timestamp": "06:46"
+      "timestamp": "06:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-43",
       "start": 407.0999984741211,
       "end": 408.0999984741211,
       "text": "네",
-      "timestamp": "06:47"
+      "timestamp": "06:47",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-44",
       "start": 408.0999984741211,
       "end": 413.0999984741211,
       "text": "제가 관자놀이에 있는 동맥 조금 촉진을 해보도록 하겠습니다",
-      "timestamp": "06:48"
+      "timestamp": "06:48",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-45",
       "start": 413.0999984741211,
       "end": 414.0999984741211,
       "text": "맥박",
-      "timestamp": "06:53"
+      "timestamp": "06:53",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-46",
       "start": 415.0999984741211,
       "end": 417.0999984741211,
       "text": "네, 좋습니다",
-      "timestamp": "06:55"
+      "timestamp": "06:55",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-47",
       "start": 417.0999984741211,
       "end": 419.0999984741211,
       "text": "이제 얼굴 전반을 좀 확인하려고 하는데",
-      "timestamp": "06:57"
+      "timestamp": "06:57",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-48",
       "start": 419.0999984741211,
       "end": 421.0999984741211,
       "text": "눈을 좀 보려고 합니다",
-      "timestamp": "06:59"
+      "timestamp": "06:59",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-49",
       "start": 421.0999984741211,
       "end": 425.0999984741211,
       "text": "네, 먼저 동공 반사를 확인해보겠습니다",
-      "timestamp": "07:01"
+      "timestamp": "07:01",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-50",
       "start": 425.0999984741211,
       "end": 427.0999984741211,
       "text": "제 코를 계속 바라봐주시고",
-      "timestamp": "07:05"
+      "timestamp": "07:05",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-51",
       "start": 427.0999984741211,
       "end": 429.1000061035156,
       "text": "좀 눈이 부실 수 있 요",
-      "timestamp": "07:07"
+      "timestamp": "07:07",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-52",
       "start": 431.1000061035156,
       "end": 433.1000061035156,
       "text": "반대쪽도 확인해보겠습니다",
-      "timestamp": "07:11"
+      "timestamp": "07:11",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-53",
       "start": 433.1000061035156,
       "end": 434.1000061035156,
       "text": "눈이 부십니다",
-      "timestamp": "07:13"
+      "timestamp": "07:13",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-54",
       "start": 436.1000061035156,
       "end": 438.1000061035156,
       "text": "제가 턱을 잠시 잡을게요",
-      "timestamp": "07:16"
+      "timestamp": "07:16",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-55",
       "start": 438.1000061035156,
       "end": 441.1000061035156,
       "text": "이 펜의 끝을 눈으로만 쫓아와주세요",
-      "timestamp": "07:18"
+      "timestamp": "07:18",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-56",
       "start": 441.1000061035156,
       "end": 443.1000061035156,
       "text": "네, 잘하고 계십니다",
-      "timestamp": "07:21"
+      "timestamp": "07:21",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-57",
       "start": 445.1000061035156,
       "end": 447.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "07:25"
+      "timestamp": "07:25",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-58",
       "start": 447.1000061035156,
       "end": 449.1000061035156,
       "text": "이제 표정을 한번 따라해보실 텐데",
-      "timestamp": "07:27"
+      "timestamp": "07:27",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-59",
       "start": 449.1000061035156,
       "end": 451.1000061035156,
       "text": "눈을 찡그렸다가 다시 떠주시고",
-      "timestamp": "07:29"
+      "timestamp": "07:29",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-60",
       "start": 451.1000061035156,
       "end": 452.1000061035156,
       "text": "볼을 부풀려보시겠 요?",
-      "timestamp": "07:31"
+      "timestamp": "07:31",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-61",
       "start": 452.1000061035156,
       "end": 454.1000061035156,
       "text": "네, 잘하셨습니다",
-      "timestamp": "07:32"
+      "timestamp": "07:32",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-62",
       "start": 454.1000061035156,
       "end": 458.1000061035156,
       "text": "이번엔 감각을 전반적으로 확인해보겠습니다",
-      "timestamp": "07:34"
+      "timestamp": "07:34",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-63",
       "start": 458.1000061035156,
       "end": 461.1000061035156,
       "text": "먼저 얼굴부터 시작해서 사지 감각을 확인해볼텐데요",
-      "timestamp": "07:38"
+      "timestamp": "07:38",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-64",
       "start": 461.1000061035156,
       "end": 463.1000061035156,
       "text": "눈을 감아보시겠 요?",
-      "timestamp": "07:41"
+      "timestamp": "07:41",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-65",
       "start": 463.1000061035156,
       "end": 466.1000061035156,
       "text": "양쪽의 감각이 비슷하게 느껴지시는지 말씀해주세요",
-      "timestamp": "07:43"
+      "timestamp": "07:43",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-66",
       "start": 466.1000061035156,
       "end": 467.1000061035156,
       "text": "비슷하신가요?",
-      "timestamp": "07:46"
+      "timestamp": "07:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-67",
       "start": 467.1000061035156,
       "end": 468.1000061035156,
       "text": "네",
-      "timestamp": "07:47"
+      "timestamp": "07:47",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-68",
       "start": 468.1000061035156,
       "end": 469.1000061035156,
       "text": "비슷하게 느껴지시구요?",
-      "timestamp": "07:48"
+      "timestamp": "07:48",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-69",
       "start": 469.1000061035156,
       "end": 470.1000061035156,
       "text": "네",
-      "timestamp": "07:49"
+      "timestamp": "07:49",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-70",
       "start": 470.1000061035156,
       "end": 471.1000061035156,
       "text": "비슷하신가요?",
-      "timestamp": "07:50"
+      "timestamp": "07:50",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-71",
       "start": 471.1000061035156,
       "end": 472.1000061035156,
       "text": "네",
-      "timestamp": "07:51"
+      "timestamp": "07:51",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-72",
       "start": 472.1000061035156,
       "end": 474.1000061035156,
       "text": "양쪽이 비슷하게 느껴지실까요?",
-      "timestamp": "07:52"
+      "timestamp": "07:52",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-73",
       "start": 474.1000061035156,
       "end": 475.1000061035156,
       "text": "네",
-      "timestamp": "07:54"
+      "timestamp": "07:54",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-74",
       "start": 475.1000061035156,
       "end": 476.1000061035156,
       "text": "양쪽 비슷하시구요?",
-      "timestamp": "07:55"
+      "timestamp": "07:55",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-75",
       "start": 476.1000061035156,
       "end": 477.1000061035156,
       "text": "네",
-      "timestamp": "07:56"
+      "timestamp": "07:56",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-76",
       "start": 477.1000061035156,
       "end": 478.1000061035156,
       "text": "비슷하신가요?",
-      "timestamp": "07:57"
+      "timestamp": "07:57",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-77",
       "start": 478.1000061035156,
       "end": 479.1000061035156,
       "text": "네",
-      "timestamp": "07:58"
+      "timestamp": "07:58",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-78",
       "start": 480.1000061035156,
       "end": 481.1000061035156,
       "text": "양쪽이 비슷하실까요?",
-      "timestamp": "08:00"
+      "timestamp": "08:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-79",
       "start": 481.1000061035156,
       "end": 482.1000061035156,
       "text": "네",
-      "timestamp": "08:01"
+      "timestamp": "08:01",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-80",
       "start": 483.1000061035156,
       "end": 484.1000061035156,
       "text": "비슷하시구요?",
-      "timestamp": "08:03"
+      "timestamp": "08:03",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-81",
       "start": 484.1000061035156,
       "end": 485.1000061035156,
       "text": "네",
-      "timestamp": "08:04"
+      "timestamp": "08:04",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-82",
       "start": 485.1000061035156,
       "end": 486.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "08:05"
+      "timestamp": "08:05",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-83",
       "start": 488.1000061035156,
       "end": 490.1000061035156,
       "text": "몇 가지 검사를 연달아서 해보겠습니다",
-      "timestamp": "08:08"
+      "timestamp": "08:08",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-84",
       "start": 490.1000061035156,
       "end": 492.1000061035156,
       "text": "팔을 한번 이렇게 해보실까요?",
-      "timestamp": "08:10"
+      "timestamp": "08:10",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-85",
       "start": 492.1000061035156,
       "end": 494.1000061035156,
       "text": "제가 힘을 줄 테니까 버텨보세요",
-      "timestamp": "08:12"
+      "timestamp": "08:12",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-86",
       "start": 494.1000061035156,
       "end": 495.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "08:14"
+      "timestamp": "08:14",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-87",
       "start": 495.1000061035156,
       "end": 496.1000061035156,
       "text": "이렇게 해보시고",
-      "timestamp": "08:15"
+      "timestamp": "08:15",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-88",
       "start": 496.1000061035156,
       "end": 497.1000061035156,
       "text": "버텨보세요",
-      "timestamp": "08:16"
+      "timestamp": "08:16",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-89",
       "start": 497.1000061035156,
       "end": 498.1000061035156,
       "text": "네",
-      "timestamp": "08:17"
+      "timestamp": "08:17",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-90",
       "start": 498.1000061035156,
       "end": 500.1000061035156,
       "text": "이번엔 왼쪽 다리 들 올려보시고",
-      "timestamp": "08:18"
+      "timestamp": "08:18",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-91",
       "start": 500.1000061035156,
       "end": 502.1000061035156,
       "text": "반대쪽 다리 들 올려보시고",
-      "timestamp": "08:20"
+      "timestamp": "08:20",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-92",
       "start": 502.1000061035156,
       "end": 503.1000061035156,
       "text": "밀 보시고",
-      "timestamp": "08:22"
+      "timestamp": "08:22",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-93",
       "start": 503.1000061035156,
       "end": 504.1000061035156,
       "text": "네, 밀 보시고",
-      "timestamp": "08:23"
+      "timestamp": "08:23",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-94",
       "start": 504.1000061035156,
       "end": 506.1000061035156,
       "text": "네, 잘하시고 계십니다",
-      "timestamp": "08:24"
+      "timestamp": "08:24",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-95",
       "start": 506.1000061035156,
       "end": 508.1000061035156,
       "text": "이번엔 동작을 한번 따라해볼텐데요",
-      "timestamp": "08:26"
+      "timestamp": "08:26",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-96",
       "start": 508.1000061035156,
       "end": 510.1000061035156,
       "text": "먼저 손을 이렇게 내려주시고",
-      "timestamp": "08:28"
+      "timestamp": "08:28",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-97",
       "start": 510.1000061035156,
       "end": 511.1000061035156,
       "text": "뒤집 주시고",
-      "timestamp": "08:30"
+      "timestamp": "08:30",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-98",
       "start": 511.1000061035156,
       "end": 512.1000061035156,
       "text": "반복해주시겠 요?",
-      "timestamp": "08:31"
+      "timestamp": "08:31",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-99",
       "start": 512.1000061035156,
       "end": 514.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "08:32"
+      "timestamp": "08:32",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-100",
       "start": 514.1000061035156,
       "end": 515.1000061035156,
       "text": "한 가지 더 해볼게요",
-      "timestamp": "08:34"
+      "timestamp": "08:34",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-101",
       "start": 515.1000061035156,
       "end": 517.1000061035156,
       "text": "손가락을 맞춰보시는데",
-      "timestamp": "08:35"
+      "timestamp": "08:35",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-102",
       "start": 517.1000061035156,
       "end": 519.1000061035156,
       "text": "먼저 환자분 코를 가리키셨다가",
-      "timestamp": "08:37"
+      "timestamp": "08:37",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-103",
       "start": 519.1000061035156,
       "end": 521.1000061035156,
       "text": "손가락을 맞춰보세요",
-      "timestamp": "08:39"
+      "timestamp": "08:39",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-104",
       "start": 521.1000061035156,
       "end": 522.1000061035156,
       "text": "네, 한 번 더",
-      "timestamp": "08:41"
+      "timestamp": "08:41",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-105",
       "start": 522.1000061035156,
       "end": 523.1000061035156,
       "text": "한 번 더",
-      "timestamp": "08:42"
+      "timestamp": "08:42",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-106",
       "start": 523.1000061035156,
       "end": 524.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "08:43"
+      "timestamp": "08:43",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-107",
       "start": 524.1000061035156,
       "end": 525.1000061035156,
       "text": "반대손으로 해볼까요?",
-      "timestamp": "08:44"
+      "timestamp": "08:44",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-108",
       "start": 525.1000061035156,
       "end": 526.1000061035156,
       "text": "반대손으로 동일하게",
-      "timestamp": "08:45"
+      "timestamp": "08:45",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-109",
       "start": 526.1000061035156,
       "end": 528.1000061035156,
       "text": "네, 한 번 더",
-      "timestamp": "08:46"
+      "timestamp": "08:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-110",
       "start": 528.1000061035156,
       "end": 529.1000061035156,
       "text": "네, 한 번 더",
-      "timestamp": "08:48"
+      "timestamp": "08:48",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-111",
       "start": 529.1000061035156,
       "end": 531.1000061035156,
       "text": "네, 너무 잘하셨습니다",
-      "timestamp": "08:49"
+      "timestamp": "08:49",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-112",
       "start": 531.1000061035156,
       "end": 533.1000061035156,
       "text": "몇 가지 검사가 조금 더 남았는데요",
-      "timestamp": "08:51"
+      "timestamp": "08:51",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-113",
       "start": 533.1000061035156,
       "end": 535.1000061035156,
       "text": "이번에는 옆에 있는 베드에",
-      "timestamp": "08:53"
+      "timestamp": "08:53",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-114",
       "start": 535.1000061035156,
       "end": 537.1000061035156,
       "text": "한번 편하게 누워보실까요?",
-      "timestamp": "08:55"
+      "timestamp": "08:55",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-115",
       "start": 537.1000061035156,
       "end": 538.1000061035156,
       "text": "네",
-      "timestamp": "08:57"
+      "timestamp": "08:57",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-116",
       "start": 543.1000061035156,
       "end": 545.1000061035156,
       "text": "다리 편하게 누워보시고",
-      "timestamp": "09:03"
+      "timestamp": "09:03",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-117",
       "start": 545.1000061035156,
       "end": 547.1000061035156,
       "text": "잠깐 베개를 좀 빼도록 하겠습니다",
-      "timestamp": "09:05"
+      "timestamp": "09:05",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-118",
       "start": 547.1000061035156,
       "end": 549.1000061035156,
       "text": "제가 목을 살짝 들 올려볼텐데",
-      "timestamp": "09:07"
+      "timestamp": "09:07",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-119",
       "start": 549.1000061035156,
       "end": 551.1000061035156,
       "text": "혹시 뻣뻣하게 느껴지거나",
-      "timestamp": "09:09"
+      "timestamp": "09:09",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-120",
       "start": 551.1000061035156,
       "end": 553.1000061035156,
       "text": "불편하면 얘기해주세요",
-      "timestamp": "09:11"
+      "timestamp": "09:11",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-121",
       "start": 553.1000061035156,
       "end": 554.1000061035156,
       "text": "괜찮으실까요?",
-      "timestamp": "09:13"
+      "timestamp": "09:13",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-122",
       "start": 554.1000061035156,
       "end": 555.1000061035156,
       "text": "네",
-      "timestamp": "09:14"
+      "timestamp": "09:14",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-123",
       "start": 555.1000061035156,
       "end": 557.1000061035156,
       "text": "아프진 않으시고요",
-      "timestamp": "09:15"
+      "timestamp": "09:15",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-124",
       "start": 557.1000061035156,
       "end": 558.1000061035156,
       "text": "네",
-      "timestamp": "09:17"
+      "timestamp": "09:17",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-125",
       "start": 559.1000061035156,
       "end": 561.1000061035156,
       "text": "한 가지 더 진행해보겠습니다",
-      "timestamp": "09:19"
+      "timestamp": "09:19",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-126",
       "start": 561.1000061035156,
       "end": 563.1000061035156,
       "text": "다리 힘을 풀 주시고",
-      "timestamp": "09:21"
+      "timestamp": "09:21",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-127",
       "start": 565.1000061035156,
       "end": 566.1000061035156,
       "text": "괜찮으시고요?",
-      "timestamp": "09:25"
+      "timestamp": "09:25",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-128",
       "start": 566.1000061035156,
       "end": 567.1000061035156,
       "text": "네",
-      "timestamp": "09:26"
+      "timestamp": "09:26",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-129",
       "start": 567.1000061035156,
       "end": 568.1000061035156,
       "text": "네, 좋습니다",
-      "timestamp": "09:27"
+      "timestamp": "09:27",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-130",
       "start": 569.1000061035156,
       "end": 572.1000061035156,
       "text": "네, 이제 자리로 돌아와주시면 되겠습니다",
-      "timestamp": "09:29"
+      "timestamp": "09:29",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-131",
       "start": 576.1000061035156,
       "end": 579.1000061035156,
       "text": "네, 혹시 신체 진찰 간에 불편한 부분은 없으셨을까요?",
-      "timestamp": "09:36"
+      "timestamp": "09:36",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-132",
       "start": 579.1000061035156,
       "end": 580.1000061035156,
       "text": "네, 전 없 요",
-      "timestamp": "09:39"
+      "timestamp": "09:39",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-133",
       "start": 580.1000061035156,
       "end": 582.1000061035156,
       "text": "네, 말씀해주신 내용과",
-      "timestamp": "09:40"
+      "timestamp": "09:40",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-134",
       "start": 582.1000061035156,
       "end": 586.1000061035156,
       "text": "이제 신체 진찰 결과 조금 종합을 해봤을 때",
-      "timestamp": "09:42"
+      "timestamp": "09:42",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-135",
       "start": 586.1000061035156,
       "end": 588.1000061035156,
       "text": "가장 좀 의심이 되는 것은",
-      "timestamp": "09:46"
+      "timestamp": "09:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-136",
       "start": 588.1000061035156,
       "end": 590.1000061035156,
       "text": "편투통이 의심이 되고 있습니다",
-      "timestamp": "09:48"
+      "timestamp": "09:48",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-137",
       "start": 590.1000061035156,
       "end": 591.1000061035156,
       "text": "네",
-      "timestamp": "09:50"
+      "timestamp": "09:50",
+      "speaker": "patient"
     },
     {
       "id": "seg-300-138",
       "start": 591.1000061035156,
       "end": 593.1000061035156,
       "text": "우선 다행히 신체 진찰에서는",
-      "timestamp": "09:51"
+      "timestamp": "09:51",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-139",
       "start": 593.1000061035156,
       "end": 595.1000061035156,
       "text": "큰 특이사항은 나오지 않으셨는데요",
-      "timestamp": "09:53"
+      "timestamp": "09:53",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-140",
       "start": 595.1000061035156,
       "end": 597.1000061035156,
       "text": "말씀해주신",
-      "timestamp": "09:55"
+      "timestamp": "09:55",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-141",
       "start": 597.1000061035156,
       "end": 599.1000061035156,
       "text": "머리가 아프기 전에",
-      "timestamp": "09:57"
+      "timestamp": "09:57",
+      "speaker": "doctor"
     },
     {
       "id": "seg-300-142",
       "start": 599.1000061035156,
       "end": 601.1000061035156,
       "text": "매스꺼움이",
-      "timestamp": "09:59"
+      "timestamp": "09:59",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-0",
       "start": 600,
       "end": 607.8200001716614,
       "text": "큰 점이 보였다 이런게 전조 증상이라고 해서 편주통에서 나타날 수 있는 증상들이거든요",
-      "timestamp": "10:00"
+      "timestamp": "10:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-1",
       "start": 607.8200001716614,
       "end": 617.3199996948242,
       "text": "따라서 지금은 편주통의 가능성이 좀 높다고 생각이 되는데 혹시 다른 떤 뇌의 기질적인 문제, 뇌혈관 문제라든지",
-      "timestamp": "10:07"
+      "timestamp": "10:07",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-2",
       "start": 617.3199996948242,
       "end": 623.5599994659424,
       "text": "아니면 뇌의 떤 조직의 문제라든지 이걸 확인하기 위해서 검사가 좀 필요할 것 같습니다",
-      "timestamp": "10:17"
+      "timestamp": "10:17",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-3",
       "start": 623.5599994659424,
       "end": 628.0400009155273,
       "text": "뇌 CT랑 MRI를 둘 다 좀 찍 보려고 하는데 괜찮으실까요?",
-      "timestamp": "10:23"
+      "timestamp": "10:23",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-4",
       "start": 628.0400009155273,
       "end": 634,
       "text": "뇌혈관이나 뇌조직 자체의 문제는 없는지 정확하게 확인이 가능할 것 같습니다",
-      "timestamp": "10:28"
+      "timestamp": "10:28",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-5",
       "start": 634,
       "end": 643.9599990844727,
       "text": "기본적으로 혈액검사를 통해서 전해질이나 빈혈소견, 전해질 이상 빈혈소견이 없는지 같이 확인해 보도록 하겠습니다",
-      "timestamp": "10:34"
+      "timestamp": "10:34",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-6",
       "start": 643.9599990844727,
       "end": 651.2799987792969,
       "text": "이런 편두통에서는 타이레놀을 드시고 있는데 요즘 들 서는 효과가 거의 없다고 하셨 요",
-      "timestamp": "10:43"
+      "timestamp": "10:43",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-7",
       "start": 651.2799987792969,
       "end": 655.9599990844727,
       "text": "제가 좀 우선 두 가지 약물을 좀 써볼 수가 있는데",
-      "timestamp": "10:51"
+      "timestamp": "10:51",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-8",
       "start": 655.9599990844727,
       "end": 660.5200004577637,
       "text": "급성기 약물 이제 평상시에 드실 수 있는 장기 복용 약물",
-      "timestamp": "10:55"
+      "timestamp": "10:55",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-9",
       "start": 660.5200004577637,
       "end": 665.879997253418,
       "text": "급성기 약물은 아프실 때 좀 즉각적으로 좀 통증을 내려줄 수 있는 약물이고요",
-      "timestamp": "11:00"
+      "timestamp": "11:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-10",
       "start": 665.879997253418,
-      "end": 673.879997253418,
+      "end": 673.9199981689453,
       "text": "평상시에 드실 수 있는 약물은 예방 약물이라고 해서 편두통이 다시 재발하지 않도록 조금 조절해 주는 두 가지 약물을",
-      "timestamp": "11:05"
+      "timestamp": "11:05",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-11",
-      "start": 673.879997253418,
+      "start": 673.9199981689453,
       "end": 677.120002746582,
       "text": "조금 처방을 해드리려고 하는데 괜찮으실까요?",
-      "timestamp": "11:13"
+      "timestamp": "11:13",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-12",
       "start": 677.120002746582,
       "end": 683.3600006103516,
       "text": "말씀해 주신 것은 스트레스 요즘에 좀 고민, 남편분과 같이 고민하시는 게 있다고 했는데",
-      "timestamp": "11:17"
+      "timestamp": "11:17",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-13",
       "start": 683.3600006103516,
       "end": 690.4800033569336,
       "text": "스트레스는 큰 연관이 없다고 하셨는데 두통 자체가 좀 스트레스에 의해서 유갈되기가 쉽기 때문에",
-      "timestamp": "11:23"
+      "timestamp": "11:23",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-14",
       "start": 690.4800033569336,
       "end": 696.120002746582,
       "text": "평상시에 이제 가벼운 산책이라든지 명상이나 이런 걸로 좀 스트레스를 조절하시면",
-      "timestamp": "11:30"
+      "timestamp": "11:30",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-15",
       "start": 696.120002746582,
       "end": 700.1999969482422,
       "text": "좀 두통을 예방하는 데 도움이 될 수 있을 것 같고요",
-      "timestamp": "11:36"
+      "timestamp": "11:36",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-16",
       "start": 700.1999969482422,
       "end": 706.1999969482422,
       "text": "술을 아주 자주 드시는 편은 아니지만 술을 마실 경우에는 조금 두통 악화시킬 수 있기 때문에",
-      "timestamp": "11:40"
+      "timestamp": "11:40",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-17",
       "start": 706.1999969482422,
       "end": 708.8399963378906,
       "text": "두통을 좀 줄여주시면 좋을 것 같습니다",
-      "timestamp": "11:46"
+      "timestamp": "11:46",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-18",
       "start": 708.8399963378906,
       "end": 715.0400009155273,
       "text": "두통이 너무 심해서 의식을 잃을 정도이다, 못 참을 정도다 하면 응급상황일 수 있 서",
-      "timestamp": "11:48"
+      "timestamp": "11:48",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-19",
       "start": 715.0400009155273,
       "end": 718.1600036621094,
       "text": "바로 병원에 내원해 주셔야겠습니다",
-      "timestamp": "11:55"
+      "timestamp": "11:55",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-20",
       "start": 718.1600036621094,
       "end": 719.9599990844727,
       "text": "혹시 더 궁금하신 부분이 있으실까요?",
-      "timestamp": "11:58"
+      "timestamp": "11:58",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-21",
       "start": 719.9599990844727,
       "end": 720.6399993896484,
       "text": "아니요 없습니다",
-      "timestamp": "11:59"
+      "timestamp": "11:59",
+      "speaker": "patient"
     },
     {
       "id": "seg-600-22",
       "start": 720.6399993896484,
       "end": 722.1600036621094,
-      "text": "네, 마치겠습니다",
-      "timestamp": "12:00"
+      "text": "네 마치겠습니다",
+      "timestamp": "12:00",
+      "speaker": "doctor"
     },
     {
       "id": "seg-600-23",
       "start": 722.1600036621094,
       "end": 722.9599990844727,
       "text": "감사합니다",
-      "timestamp": "12:02"
+      "timestamp": "12:02",
+      "speaker": "patient"
     }
   ],
-  "createdAt": "2026-03-19T03:34:15.864Z"
+  "createdAt": "2026-03-19T05:27:01.016Z"
 }

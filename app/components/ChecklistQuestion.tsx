@@ -119,8 +119,11 @@ export default function ChecklistQuestion({
                         const startLabel = seg ? formatTimestamp(seg.start) : stamp;
                         const endLabel = seg ? formatTimestamp(seg.end) : null;
                         const endSeconds = seg ? seg.end : null;
+                        const isDoctor =
+                          seg?.speaker != null &&
+                          /^(speaker\s*1|a)\b/i.test(seg.speaker);
                         return (
-                          <div key={stamp} className="flex items-baseline gap-2">
+                          <div key={stamp} className={`flex items-baseline gap-2 rounded-md px-2 py-1 ${isDoctor ? "bg-blue-50" : ""}`}>
                             <span className="shrink-0 text-[13px] font-semibold">
                               <button
                                 type="button"
@@ -153,8 +156,21 @@ export default function ChecklistQuestion({
                               )}
                             </span>
                             {seg && (
-                              <span className="text-[13px] leading-relaxed text-slate-600">
-                                {seg.text}
+                              <span className="flex items-baseline gap-1.5">
+                                {seg.speaker && (
+                                  <span
+                                    className={`shrink-0 rounded px-1 py-0.5 text-[10px] font-semibold ${
+                                      isDoctor
+                                        ? "bg-blue-100 text-blue-600"
+                                        : "bg-slate-100 text-slate-500"
+                                    }`}
+                                  >
+                                    {isDoctor ? "의사" : "환자"}
+                                  </span>
+                                )}
+                                <span className="text-[13px] leading-relaxed text-slate-600">
+                                  {seg.text}
+                                </span>
                               </span>
                             )}
                           </div>

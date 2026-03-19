@@ -33,11 +33,14 @@ export async function transcribeVideo(
   }
 
   const fileStats = await stat(videoPath);
+  let segments: TranscriptSegment[];
   if (fileStats.size <= MAX_UPLOAD_BYTES) {
-    return transcribeAudioFile(videoPath, "video1.mp4", "video/mp4", 0);
+    segments = await transcribeAudioFile(videoPath, "video1.mp4", "video/mp4", 0);
+  } else {
+    segments = await transcribeLargeVideo(videoPath);
   }
 
-  return transcribeLargeVideo(videoPath);
+  return labelSpeakers(segments);
 }
 
 async function transcribeAudioFile(
@@ -55,7 +58,7 @@ async function transcribeAudioFile(
   formData.append("file", fileObject, fileName);
   formData.append("model", TRANSCRIBE_MODEL);
   formData.append("response_format", TRANSCRIBE_FORMAT);
-  formData.append("timestamp_granularities[]", "segment");
+  formData.append("language", "ko");
 
   const response = await fetch(`${OPENAI_URL}/audio/transcriptions`, {
     method: "POST",
@@ -71,7 +74,12 @@ async function transcribeAudioFile(
   }
 
   const data = (await response.json()) as {
-    segments?: Array<{ start: number; end: number; text: string }>;
+    segments?: Array<{
+      id: number;
+      start: number;
+      end: number;
+      text: string;
+    }>;
     text?: string;
   };
 
@@ -86,7 +94,7 @@ async function transcribeAudioFile(
           start,
           end,
           text: cleaned,
-          timestamp: formatTimestamp(start)
+          timestamp: formatTimestamp(start),
         } satisfies TranscriptSegment;
       })
       .filter((segment) => segment.text.length > 0);
@@ -99,6 +107,70 @@ async function transcribeAudioFile(
   const durationSeconds =
     (await getMediaDurationSeconds(filePath)) ?? SEGMENT_SECONDS;
   return buildApproxSegments(cleanedText, offsetSeconds, durationSeconds);
+}
+
+async function labelSpeakers(
+  segments: TranscriptSegment[]
+): Promise<TranscriptSegment[]> {
+  if (segments.length === 0) return segments;
+
+  const transcript = segments.map((s) => ({
+    id: s.id,
+    timestamp: s.timestamp,
+    text: s.text,
+  }));
+
+  const response = await fetch(`${OPENAI_URL}/chat/completions`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.OPENAI_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: [
+            "You are a speaker diarization assistant for medical interviews.",
+            "Given a transcript of a doctor-patient conversation, label each segment with the speaker.",
+            "Use exactly \"doctor\" or \"patient\" as speaker labels.",
+            "Return JSON array only: [{\"id\":\"seg-...\",\"speaker\":\"doctor\"|\"patient\"}]",
+            "No other text or explanation.",
+          ].join("\n"),
+        },
+        {
+          role: "user",
+          content: JSON.stringify(transcript),
+        },
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    // If labeling fails, return segments without speaker info
+    return segments;
+  }
+
+  const data = (await response.json()) as {
+    choices?: Array<{ message?: { content?: string } }>;
+  };
+
+  const content = data.choices?.[0]?.message?.content ?? "[]";
+
+  try {
+    const labels = JSON.parse(content) as Array<{
+      id: string;
+      speaker: string;
+    }>;
+    const speakerMap = new Map(labels.map((l) => [l.id, l.speaker]));
+    return segments.map((s) => ({
+      ...s,
+      speaker: speakerMap.get(s.id) ?? undefined,
+    }));
+  } catch {
+    return segments;
+  }
 }
 
 async function transcribeLargeVideo(

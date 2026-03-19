@@ -20,6 +20,7 @@ export type TranscriptSegment = {
   end: number;
   text: string;
   timestamp: string;
+  speaker?: string;
 };
 
 export type Score = 3 | 2 | 1;
