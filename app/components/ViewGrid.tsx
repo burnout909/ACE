@@ -11,6 +11,30 @@ type ViewGridProps = {
   onTimeUpdate: (time: number) => void;
 };
 
+const views = [
+  { id: "view1", label: "View 1" },
+  { id: "view2", label: "View 2" },
+  { id: "view3", label: "View 3" },
+  { id: "view4", label: "View 4" }
+];
+
+function ViewContent({
+  viewId,
+  videoRef,
+  lastSynced,
+  onTimeUpdate
+}: {
+  viewId: string;
+  videoRef: RefObject<HTMLVideoElement>;
+  lastSynced: string | null;
+  onTimeUpdate: (time: number) => void;
+}) {
+  if (viewId === "view1") {
+    return <VideoPanel videoRef={videoRef} onTimeUpdate={onTimeUpdate} />;
+  }
+  return <PlaceholderPanel status={lastSynced} />;
+}
+
 export default function ViewGrid({
   activeView,
   onActivate,
@@ -18,36 +42,42 @@ export default function ViewGrid({
   lastSynced,
   onTimeUpdate
 }: ViewGridProps) {
+  const activeViewData = views.find((v) => v.id === activeView) ?? views[0];
+  const thumbnails = views.filter((v) => v.id !== activeViewData.id);
+
   return (
-    <div className="grid h-[540px] grid-cols-2 grid-rows-2 gap-4">
+    <div className="grid h-[540px] grid-cols-[1fr_200px] gap-3">
       <ViewPanel
-        label="View 1"
-        isActive={activeView === "view1"}
-        onActivate={() => onActivate("view1")}
+        label={activeViewData.label}
+        isActive={true}
+        isThumbnail={false}
+        onActivate={() => onActivate(activeViewData.id)}
       >
-        <VideoPanel videoRef={videoRef} onTimeUpdate={onTimeUpdate} />
+        <ViewContent
+          viewId={activeViewData.id}
+          videoRef={videoRef}
+          lastSynced={lastSynced}
+          onTimeUpdate={onTimeUpdate}
+        />
       </ViewPanel>
-      <ViewPanel
-        label="View 2"
-        isActive={activeView === "view2"}
-        onActivate={() => onActivate("view2")}
-      >
-        <PlaceholderPanel status={lastSynced} />
-      </ViewPanel>
-      <ViewPanel
-        label="View 3"
-        isActive={activeView === "view3"}
-        onActivate={() => onActivate("view3")}
-      >
-        <PlaceholderPanel status={lastSynced} />
-      </ViewPanel>
-      <ViewPanel
-        label="View 4"
-        isActive={activeView === "view4"}
-        onActivate={() => onActivate("view4")}
-      >
-        <PlaceholderPanel status={lastSynced} />
-      </ViewPanel>
+      <div className="flex flex-col gap-3">
+        {thumbnails.map((view) => (
+          <ViewPanel
+            key={view.id}
+            label={view.label}
+            isActive={false}
+            isThumbnail={true}
+            onActivate={() => onActivate(view.id)}
+          >
+            <ViewContent
+              viewId={view.id}
+              videoRef={videoRef}
+              lastSynced={lastSynced}
+              onTimeUpdate={onTimeUpdate}
+            />
+          </ViewPanel>
+        ))}
+      </div>
     </div>
   );
 }

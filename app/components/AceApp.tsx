@@ -7,6 +7,7 @@ import EvaluationPanel from "./EvaluationPanel";
 import type {
   AiEvaluation,
   ChecklistData,
+  Score,
   TranscriptSegment
 } from "@/lib/types";
 import { formatTimestamp } from "@/lib/time";
@@ -24,7 +25,7 @@ export default function AceApp() {
   const [aiEvaluation, setAiEvaluation] = useState<AiEvaluation[]>([]);
   const [aiFromFile, setAiFromFile] = useState(false);
   const [showAi, setShowAi] = useState(true);
-  const [answers, setAnswers] = useState<Record<string, "Yes" | "No">>({});
+  const [answers, setAnswers] = useState<Record<string, Score>>({});
   const [aiLoading, setAiLoading] = useState(false);
 
   useEffect(() => {
@@ -47,7 +48,14 @@ export default function AceApp() {
     const stored = localStorage.getItem(ANSWERS_KEY);
     if (stored) {
       try {
-        setAnswers(JSON.parse(stored));
+        const parsed = JSON.parse(stored) as Record<string, unknown>;
+        const migrated: Record<string, Score> = {};
+        for (const [key, value] of Object.entries(parsed)) {
+          if (value === 1 || value === 0) {
+            migrated[key] = value;
+          }
+        }
+        setAnswers(migrated);
       } catch {
         setAnswers({});
       }
@@ -131,7 +139,7 @@ export default function AceApp() {
     setLastSynced(formatTimestamp(seconds));
   };
 
-  const handleAnswer = (id: string, value: "Yes" | "No") => {
+  const handleAnswer = (id: string, value: Score) => {
     setAnswers((prev) => {
       if (prev[id] === value) {
         const next = { ...prev };
@@ -165,7 +173,7 @@ export default function AceApp() {
         </h1>
       </header> */}
 
-      <div className="grid min-w-[1080px] grid-cols-[minmax(0,1fr)_360px] gap-6">
+      <div className="grid min-w-[1080px] grid-cols-2 gap-6">
         <section className="flex flex-col gap-4">
           <ViewGrid
             activeView={activeView}
@@ -193,6 +201,7 @@ export default function AceApp() {
           onComplete={handleComplete}
           isComplete={isComplete}
           onTimestampClick={handleTimestampClick}
+          transcript={transcript}
         />
       </div>
     </main>

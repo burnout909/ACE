@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 type ViewPanelProps = {
   label: string;
   isActive: boolean;
+  isThumbnail: boolean;
   onActivate: () => void;
   children: ReactNode;
 };
@@ -10,6 +11,7 @@ type ViewPanelProps = {
 export default function ViewPanel({
   label,
   isActive,
+  isThumbnail,
   onActivate,
   children
 }: ViewPanelProps) {
@@ -27,7 +29,7 @@ export default function ViewPanel({
         isActive
           ? "border-sky-400 ring-2 ring-sky-200"
           : "border-slate-200 hover:border-slate-300"
-      }`}
+      } ${isThumbnail ? "opacity-40 blur-[1px] hover:opacity-70 hover:blur-none" : ""}`}
     >
       <div className="absolute left-4 top-4 z-10 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 shadow">
         {label}

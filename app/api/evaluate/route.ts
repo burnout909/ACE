@@ -11,13 +11,6 @@ const evaluationPath = path.join(
   "ai-evaluation.json"
 );
 
-function normalizeAiAnswer(value: unknown): "Yes" | "No" {
-  if (typeof value === "string" && value.toLowerCase() === "yes") {
-    return "Yes";
-  }
-  return "No";
-}
-
 function normalizeEvidence(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
@@ -34,9 +27,7 @@ function normalizeEvaluations(raw: unknown): AiEvaluation[] {
         }
         const data = entry as {
           questionId?: string;
-          aiAnswer?: string;
           id?: string;
-          answer?: string;
           evidence?: unknown;
         };
         const questionId = data.questionId ?? data.id;
@@ -45,7 +36,6 @@ function normalizeEvaluations(raw: unknown): AiEvaluation[] {
         }
         return {
           questionId,
-          aiAnswer: normalizeAiAnswer(data.aiAnswer ?? data.answer),
           evidence: normalizeEvidence(data.evidence)
         } satisfies AiEvaluation;
       })

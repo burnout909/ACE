@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { AiEvaluation, ChecklistData } from "@/lib/types";
+import type { AiEvaluation, ChecklistData, Score, TranscriptSegment } from "@/lib/types";
 import EvaluationTabs from "./EvaluationTabs";
 import ChecklistQuestion from "./ChecklistQuestion";
 
 type EvaluationPanelProps = {
   checklist: ChecklistData | null;
-  answers: Record<string, "Yes" | "No">;
-  onAnswer: (id: string, value: "Yes" | "No") => void;
+  answers: Record<string, Score>;
+  onAnswer: (id: string, value: Score) => void;
   aiEvaluation: AiEvaluation[];
   showAi: boolean;
   onToggleAi: () => void;
@@ -18,6 +18,7 @@ type EvaluationPanelProps = {
   onComplete: () => void;
   isComplete: boolean;
   onTimestampClick?: (seconds: number) => void;
+  transcript: TranscriptSegment[];
 };
 
 export default function EvaluationPanel({
@@ -32,7 +33,8 @@ export default function EvaluationPanel({
   totalQuestions,
   onComplete,
   isComplete,
-  onTimestampClick
+  onTimestampClick,
+  transcript
 }: EvaluationPanelProps) {
   const [activeTabId, setActiveTabId] = useState<string | null>(null);
 
@@ -64,7 +66,7 @@ export default function EvaluationPanel({
           onClick={onToggleAi}
           className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 hover:border-slate-300 hover:bg-slate-50 active:border-slate-400 active:bg-slate-100"
         >
-          {showAi ? "Hide AI Evaluation" : "Show AI Evaluation"}
+          {showAi ? "AI 근거 숨기기" : "AI 근거 보기"}
         </button>
       </div>
 
@@ -93,6 +95,7 @@ export default function EvaluationPanel({
                 showAi={showAi}
                 aiLoading={aiLoading}
                 onTimestampClick={onTimestampClick}
+                transcript={transcript}
               />
             ))}
           </div>
