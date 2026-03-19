@@ -12,8 +12,8 @@ import type {
 import { formatTimestamp } from "@/lib/time";
 
 const ANSWERS_KEY = "ace-evaluator-answers";
-const TRANSCRIPT_ENDPOINT = "/route/transcript";
-const EVALUATION_ENDPOINT = "/route/evaluate";
+const TRANSCRIPT_ENDPOINT = "/api/transcript";
+const EVALUATION_ENDPOINT = "/api/evaluate";
 export default function AceApp() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [activeView, setActiveView] = useState("view1");
