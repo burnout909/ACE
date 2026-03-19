@@ -22,7 +22,7 @@ export type TranscriptSegment = {
   timestamp: string;
 };
 
-export type Score = 1 | 0;
+export type Score = 3 | 2 | 1;
 
 export type AiEvaluation = {
   questionId: string;

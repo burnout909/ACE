@@ -12,10 +12,10 @@ type ViewGridProps = {
 };
 
 const views = [
-  { id: "view1", label: "View 1" },
-  { id: "view2", label: "View 2" },
-  { id: "view3", label: "View 3" },
-  { id: "view4", label: "View 4" }
+  { id: "view1", label: "화면 1" },
+  { id: "view2", label: "화면 2" },
+  { id: "view3", label: "화면 3" },
+  { id: "view4", label: "화면 4" }
 ];
 
 function ViewContent({
@@ -46,7 +46,7 @@ export default function ViewGrid({
   const thumbnails = views.filter((v) => v.id !== activeViewData.id);
 
   return (
-    <div className="grid h-[540px] grid-cols-[1fr_200px] gap-3">
+    <div className="grid h-full grid-cols-[1fr_260px] gap-3">
       <ViewPanel
         label={activeViewData.label}
         isActive={true}

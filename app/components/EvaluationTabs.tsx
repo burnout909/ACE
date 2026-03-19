@@ -12,17 +12,17 @@ export default function EvaluationTabs({
   onSelect
 }: EvaluationTabsProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex rounded-lg bg-slate-100 p-1">
       {tabs.map((tab) => {
         const isActive = tab.id === activeTabId;
         return (
           <button
             key={tab.id}
             onClick={() => onSelect(tab.id)}
-            className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition-all ${
               isActive
-                ? "border-sky-400 bg-sky-50 text-slate-900"
-                : "border-slate-200 bg-white text-slate-500 hover:border-sky-200 hover:bg-slate-50 active:bg-slate-100"
+                ? "bg-white text-slate-900 shadow-sm"
+                : "text-slate-500 hover:text-slate-700"
             }`}
           >
             {tab.label}

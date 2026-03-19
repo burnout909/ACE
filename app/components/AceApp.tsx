@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ViewGrid from "./ViewGrid";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
+import DragHandle from "./DragHandle";
 import type {
   AiEvaluation,
   ChecklistData,
@@ -28,6 +29,30 @@ export default function AceApp() {
   const [answers, setAnswers] = useState<Record<string, Score>>({});
   const [aiLoading, setAiLoading] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [leftWidthPct, setLeftWidthPct] = useState(60);
+  const [topHeightPct, setTopHeightPct] = useState(55);
+
+  const handleHorizontalDrag = useCallback(
+    (delta: number) => {
+      const container = containerRef.current;
+      if (!container) return;
+      const pct = (delta / container.clientWidth) * 100;
+      setLeftWidthPct((prev) => Math.min(80, Math.max(30, prev + pct)));
+    },
+    []
+  );
+
+  const handleVerticalDrag = useCallback(
+    (delta: number) => {
+      const container = containerRef.current;
+      if (!container) return;
+      const pct = (delta / container.clientHeight) * 100;
+      setTopHeightPct((prev) => Math.min(80, Math.max(20, prev + pct)));
+    },
+    []
+  );
+
   useEffect(() => {
     fetch("/checklist.json")
       .then((res) => res.json())
@@ -51,7 +76,7 @@ export default function AceApp() {
         const parsed = JSON.parse(stored) as Record<string, unknown>;
         const migrated: Record<string, Score> = {};
         for (const [key, value] of Object.entries(parsed)) {
-          if (value === 1 || value === 0) {
+          if (value === 3 || value === 2 || value === 1) {
             migrated[key] = value;
           }
         }
@@ -160,49 +185,76 @@ export default function AceApp() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-x-auto px-8 py-6">
+    <main className="relative h-screen overflow-hidden">
       <div className="absolute inset-0 -z-10 opacity-80" aria-hidden="true">
         <div className="absolute left-10 top-10 h-48 w-48 rounded-full bg-[#f5f0e6] blur-3xl" />
         <div className="absolute right-24 top-8 h-64 w-64 rounded-full bg-[#e1f0ff] blur-3xl" />
         <div className="absolute bottom-10 left-1/3 h-72 w-72 rounded-full bg-[#eef7ee] blur-3xl" />
       </div>
 
-      {/* <header className="mb-6 flex min-w-[1080px] items-end">
-        <h1 className="font-display text-3xl font-bold text-slate-900">
-          ACE
-        </h1>
-      </header> */}
+      <div
+        ref={containerRef}
+        className="flex h-full min-w-[1080px]"
+      >
+        {/* Left: Video + Transcript */}
+        <div
+          className="flex flex-col overflow-hidden"
+          style={{ width: `${leftWidthPct}%` }}
+        >
+          {/* Video panel */}
+          <div
+            className="overflow-hidden border-b border-r border-slate-200 bg-white/80"
+            style={{ height: `${topHeightPct}%` }}
+          >
+            <div className="h-full p-3">
+              <ViewGrid
+                activeView={activeView}
+                onActivate={setActiveView}
+                videoRef={videoRef}
+                lastSynced={lastSynced}
+                onTimeUpdate={setCurrentTime}
+              />
+            </div>
+          </div>
 
-      <div className="grid min-w-[1080px] grid-cols-2 gap-6">
-        <section className="flex flex-col gap-4">
-          <ViewGrid
-            activeView={activeView}
-            onActivate={setActiveView}
-            videoRef={videoRef}
-            lastSynced={lastSynced}
-            onTimeUpdate={setCurrentTime}
-          />
-          <TranscriptBar
-            segments={transcript}
-            currentTime={currentTime}
+          <DragHandle direction="vertical" onDrag={handleVerticalDrag} />
+
+          {/* Transcript panel */}
+          <div
+            className="flex-1 overflow-hidden border-r border-slate-200 bg-white/80"
+          >
+            <div className="h-full p-3">
+              <TranscriptBar
+                segments={transcript}
+                currentTime={currentTime}
+                onTimestampClick={handleTimestampClick}
+              />
+            </div>
+          </div>
+        </div>
+
+        <DragHandle direction="horizontal" onDrag={handleHorizontalDrag} />
+
+        {/* Right: Checklist panel */}
+        <div
+          className="flex-1 overflow-hidden bg-white/80"
+        >
+          <EvaluationPanel
+            checklist={checklist}
+            answers={answers}
+            onAnswer={handleAnswer}
+            aiEvaluation={aiEvaluation}
+            showAi={showAi}
+            onToggleAi={() => setShowAi((prev) => !prev)}
+            aiLoading={aiLoading}
+            answeredCount={answeredCount}
+            totalQuestions={totalQuestions}
+            onComplete={handleComplete}
+            isComplete={isComplete}
             onTimestampClick={handleTimestampClick}
+            transcript={transcript}
           />
-        </section>
-        <EvaluationPanel
-          checklist={checklist}
-          answers={answers}
-          onAnswer={handleAnswer}
-          aiEvaluation={aiEvaluation}
-          showAi={showAi}
-          onToggleAi={() => setShowAi((prev) => !prev)}
-          aiLoading={aiLoading}
-          answeredCount={answeredCount}
-          totalQuestions={totalQuestions}
-          onComplete={handleComplete}
-          isComplete={isComplete}
-          onTimestampClick={handleTimestampClick}
-          transcript={transcript}
-        />
+        </div>
       </div>
     </main>
   );

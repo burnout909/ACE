@@ -8,8 +8,8 @@ import type { ChecklistData, TranscriptSegment, AiEvaluation } from "@/lib/types
 const OPENAI_URL = "https://api.openai.com/v1";
 const MAX_UPLOAD_BYTES = 24 * 1024 * 1024;
 const SEGMENT_SECONDS = 300;
-const TRANSCRIBE_MODEL = "gpt-4o-transcribe";
-const TRANSCRIBE_FORMAT = "json";
+const TRANSCRIBE_MODEL = "whisper-1";
+const TRANSCRIBE_FORMAT = "verbose_json";
 
 const fillerRegex =
   /\b(um+|uh+|erm+|hmm+|like|you know|sort of|kind of|ah+|eh+)\b/gi;
@@ -55,6 +55,7 @@ async function transcribeAudioFile(
   formData.append("file", fileObject, fileName);
   formData.append("model", TRANSCRIBE_MODEL);
   formData.append("response_format", TRANSCRIBE_FORMAT);
+  formData.append("timestamp_granularities[]", "segment");
 
   const response = await fetch(`${OPENAI_URL}/audio/transcriptions`, {
     method: "POST",

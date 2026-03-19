@@ -1,13 +1,29 @@
 @import "tailwindcss";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 
+@theme {
+  --font-sans: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Segoe UI", sans-serif;
+
+  --color-yonsei-50: #e8f0fa;
+  --color-yonsei-100: #c5d9f2;
+  --color-yonsei-200: #9fbfe8;
+  --color-yonsei-300: #6fa0db;
+  --color-yonsei-400: #4785cf;
+  --color-yonsei-500: #1a6db5;
+  --color-yonsei-600: #155da0;
+  --color-yonsei-700: #003876;
+  --color-yonsei-800: #002c5e;
+  --color-yonsei-900: #001d3f;
+  --color-yonsei-950: #001229;
+}
+
 :root {
   --ace-bg: #f7f9fc;
   --ace-panel: #ffffff;
   --ace-ink: #0f2a3d;
   --ace-muted: #5b6b7c;
-  --ace-accent: #1b5a95;
-  --ace-accent-soft: #d9e8f8;
+  --ace-accent: #003876;
+  --ace-accent-soft: #e8f0fa;
   --ace-border: #d8e1ec;
 }
 
@@ -18,9 +34,9 @@
 body {
   color: var(--ace-ink);
   background:
-    radial-gradient(1200px 600px at 12% 8%, #fff8e9 0%, transparent 60%),
-    radial-gradient(900px 520px at 82% 12%, #e4f3ff 0%, transparent 58%),
-    linear-gradient(180deg, #f7f9fc 0%, #eef4fb 100%);
+    radial-gradient(1200px 600px at 12% 8%, #f0f4fa 0%, transparent 60%),
+    radial-gradient(900px 520px at 82% 12%, #e8f0fa 0%, transparent 58%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f9 100%);
   font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
     "Segoe UI", sans-serif;
 }

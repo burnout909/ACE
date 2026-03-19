@@ -2,7 +2,7 @@
   "tabs": [
     {
       "id": "hx",
-      "label": "Hx",
+      "label": "병력 청취",
       "questions": [
         {
           "id": "HX-01",
@@ -88,7 +88,7 @@
     },
     {
       "id": "pex",
-      "label": "PEx",
+      "label": "신체 진찰",
       "questions": [
         {
           "id": "PE-01",
@@ -124,7 +124,7 @@
     },
     {
       "id": "edu",
-      "label": "Edu",
+      "label": "환자 교육",
       "questions": [
         {
           "id": "ED-01",
@@ -155,7 +155,7 @@
     },
     {
       "id": "ppi",
-      "label": "PPI",
+      "label": "환자-의사 관계",
       "questions": [
         {
           "id": "PPI-01",
