@@ -60,12 +60,13 @@ model Case {
 }
 
 model ChecklistItem {
-  id      String   @id
-  section Section
-  scale   Scale
-  text    String
-  ord     Int
-  answers Answer[]
+  id       String   @id
+  section  Section
+  scale    Scale
+  text     String
+  criteria String   @db.Text
+  ord      Int
+  answers  Answer[]
 
   @@map("checklist_items")
 }
