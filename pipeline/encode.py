@@ -1,4 +1,3 @@
-import json
 import subprocess
 import boto3
 from pipeline import config
@@ -21,10 +20,17 @@ def probe_duration(url):
     return float(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout.strip())
 
 def common_plan(offsets, durations):
-    """Given per-view start offsets and source durations, return (starts, common_duration)."""
-    starts = {v: float(offsets.get(v, 0.0)) for v in durations}
+    """Given per-view start offsets (may be negative) and source durations, return (starts, common_duration).
+
+    Offsets are rebaselined so all per-view starts are >= 0: the minimum offset
+    becomes 0 (no trim) and every other view is trimmed by (offset - min_offset).
+    This ensures ffmpeg -ss is never negative regardless of which camera started first.
+    """
+    starts_raw = {v: float(offsets.get(v, 0.0)) for v in durations}
+    base = min(starts_raw.values())
+    starts = {v: starts_raw[v] - base for v in durations}
     remaining = {v: durations[v] - starts[v] for v in durations}
-    common = min(remaining.values())
+    common = max(0.0, min(remaining.values()))
     return starts, common
 
 def run_encode(url, out_path, start_sec, dur_sec):

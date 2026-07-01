@@ -5,10 +5,17 @@ from pipeline import config, pairing, sync, encode, manifest, s3util
 
 def process_encounter(enc, overrides, s3):
     view_urls = {v: s3util.presign(k, s3) for v, k in enc["views"].items()}
-    # offsets: reference=0; others via xcorr unless overridden
+    # offsets: reference=0; others via xcorr unless overridden.
+    # Only call encounter_offsets when the reference view is present; otherwise
+    # fall back to empty offs so downstream ov.get/offs.get chains use defaults.
     ov = overrides.get(enc["id"], {})
-    offs = sync.encounter_offsets(view_urls)
-    offsets = {config.REFERENCE_VIEW: 0.0}
+    if config.REFERENCE_VIEW in view_urls:
+        offs = sync.encounter_offsets(view_urls)
+    else:
+        offs = {}
+    offsets = {}
+    if config.REFERENCE_VIEW in enc["views"]:
+        offsets[config.REFERENCE_VIEW] = 0.0
     conf = 1.0
     for v in enc["views"]:
         if v == config.REFERENCE_VIEW:
@@ -33,6 +40,14 @@ def process_encounter(enc, overrides, s3):
                  "reviewed": enc["id"] in overrides},
         "missingViews": enc["missingViews"],
     }
+
+def _safe_process(enc, overrides, s3):
+    """Wrapper that catches per-encounter errors so one failure cannot abort the batch."""
+    try:
+        return process_encounter(enc, overrides, s3)
+    except Exception as exc:
+        print(f"FAILED {enc['id']} {exc}")
+        return {"id": enc["id"], "error": str(exc)}
 
 def main():
     ap = argparse.ArgumentParser()
@@ -59,16 +74,18 @@ def main():
     # only encode encounters that have all views present (skip 2-view for now unless overridden)
     todo = [e for e in encounters if not e["missingViews"] or e["id"] in overrides]
 
-    processed = []
+    all_results = []
     with ThreadPoolExecutor(max_workers=args.workers) as ex:
-        for r in ex.map(lambda e: process_encounter(e, overrides, s3), todo):
-            processed.append(r)
-            print("done", r["id"], "conf=", r["sync"]["confidence"])
+        for r in ex.map(lambda e: _safe_process(e, overrides, s3), todo):
+            all_results.append(r)
+            if "error" not in r:
+                print("done", r["id"], "conf=", r["sync"]["confidence"])
 
+    successful = [r for r in all_results if "error" not in r]
     with open("sync_report.json", "w") as f:
-        json.dump({e["id"]: e["sync"] for e in processed},
+        json.dump({e["id"]: e["sync"] for e in successful},
                   f, ensure_ascii=False, indent=1)
-    m = manifest.build_manifest(processed)
+    m = manifest.build_manifest(successful)
     s3.put_object(Bucket=config.BUCKET, Key=f"{config.DST_PREFIX}/encounters.json",
                   Body=json.dumps(m, ensure_ascii=False, indent=1).encode(),
                   ContentType="application/json")

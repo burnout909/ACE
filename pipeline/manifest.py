@@ -1,4 +1,3 @@
-from pipeline import config
 from pipeline.encode import dst_key
 
 ENCODING_DESC = {"video": "h264 1920x1080 crf23 faststart", "audio": "aac 128k"}

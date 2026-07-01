@@ -21,3 +21,14 @@ def test_common_plan_aligns_to_reference_start():
     assert starts == {"ceiling": 0.0, "bedside": 13.0, "evaluator": 22.0}
     # remaining after each start: 700, 677, 658 -> min 658
     assert abs(common - 658.0) < 1e-6
+
+def test_common_plan_rebaselines_negative_offsets():
+    # evaluator has the most negative offset (-22); bedside -13; ceiling 0.
+    # base = min(-22, -13, 0) = -22; rebaselined starts: ceiling 22, bedside 9, evaluator 0.
+    offsets = {"ceiling": 0.0, "bedside": -13.0, "evaluator": -22.0}
+    durations = {"ceiling": 700.0, "bedside": 690.0, "evaluator": 680.0}
+    starts, common = common_plan(offsets, durations)
+    assert starts == {"ceiling": 22.0, "bedside": 9.0, "evaluator": 0.0}
+    # remaining: ceiling 700-22=678, bedside 690-9=681, evaluator 680-0=680 -> min 678
+    assert abs(common - 678.0) < 1e-6
+    assert all(s >= 0 for s in starts.values())
