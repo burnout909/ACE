@@ -1,7 +1,10 @@
+export type { Scale, AnswerValue } from "@/lib/study/scale";
+
 export type ChecklistQuestion = {
   id: string;
   title: string;
   criteria: string;
+  scale: import("@/lib/study/scale").Scale; // 항목별 척도
 };
 
 export type ChecklistTab = {
@@ -23,7 +26,6 @@ export type TranscriptSegment = {
   speaker?: string;
 };
 
-export type Score = 3 | 2 | 1;
 
 export type AiEvaluation = {
   questionId: string;
