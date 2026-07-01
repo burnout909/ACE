@@ -22,9 +22,11 @@ export async function GET(
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
-  const c = await prisma.case.findUnique({ where: { id: a.caseId } });
-  const items = await prisma.checklistItem.findMany({ orderBy: { ord: "asc" } });
-  const answers = await prisma.answer.findMany({ where: { assignmentId: a.id } });
+  const [c, items, answers] = await Promise.all([
+    prisma.case.findUnique({ where: { id: a.caseId } }),
+    prisma.checklistItem.findMany({ orderBy: { ord: "asc" } }),
+    prisma.answer.findMany({ where: { assignmentId: a.id } }),
+  ]);
 
   const prog = await prisma.caseProgress.findUnique({ where: { assignmentId: a.id } });
 

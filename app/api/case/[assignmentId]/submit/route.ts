@@ -25,6 +25,10 @@ export async function POST(
     return NextResponse.json({ error: "bad_request" }, { status: 400 });
   }
 
+  if (!Array.isArray(answers)) {
+    return NextResponse.json({ error: "bad_request" }, { status: 400 });
+  }
+
   const { assignmentId } = await params;
   const a = await prisma.assignment.findUnique({ where: { id: Number(assignmentId) } });
   if (!a || a.raterId !== claim.raterId || a.period !== claim.period) {
