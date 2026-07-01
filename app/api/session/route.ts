@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
   const rater = await prisma.rater.findUnique({ where: { id: claim.raterId } });
   if (!rater) return NextResponse.json({ error: "unknown_rater" }, { status: 401 });
 
+  // TODO(Plan 2): enforce isLockedOut() via a persistent failed-attempt store before verifyPin — PIN endpoint is currently unthrottled.
   if (!verifyPin(body.pin ?? "", rater.pinSalt, rater.pinHash)) {
     return NextResponse.json({ error: "bad_pin" }, { status: 401 });
   }
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
   res.cookies.set("sid", body.token!, {
     httpOnly: true,
     sameSite: "lax",
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     path: "/",
   });
   return res;

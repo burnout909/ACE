@@ -30,7 +30,10 @@ export async function POST(
   }
 
   const { assignmentId } = await params;
-  const a = await prisma.assignment.findUnique({ where: { id: Number(assignmentId) } });
+  const id = Number(assignmentId);
+  if (!Number.isInteger(id)) return NextResponse.json({ error: "bad_request" }, { status: 400 });
+  // TODO(Plan 2/3): re-check Session.status === "active" (and window) here — the sid cookie is a non-expiring bearer token, so a rater keeps access after an admin locks the period.
+  const a = await prisma.assignment.findUnique({ where: { id } });
   if (!a || a.raterId !== claim.raterId || a.period !== claim.period) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
@@ -48,6 +51,16 @@ export async function POST(
     if (scale === undefined || !isValidAnswer(scale, value)) {
       return NextResponse.json({ error: "invalid_answer", itemId }, { status: 400 });
     }
+  }
+
+  // Fix A: require every checklist item to have a submitted answer before locking.
+  const submittedIds = new Set(answers.map((a) => a.itemId));
+  const missingIds = items.map((i) => i.id).filter((id) => !submittedIds.has(id));
+  if (missingIds.length > 0) {
+    return NextResponse.json(
+      { error: "incomplete_submission", missing: missingIds },
+      { status: 400 }
+    );
   }
 
   await prisma.$transaction([

@@ -17,7 +17,10 @@ export async function GET(
   if (!claim) return NextResponse.json({ error: "unauth" }, { status: 401 });
 
   const { assignmentId } = await params;
-  const a = await prisma.assignment.findUnique({ where: { id: Number(assignmentId) } });
+  const id = Number(assignmentId);
+  if (!Number.isInteger(id)) return NextResponse.json({ error: "bad_request" }, { status: 400 });
+  // TODO(Plan 2/3): re-check Session.status === "active" (and window) here — the sid cookie is a non-expiring bearer token, so a rater keeps access after an admin locks the period.
+  const a = await prisma.assignment.findUnique({ where: { id } });
   if (!a || a.raterId !== claim.raterId || a.period !== claim.period) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
@@ -34,7 +37,7 @@ export async function GET(
     await prisma.caseProgress.upsert({
       where: { assignmentId: a.id },
       create: { assignmentId: a.id, state: "in_progress", enterAt: new Date() },
-      update: { state: "in_progress", enterAt: new Date() },
+      update: { state: "in_progress" },
     });
   }
 
