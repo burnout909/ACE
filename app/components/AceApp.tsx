@@ -1,160 +1,72 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import ViewGrid from "./ViewGrid";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
 import DragHandle from "./DragHandle";
-import type {
-  AiEvaluation,
-  ChecklistData,
-  Score,
-  TranscriptSegment
-} from "@/lib/types";
+import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment } from "@/lib/types";
 import { formatTimestamp } from "@/lib/time";
 
-const ANSWERS_KEY = "ace-evaluator-answers";
-const TRANSCRIPT_ENDPOINT = "/api/transcript";
-const EVALUATION_ENDPOINT = "/api/evaluate";
-export default function AceApp() {
+export type AceAppProps = {
+  mode: "A" | "B";
+  videoUrls: CaseVideoUrls;
+  items: StudyChecklistItem[];
+  initialAnswers: { itemId: string; value: number }[];
+  onSubmit: (answers: { itemId: string; value: number }[]) => Promise<void> | void;
+};
+
+export default function AceApp({
+  mode,
+  videoUrls,
+  items,
+  initialAnswers,
+  onSubmit,
+}: AceAppProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [activeView, setActiveView] = useState("view1");
   const [lastSynced, setLastSynced] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
-  const [transcript, setTranscript] = useState<TranscriptSegment[]>([]);
-  const [checklist, setChecklist] = useState<ChecklistData | null>(null);
-  const [aiEvaluation, setAiEvaluation] = useState<AiEvaluation[]>([]);
-  const [aiFromFile, setAiFromFile] = useState(false);
-  const [showAi, setShowAi] = useState(true);
-  const [answers, setAnswers] = useState<Record<string, Score>>({});
-  const [aiLoading, setAiLoading] = useState(false);
+
+  // No transcript in Plan 1 (Plan 4 will wire evidence/transcript)
+  const transcript: TranscriptSegment[] = [];
+
+  const [answers, setAnswers] = useState<Record<string, number>>(() => {
+    const map: Record<string, number> = {};
+    for (const { itemId, value } of initialAnswers) {
+      map[itemId] = value;
+    }
+    return map;
+  });
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [leftWidthPct, setLeftWidthPct] = useState(60);
   const [topHeightPct, setTopHeightPct] = useState(55);
 
-  const handleHorizontalDrag = useCallback(
-    (delta: number) => {
-      const container = containerRef.current;
-      if (!container) return;
-      const pct = (delta / container.clientWidth) * 100;
-      setLeftWidthPct((prev) => Math.min(80, Math.max(30, prev + pct)));
-    },
-    []
+  const handleHorizontalDrag = useCallback((delta: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const pct = (delta / container.clientWidth) * 100;
+    setLeftWidthPct((prev) => Math.min(80, Math.max(30, prev + pct)));
+  }, []);
+
+  const handleVerticalDrag = useCallback((delta: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const pct = (delta / container.clientHeight) * 100;
+    setTopHeightPct((prev) => Math.min(80, Math.max(20, prev + pct)));
+  }, []);
+
+  const totalQuestions = items.length;
+
+  const answeredCount = useMemo(
+    () => items.filter((item) => answers[item.id] !== undefined).length,
+    [answers, items]
   );
-
-  const handleVerticalDrag = useCallback(
-    (delta: number) => {
-      const container = containerRef.current;
-      if (!container) return;
-      const pct = (delta / container.clientHeight) * 100;
-      setTopHeightPct((prev) => Math.min(80, Math.max(20, prev + pct)));
-    },
-    []
-  );
-
-  useEffect(() => {
-    fetch("/checklist.json")
-      .then((res) => res.json())
-      .then((data: ChecklistData) => setChecklist(data))
-      .catch(() => setChecklist(null));
-  }, []);
-
-  useEffect(() => {
-    fetch(TRANSCRIPT_ENDPOINT)
-      .then((res) => res.json())
-      .then((data: { segments: TranscriptSegment[] }) => {
-        setTranscript(data.segments ?? []);
-      })
-      .catch(() => setTranscript([]));
-  }, []);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(ANSWERS_KEY);
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored) as Record<string, unknown>;
-        const migrated: Record<string, Score> = {};
-        for (const [key, value] of Object.entries(parsed)) {
-          if (value === 3 || value === 2 || value === 1) {
-            migrated[key] = value;
-          }
-        }
-        setAnswers(migrated);
-      } catch {
-        setAnswers({});
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(ANSWERS_KEY, JSON.stringify(answers));
-  }, [answers]);
-
-  useEffect(() => {
-    fetch(EVALUATION_ENDPOINT)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data: { evaluations?: AiEvaluation[] } | null) => {
-        if (data?.evaluations && Array.isArray(data.evaluations)) {
-          setAiEvaluation(data.evaluations);
-          setAiFromFile(true);
-        }
-      })
-      .catch(() => undefined);
-  }, []);
-
-  useEffect(() => {
-    if (aiFromFile || aiEvaluation.length > 0 || aiLoading) {
-      return;
-    }
-    if (!checklist || transcript.length === 0) {
-      return;
-    }
-    setAiLoading(true);
-    fetch(EVALUATION_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ checklist, transcript })
-    })
-      .then((res) => res.json())
-      .then((data: { evaluations?: AiEvaluation[]; source?: string }) => {
-        const evaluations = Array.isArray(data.evaluations)
-          ? data.evaluations
-          : [];
-        setAiEvaluation(evaluations);
-        if (data.source === "file") {
-          setAiFromFile(true);
-        }
-      })
-      .catch(() => setAiEvaluation([]))
-      .finally(() => setAiLoading(false));
-  }, [aiEvaluation.length, aiFromFile, aiLoading, checklist, transcript]);
-
-  const totalQuestions = useMemo(() => {
-    if (!checklist) {
-      return 0;
-    }
-    return checklist.tabs.reduce(
-      (count, tab) => count + tab.questions.length,
-      0
-    );
-  }, [checklist]);
-
-  const answeredCount = useMemo(() => {
-    if (!checklist) {
-      return 0;
-    }
-    return checklist.tabs.reduce((count, tab) => {
-      return (
-        count +
-        tab.questions.filter((question) => answers[question.id]).length
-      );
-    }, 0);
-  }, [answers, checklist]);
 
   const isComplete = totalQuestions > 0 && answeredCount === totalQuestions;
 
-  const handleTimestampClick = (seconds: number) => {
+  const handleTimestampClick = useCallback((seconds: number) => {
     const video = videoRef.current;
     if (video) {
       video.currentTime = seconds;
@@ -162,9 +74,9 @@ export default function AceApp() {
     }
     setActiveView("view1");
     setLastSynced(formatTimestamp(seconds));
-  };
+  }, []);
 
-  const handleAnswer = (id: string, value: Score) => {
+  const handleAnswer = useCallback((id: string, value: number) => {
     setAnswers((prev) => {
       if (prev[id] === value) {
         const next = { ...prev };
@@ -173,16 +85,15 @@ export default function AceApp() {
       }
       return { ...prev, [id]: value };
     });
-  };
+  }, []);
 
-  const handleComplete = () => {
-    const payload = {
-      answers,
-      aiEvaluation,
-      completedAt: new Date().toISOString()
-    };
-    console.log("ACE evaluation", payload);
-  };
+  const handleComplete = useCallback(() => {
+    const answersArray = Object.entries(answers).map(([itemId, value]) => ({
+      itemId,
+      value,
+    }));
+    void onSubmit(answersArray);
+  }, [answers, onSubmit]);
 
   return (
     <main className="relative h-screen overflow-hidden">
@@ -192,10 +103,7 @@ export default function AceApp() {
         <div className="absolute bottom-10 left-1/3 h-72 w-72 rounded-full bg-[#eef7ee] blur-3xl" />
       </div>
 
-      <div
-        ref={containerRef}
-        className="flex h-full min-w-[1080px]"
-      >
+      <div ref={containerRef} className="flex h-full min-w-[1080px]">
         {/* Left: Video + Transcript */}
         <div
           className="flex flex-col overflow-hidden"
@@ -213,6 +121,7 @@ export default function AceApp() {
                 videoRef={videoRef}
                 lastSynced={lastSynced}
                 onTimeUpdate={setCurrentTime}
+                videoSrc={videoUrls.ceiling}
               />
             </div>
           </div>
@@ -220,9 +129,7 @@ export default function AceApp() {
           <DragHandle direction="vertical" onDrag={handleVerticalDrag} />
 
           {/* Transcript panel */}
-          <div
-            className="flex-1 overflow-hidden border-r border-slate-200 bg-white/80"
-          >
+          <div className="flex-1 overflow-hidden border-r border-slate-200 bg-white/80">
             <div className="h-full p-3">
               <TranscriptBar
                 segments={transcript}
@@ -236,19 +143,12 @@ export default function AceApp() {
         <DragHandle direction="horizontal" onDrag={handleHorizontalDrag} />
 
         {/* Right: Checklist panel */}
-        <div
-          className="flex-1 overflow-hidden bg-white/80"
-        >
+        <div className="flex-1 overflow-hidden bg-white/80">
           <EvaluationPanel
-            checklist={checklist}
+            mode={mode}
+            items={items}
             answers={answers}
             onAnswer={handleAnswer}
-            aiEvaluation={aiEvaluation}
-            showAi={showAi}
-            onToggleAi={() => setShowAi((prev) => !prev)}
-            aiLoading={aiLoading}
-            answeredCount={answeredCount}
-            totalQuestions={totalQuestions}
             onComplete={handleComplete}
             isComplete={isComplete}
             onTimestampClick={handleTimestampClick}

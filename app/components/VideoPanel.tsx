@@ -1,16 +1,17 @@
 import type { RefObject } from "react";
 
 type VideoPanelProps = {
+  src?: string;
   videoRef: RefObject<HTMLVideoElement>;
   onTimeUpdate: (time: number) => void;
 };
 
-export default function VideoPanel({ videoRef, onTimeUpdate }: VideoPanelProps) {
+export default function VideoPanel({ src, videoRef, onTimeUpdate }: VideoPanelProps) {
   return (
     <div className="flex h-full items-center justify-center rounded-xl bg-slate-950">
       <video
         ref={videoRef}
-        src={`https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_S3_REGION}.amazonaws.com/video1.mp4`}
+        src={src}
         className="h-full w-full rounded-xl object-cover"
         controls
         playsInline

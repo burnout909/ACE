@@ -9,6 +9,7 @@ type ViewGridProps = {
   videoRef: RefObject<HTMLVideoElement>;
   lastSynced: string | null;
   onTimeUpdate: (time: number) => void;
+  videoSrc?: string;
 };
 
 const views = [
@@ -22,15 +23,17 @@ function ViewContent({
   viewId,
   videoRef,
   lastSynced,
-  onTimeUpdate
+  onTimeUpdate,
+  videoSrc
 }: {
   viewId: string;
   videoRef: RefObject<HTMLVideoElement>;
   lastSynced: string | null;
   onTimeUpdate: (time: number) => void;
+  videoSrc?: string;
 }) {
   if (viewId === "view1") {
-    return <VideoPanel videoRef={videoRef} onTimeUpdate={onTimeUpdate} />;
+    return <VideoPanel src={videoSrc} videoRef={videoRef} onTimeUpdate={onTimeUpdate} />;
   }
   return <PlaceholderPanel status={lastSynced} />;
 }
@@ -40,7 +43,8 @@ export default function ViewGrid({
   onActivate,
   videoRef,
   lastSynced,
-  onTimeUpdate
+  onTimeUpdate,
+  videoSrc
 }: ViewGridProps) {
   const activeViewData = views.find((v) => v.id === activeView) ?? views[0];
   const thumbnails = views.filter((v) => v.id !== activeViewData.id);
@@ -58,6 +62,7 @@ export default function ViewGrid({
           videoRef={videoRef}
           lastSynced={lastSynced}
           onTimeUpdate={onTimeUpdate}
+          videoSrc={videoSrc}
         />
       </ViewPanel>
       <div className="flex flex-col gap-3">
@@ -74,6 +79,7 @@ export default function ViewGrid({
               videoRef={videoRef}
               lastSynced={lastSynced}
               onTimeUpdate={onTimeUpdate}
+              videoSrc={videoSrc}
             />
           </ViewPanel>
         ))}

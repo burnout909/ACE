@@ -1,7 +1,7 @@
-import type { ChecklistTab } from "@/lib/types";
+type Tab = { id: string; label: string };
 
 type EvaluationTabsProps = {
-  tabs: ChecklistTab[];
+  tabs: Tab[];
   activeTabId: string | null;
   onSelect: (id: string) => void;
 };
