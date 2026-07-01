@@ -10,7 +10,7 @@ describe("session token", () => {
   });
   it("rejects tampered payload", () => {
     const t = signToken("P2", 1, SECRET);
-    const tampered = t.replace("P2", "P3");
+    const tampered = t.slice(0, 3) + (t[3] === "A" ? "B" : "A") + t.slice(4);
     expect(verifyToken(tampered, SECRET)).toBeNull();
   });
   it("rejects wrong secret", () => {

@@ -7,7 +7,7 @@ function mac(payload: string, secret: string): string {
 }
 
 export function signToken(raterId: string, period: 1 | 2, secret: string): string {
-  const payload = JSON.stringify({ raterId, period });
+  const payload = Buffer.from(JSON.stringify({ raterId, period }), "utf8").toString("base64url");
   return `${payload}.${mac(payload, secret)}`;
 }
 
@@ -21,7 +21,9 @@ export function verifyToken(
   const sig = token.slice(lastDot + 1);
   if (mac(payload, secret) !== sig) return null;
   try {
-    const { raterId, period } = JSON.parse(payload);
+    const { raterId, period } = JSON.parse(
+      Buffer.from(payload, "base64url").toString("utf8")
+    );
     if ((period !== 1 && period !== 2) || typeof raterId !== "string") return null;
     return { raterId, period };
   } catch {
