@@ -80,9 +80,23 @@ async function main() {
 
   // ── 3. Raters, assignments, sessions ───────────────────────────────────
   for (const rater of RATERS) {
-    const pin = String(Math.floor(100000 + Math.random() * 900000));
-    const salt = `salt-${rater.id}`;
-    const pinHash = hashPin(pin, salt);
+    // Check if rater already exists to avoid rotating PINs on re-run
+    const existing = await prisma.rater.findUnique({ where: { id: rater.id } });
+
+    // Generate PIN only for new raters
+    let pin: string;
+    let salt: string;
+    let pinHash: string;
+
+    if (!existing) {
+      pin = String(Math.floor(100000 + Math.random() * 900000));
+      salt = `salt-${rater.id}`;
+      pinHash = hashPin(pin, salt);
+    } else {
+      pin = "";
+      salt = "";
+      pinHash = "";
+    }
 
     await prisma.rater.upsert({
       where: { id: rater.id },
@@ -95,8 +109,6 @@ async function main() {
       },
       update: {
         name: rater.name,
-        pinHash,
-        pinSalt: salt,
         scheduleSeed: rater.seed,
       },
     });
@@ -142,7 +154,11 @@ async function main() {
     }
 
     const token = signToken(rater.id, 1, secret);
-    console.log(`${rater.id}  PIN=${pin}  S1 URL=/g/${token}`);
+    if (!existing) {
+      console.log(`${rater.id}  PIN=${pin}  S1 URL=/g/${token}`);
+    } else {
+      console.log(`${rater.id}  (기존 rater — PIN 유지, 재출력 안 함)  S1 URL=/g/${token}`);
+    }
   }
 
   await prisma.$disconnect();
