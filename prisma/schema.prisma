@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Mode {
+  A
+  B
+}
+
+enum Section {
+  Hx
+  PEx
+  Edu
+}
+
+enum Scale {
+  binary
+  triple
+}
+
+enum SessionStatus {
+  locked
+  active
+  done
+}
+
+enum ProgressState {
+  not_started
+  in_progress
+  submitted
+  locked
+}
+
+model Rater {
+  id           String       @id
+  name         String
+  pinHash      String       @map("pin_hash")
+  pinSalt      String       @map("pin_salt")
+  contact      String?
+  scheduleSeed Int          @map("schedule_seed")
+  sessions     Session[]
+  assignments  Assignment[]
+
+  @@map("raters")
+}
+
+model Case {
+  id          Int          @id
+  videoUrls   Json         @map("video_urls")
+  phenotype   String       @default("두통")
+  assignments Assignment[]
+
+  @@map("cases")
+}
+
+model ChecklistItem {
+  id      String   @id
+  section Section
+  scale   Scale
+  text    String
+  ord     Int
+  answers Answer[]
+
+  @@map("checklist_items")
+}
+
+model Session {
+  raterId       String        @map("rater_id")
+  period        Int
+  status        SessionStatus @default(locked)
+  windowOpenAt  DateTime?     @map("window_open_at") @db.Timestamptz(6)
+  windowCloseAt DateTime?     @map("window_close_at") @db.Timestamptz(6)
+  rater         Rater         @relation(fields: [raterId], references: [id])
+
+  @@id([raterId, period])
+  @@map("sessions")
+}
+
+model Assignment {
+  id         Int           @id @default(autoincrement())
+  raterId    String        @map("rater_id")
+  caseId     Int           @map("case_id")
+  period     Int
+  mode       Mode
+  orderIndex Int           @map("order_index")
+  rater      Rater         @relation(fields: [raterId], references: [id])
+  case       Case          @relation(fields: [caseId], references: [id])
+  progress   CaseProgress?
+  answers    Answer[]
+
+  @@unique([raterId, caseId, period])
+  @@map("assignments")
+}
+
+model CaseProgress {
+  assignmentId Int           @id @map("assignment_id")
+  state        ProgressState @default(not_started)
+  activeMs     Int           @default(0) @map("active_ms")
+  enterAt      DateTime?     @map("enter_at") @db.Timestamptz(6)
+  submitAt     DateTime?     @map("submit_at") @db.Timestamptz(6)
+  assignment   Assignment    @relation(fields: [assignmentId], references: [id])
+
+  @@map("case_progress")
+}
+
+model Answer {
+  assignmentId Int           @map("assignment_id")
+  itemId       String        @map("item_id")
+  value        Int
+  decidedAt    DateTime      @default(now()) @map("decided_at") @db.Timestamptz(6)
+  revisedCount Int           @default(0) @map("revised_count")
+  assignment   Assignment    @relation(fields: [assignmentId], references: [id])
+  item         ChecklistItem @relation(fields: [itemId], references: [id])
+
+  @@id([assignmentId, itemId])
+  @@map("answers")
+}
