@@ -44,13 +44,18 @@ def main():
     s3 = boto3.client("s3", region_name=config.REGION)
     keys = s3util.list_source_keys(s3)
     encounters, issues = pairing.build_encounters(keys)
-    json.dump({"issues": issues, "count": len(encounters)},
-              open("pairing_report.json", "w"), ensure_ascii=False, indent=1)
+    with open("pairing_report.json", "w") as f:
+        json.dump({"issues": issues, "count": len(encounters)},
+                  f, ensure_ascii=False, indent=1)
     print(f"encounters={len(encounters)} issues={len(issues)}")
     if args.only_pair:
         return
 
-    overrides = json.load(open(args.overrides)) if args.overrides else {}
+    if args.overrides:
+        with open(args.overrides) as f:
+            overrides = json.load(f)
+    else:
+        overrides = {}
     # only encode encounters that have all views present (skip 2-view for now unless overridden)
     todo = [e for e in encounters if not e["missingViews"] or e["id"] in overrides]
 
@@ -60,8 +65,9 @@ def main():
             processed.append(r)
             print("done", r["id"], "conf=", r["sync"]["confidence"])
 
-    json.dump({e["id"]: e["sync"] for e in processed},
-              open("sync_report.json", "w"), ensure_ascii=False, indent=1)
+    with open("sync_report.json", "w") as f:
+        json.dump({e["id"]: e["sync"] for e in processed},
+                  f, ensure_ascii=False, indent=1)
     m = manifest.build_manifest(processed)
     s3.put_object(Bucket=config.BUCKET, Key=f"{config.DST_PREFIX}/encounters.json",
                   Body=json.dumps(m, ensure_ascii=False, indent=1).encode(),
