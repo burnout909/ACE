@@ -40,6 +40,44 @@
 - `app/g/[token]/CaseRunner.tsx` — 스케줄 기반 케이스 러너(현 `AceApp` 리팩터).
 - `lib/types.ts` — 기존 타입 확장(척도 인지형 `AnswerValue`).
 - `vitest.config.ts`, `package.json` — 테스트 러너 추가.
+- `.env.local` — Supabase URL/키, 토큰 시크릿(커밋 금지, `.gitignore` 확인).
+- `scripts/seed.ts` — 시드 데이터 + 스케줄/토큰 생성.
+
+---
+
+## Task 0: Supabase 프로젝트 + 환경 셋업 (다음 세션 시작점 · 수동/대화형)
+
+> 사람이 Supabase 계정으로 수행. 이후 모든 태스크의 전제. Claude가 명령·값 생성을 안내.
+
+**Files:** Create `.env.local`
+
+- [ ] **Step 1: Supabase 프로젝트 생성 (서울 리전)**
+
+Supabase 대시보드(또는 CLI)에서 새 프로젝트 생성 — **Region = Northeast Asia (Seoul) `ap-northeast-2`**(IRB 데이터 상주). 프로젝트명 예: `ace-cpx-study`.
+CLI 대안(로컬 검증용): `npx supabase init && npx supabase start`.
+
+- [ ] **Step 2: 키 확보**
+
+대시보드 Settings → API에서 3개 값 확보: `Project URL`, `anon public` 키, `service_role` 키(서버 전용·비밀). Settings → Database에서 connection string(psql 적용용).
+
+- [ ] **Step 3: `.env.local` 작성 (커밋 금지)**
+
+토큰 시크릿 생성: `openssl rand -base64 48`.
+```
+NEXT_PUBLIC_SUPABASE_URL=https://<ref>.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon>
+SUPABASE_SERVICE_ROLE_KEY=<service_role>
+SUPABASE_DB_URL=postgresql://postgres:<pw>@db.<ref>.supabase.co:5432/postgres
+SESSION_TOKEN_SECRET=<openssl 출력>
+```
+`.gitignore`에 `.env.local` 포함 확인.
+
+- [ ] **Step 4: 연결 확인**
+
+Run: `psql "$SUPABASE_DB_URL" -c "select 1;"`
+Expected: `1` 반환(연결 OK). 실패 시 키/네트워크 점검.
+
+- [ ] **Step 5: (커밋 없음)** — `.env.local`은 비밀이라 커밋하지 않는다. Task 6에서 스키마 적용, Task 10에서 시드.
 
 ---
 
@@ -831,9 +869,80 @@ git commit -m "feat(runtime): token entry, mode-driven case runner, scale inputs
 
 ---
 
+## Task 10: 시드 데이터 + 스케줄/토큰 생성
+
+**Files:** Create `scripts/seed.ts`
+
+**Interfaces:**
+- Consumes: Task 2 `buildSchedule`, Task 4 `signToken`, Task 5 `hashPin`, Task 6 `getServerClient`.
+- Produces: raters(P1–P4, PIN 설정)·cases(30)·checklist_items 삽입, 평가자별 `assignments` 생성, `sessions`(S1=active, S2=locked), 발송용 토큰 URL·PIN 출력.
+
+- [ ] **Step 1: 시드 스크립트 작성**
+
+`scripts/seed.ts` (핵심 흐름):
+```ts
+import { getServerClient } from "@/lib/db/client";
+import { buildSchedule } from "@/lib/study/schedule";
+import { signToken } from "@/lib/auth/token";
+import { hashPin } from "@/lib/auth/pin";
+
+const CASE_IDS = Array.from({ length: 30 }, (_, i) => i + 1);
+const RATERS = [
+  { id: "P1", name: "교수1", seed: 101 },
+  { id: "P2", name: "교수2", seed: 202 },
+  { id: "P3", name: "교수3", seed: 303 },
+  { id: "P4", name: "교수4", seed: 404 },
+];
+
+async function main() {
+  const db = getServerClient();
+  const secret = process.env.SESSION_TOKEN_SECRET!;
+  // cases / checklist_items 는 실제 두통 체크리스트(신하영 교수님 전달본)와 파이프라인 video_urls로 채운다.
+  // 여기서는 raters + assignments + sessions + 토큰/PIN 발급에 집중.
+  for (const r of RATERS) {
+    const pin = String(Math.floor(100000 + Math.random() * 900000)); // 6자리
+    const salt = `salt-${r.id}`;
+    await db.from("raters").upsert({
+      id: r.id, name: r.name, pin_hash: hashPin(pin, salt), pin_salt: salt, schedule_seed: r.seed,
+    });
+    const rows = buildSchedule(CASE_IDS, r.seed).map((a) => ({
+      rater_id: r.id, case_id: a.caseId, period: a.period, mode: a.mode, order_index: a.orderIndex,
+    }));
+    await db.from("assignments").upsert(rows, { onConflict: "rater_id,case_id,period" });
+    await db.from("sessions").upsert([
+      { rater_id: r.id, period: 1, status: "active" },   // S1 개방
+      { rater_id: r.id, period: 2, status: "locked" },   // S2는 관리자 승인(Plan 3)까지 잠금
+    ]);
+    console.log(`${r.id}  PIN=${pin}  S1 URL=/g/${signToken(r.id, 1, secret)}`);
+  }
+}
+main();
+```
+> 주: `cases`·`checklist_items`는 실제 두통 체크리스트(§4 재료)와 파이프라인 `video_urls`(Plan 4/영상 파이프라인)로 채운다. PIN은 링크와 다른 채널(문자)로 전달.
+
+- [ ] **Step 2: 실행**
+
+Run: `npx tsx scripts/seed.ts`  (또는 `node --loader tsx`)
+Expected: P1–P4 각 60 assignments 생성, 콘솔에 rater별 `PIN` + `S1 URL` 출력.
+
+- [ ] **Step 3: 검증**
+
+Run: `psql "$SUPABASE_DB_URL" -c "select rater_id, count(*) from assignments group by 1;"`
+Expected: 각 rater 60행. `select period, mode, count(*) from assignments where rater_id='P1' group by 1,2;` → period1 A15/B15, period2 A15/B15.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add scripts/seed.ts
+git commit -m "feat(seed): raters, crossover assignments, sessions, token/PIN generation"
+```
+
+---
+
 ## Self-Review (플랜 작성자 체크 결과)
 
-- **스펙 커버리지:** §1 결정(저장소/인증/잠금/척도) → Task 1·3·4·5·6·7·8. §4 인증 → Task 4·5·7. §5 스케줄 → Task 2. §8 런타임(Mode·척도·timestamp·배속) → Task 3·9. §3 데이터모델(런타임 관련 7테이블) → Task 6. **이벤트/진행 대시보드/wash-out/백오피스/전사문은 본 Plan 범위 밖** → Plan 2–4에서 커버(의도된 분해).
+- **스펙 커버리지:** §1 결정(저장소/인증/잠금/척도) → Task 1·3·4·5·6·7·8. 저장소 셋업(Supabase 서울) → Task 0. §4 인증 → Task 4·5·7. §5 스케줄 → Task 2. §8 런타임(Mode·척도·timestamp·배속) → Task 3·9. §3 데이터모델(런타임 관련 7테이블) → Task 6. 시드·스케줄/토큰 발급 → Task 10. **이벤트/진행 대시보드/wash-out/백오피스/전사문은 본 Plan 범위 밖** → Plan 2–4에서 커버(의도된 분해).
+- **실행 순서:** Task 0(수동 셋업) → 1–9(TDD/배선) → 10(시드) → 수동 E2E. 다음 세션은 Task 0부터.
 - **플레이스홀더:** Task 7의 시도제한 영속화를 Plan 2로 명시 이월(스텁 아님, 인증흐름은 완결). Task 9는 UI 배선이라 코드 대신 파일·동작 명세 — 순수로직 TDD 태스크(2–5)가 검증 핵심.
 - **타입 일관성:** `Mode`(Task 2)·`Scale`/`AnswerValue`(Task 3)·`verifyToken`(Task 4)·`isValidAnswer`(Task 3·8)·`getServerClient`(Task 6·7·8) 이름 일치 확인.
 
