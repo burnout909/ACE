@@ -1,12 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import ViewGrid from "./ViewGrid";
+import MultiViewPanel from "./MultiViewPanel";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
 import DragHandle from "./DragHandle";
 import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment, EvidenceItem } from "@/lib/types";
-import { formatTimestamp } from "@/lib/time";
 import { logEvent } from "@/lib/events/client";
 
 export type AceAppProps = {
@@ -29,8 +28,6 @@ export default function AceApp({
   evidence = [],
 }: AceAppProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [activeView, setActiveView] = useState("view1");
-  const [lastSynced, setLastSynced] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
   // Group Mode-B evidence by checklist item id for per-question display.
@@ -109,8 +106,6 @@ export default function AceApp({
       video.currentTime = seconds;
       video.play().catch(() => undefined);
     }
-    setActiveView("view1");
-    setLastSynced(formatTimestamp(seconds));
     // Mode B only: emit timestamp_jump on any transcript/evidence click.
     if (mode === "B") {
       logEvent("timestamp_jump", { seconds });
@@ -156,13 +151,10 @@ export default function AceApp({
             style={{ height: `${topHeightPct}%` }}
           >
             <div className="h-full p-3">
-              <ViewGrid
-                activeView={activeView}
-                onActivate={setActiveView}
-                videoRef={videoRef}
-                lastSynced={lastSynced}
+              <MultiViewPanel
+                videoUrls={videoUrls}
+                masterRef={videoRef}
                 onTimeUpdate={setCurrentTime}
-                videoSrc={videoUrls.ceiling}
               />
             </div>
           </div>
