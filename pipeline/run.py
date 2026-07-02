@@ -57,18 +57,18 @@ def transcribe_main(args):
     unless --dry-run (writes transcribe_report.json instead).
     """
     from pipeline.transcribe import transcribe_case
-    from pipeline.adapters import OpenAiAsr, OpenAiEvaluator, DEFAULT_ASR_MODEL, EVIDENCE_MODEL
+    from pipeline.adapters import OpenAiAsr, OpenAiEvaluator, OpenAiDiarizer, DEFAULT_ASR_MODEL, EVIDENCE_MODEL
     from pipeline import load
 
     with open(args.cases_file) as f:
         cases = json.load(f)
     checklist = load.fetch_checklist()
-    asr, evaluator = OpenAiAsr(), OpenAiEvaluator()
+    asr, evaluator, diarizer = OpenAiAsr(), OpenAiEvaluator(), OpenAiDiarizer()
     model_id = args.model_id or f"{DEFAULT_ASR_MODEL}+{EVIDENCE_MODEL}"
 
     def one(c):
         try:
-            bundle = transcribe_case(c["caseId"], c["audio"], checklist, asr, evaluator, model_id)
+            bundle = transcribe_case(c["caseId"], c["audio"], checklist, asr, evaluator, model_id, diarizer=diarizer)
             if not args.dry_run:
                 load.load_case(bundle)
             print(f"done case {c['caseId']} segments={len(bundle['transcript'])} "

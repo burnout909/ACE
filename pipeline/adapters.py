@@ -124,6 +124,36 @@ class OpenAiAsr:
             return out
 
 
+class OpenAiDiarizer:
+    """Label each transcript segment as doctor/patient (gpt-4o), ported from the
+    original lib/openai.ts labelSpeakers."""
+
+    def __init__(self, model: str = EVIDENCE_MODEL):
+        self.model = model
+
+    def label(self, segments: list[dict]) -> list[dict]:
+        compact = [{"id": s["id"], "timestamp": s.get("timestamp"), "text": s["text"]} for s in segments]
+        data = _post_json("/chat/completions", {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": "\n".join([
+                    "You are a speaker diarization assistant for medical interviews.",
+                    "Given a doctor-patient conversation transcript, label each segment's speaker.",
+                    'Use exactly "doctor" or "patient".',
+                    'Return JSON array only: [{"id":"seg-...","speaker":"doctor"|"patient"}]',
+                    "No other text.",
+                ])},
+                {"role": "user", "content": json.dumps(compact, ensure_ascii=False)},
+            ],
+        })
+        content = (data.get("choices") or [{}])[0].get("message", {}).get("content", "[]")
+        content = content.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            return []
+
+
 class OpenAiEvaluator:
     """Extract per-item evidence quotes + a Yes/No verdict from the transcript."""
 

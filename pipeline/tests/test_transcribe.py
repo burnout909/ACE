@@ -1,4 +1,4 @@
-from pipeline.transcribe import normalize_segments
+from pipeline.transcribe import normalize_segments, label_speakers
 
 
 def test_normalize_adds_id_and_mmss_timestamp():
@@ -19,3 +19,14 @@ def test_normalize_strips_text_and_defaults_speaker_none():
     assert out[0]["text"] == "안녕하세요"
     assert out[0]["speaker"] is None
     assert out[0]["timestamp"] == "00:00"
+
+
+def test_label_speakers_merges_by_id_and_keeps_unlabeled():
+    segs = [
+        {"id": "seg-0", "text": "머리가 아파요", "speaker": None},
+        {"id": "seg-1", "text": "언제부터요?", "speaker": None},
+    ]
+    out = label_speakers(segs, [{"id": "seg-1", "speaker": "doctor"}])
+    assert out[0]["speaker"] is None          # unlabeled kept
+    assert out[1]["speaker"] == "doctor"      # labeled applied
+    assert out[1]["text"] == "언제부터요?"     # other fields intact

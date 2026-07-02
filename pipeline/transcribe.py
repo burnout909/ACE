@@ -16,6 +16,19 @@ class Asr(Protocol):
         ...
 
 
+class Diarizer(Protocol):
+    def label(self, segments: list[dict]) -> list[dict]:
+        """Return per-segment speaker labels: [{id, speaker: 'doctor'|'patient'}]."""
+        ...
+
+
+def label_speakers(segments: list[dict], labels: list[dict]) -> list[dict]:
+    """Merge diarization labels into segments by id (pure). Unmatched ids keep
+    their existing speaker."""
+    by_id = {l["id"]: l.get("speaker") for l in labels}
+    return [{**s, "speaker": by_id.get(s["id"], s.get("speaker"))} for s in segments]
+
+
 def _mmss(sec: float) -> str:
     s = int(sec)
     return f"{s // 60:02d}:{s % 60:02d}"
@@ -45,14 +58,17 @@ def transcribe_case(
     asr: Asr,
     evaluator: Evaluator,
     model_id: str,
+    diarizer: "Diarizer | None" = None,
 ) -> dict:
-    """Full per-case bundle: ASR → normalize → LLM evidence → verdict split.
+    """Full per-case bundle: ASR → normalize → (diarize) → LLM evidence → verdict split.
 
     Returns content ready for case_content (transcript, evidence, frozen=False)
     plus the AI-only verdicts (stored separately in ai_alone). `model_id` records
     the frozen LLM version for reproducibility.
     """
     transcript = normalize_segments(asr.transcribe(audio_path))
+    if diarizer is not None:
+        transcript = label_speakers(transcript, diarizer.label(transcript))
     ev, verdicts = split_evidence_verdict(evaluator.evaluate(checklist, transcript))
     return {
         "caseId": case_id,
