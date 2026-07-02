@@ -1,4 +1,4 @@
-from pipeline.transcribe import normalize_segments, label_speakers
+from pipeline.transcribe import normalize_segments, label_speakers, drop_hallucinated
 
 
 def test_normalize_adds_id_and_mmss_timestamp():
@@ -19,6 +19,18 @@ def test_normalize_strips_text_and_defaults_speaker_none():
     assert out[0]["text"] == "안녕하세요"
     assert out[0]["speaker"] is None
     assert out[0]["timestamp"] == "00:00"
+
+
+def test_drop_hallucinated_removes_non_korean_gibberish():
+    segs = [
+        {"id": "seg-0", "text": "Novorepnoye"},   # pure latin gibberish → drop
+        {"id": "seg-1", "text": "ormal"},          # drop
+        {"id": "seg-2", "text": "안녕하세요"},        # keep
+        {"id": "seg-3", "text": "MRI 찍으셨어요?"},  # mostly hangul → keep
+        {"id": "seg-4", "text": "네네."},            # keep (punct/hangul)
+    ]
+    out = drop_hallucinated(segs)
+    assert [s["id"] for s in out] == ["seg-2", "seg-3", "seg-4"]
 
 
 def test_label_speakers_merges_by_id_and_keeps_unlabeled():

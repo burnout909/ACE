@@ -34,6 +34,26 @@ def _mmss(sec: float) -> str:
     return f"{s // 60:02d}:{s % 60:02d}"
 
 
+import re
+
+_HANGUL = re.compile(r"[가-힣]")
+_LATIN = re.compile(r"[A-Za-z]")
+
+
+def drop_hallucinated(segments: list[dict], min_hangul_ratio: float = 0.3) -> list[dict]:
+    """Remove segments whose text is mostly non-Korean — a common ASR
+    hallucination on non-speech audio (e.g. "Novorepnoye", "schedull"). Segments
+    with no letters at all (numbers/punctuation) are kept. Residual Korean-but-
+    wrong lines are left for the human correction gate."""
+    def keep(text: str) -> bool:
+        h = len(_HANGUL.findall(text))
+        l = len(_LATIN.findall(text))
+        if h + l == 0:
+            return True
+        return h / (h + l) >= min_hangul_ratio
+    return [s for s in segments if keep(s["text"])]
+
+
 def normalize_segments(raw: list[dict]) -> list[dict]:
     """Convert raw ASR segments to the app TranscriptSegment shape."""
     out = []
@@ -66,7 +86,7 @@ def transcribe_case(
     plus the AI-only verdicts (stored separately in ai_alone). `model_id` records
     the frozen LLM version for reproducibility.
     """
-    transcript = normalize_segments(asr.transcribe(audio_path))
+    transcript = drop_hallucinated(normalize_segments(asr.transcribe(audio_path)))
     if diarizer is not None:
         transcript = label_speakers(transcript, diarizer.label(transcript))
     ev, verdicts = split_evidence_verdict(evaluator.evaluate(checklist, transcript))
