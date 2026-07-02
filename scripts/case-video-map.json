@@ -1,0 +1,424 @@
+[
+ {
+  "caseId": 1,
+  "encounterId": "250826_tue__trim1",
+  "dateFolder": "250826_tue",
+  "trim": "1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250826_tue/DJI_20250826132143_0006_D - Trim1.MP4"
+ },
+ {
+  "caseId": 2,
+  "encounterId": "250826_tue__trim2",
+  "dateFolder": "250826_tue",
+  "trim": "2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250826_tue/DJI_20250826132143_0006_D - Trim2.MP4"
+ },
+ {
+  "caseId": 3,
+  "encounterId": "250826_tue__trim3",
+  "dateFolder": "250826_tue",
+  "trim": "3",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/3/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/3/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/3/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250826_tue/DJI_20250826132143_0006_D - Trim3.MP4"
+ },
+ {
+  "caseId": 4,
+  "encounterId": "250826_tue__trim4",
+  "dateFolder": "250826_tue",
+  "trim": "4",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/4/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/4/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/4/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250826_tue/DJI_20250826132143_0006_D - Trim4.MP4"
+ },
+ {
+  "caseId": 5,
+  "encounterId": "250826_tue__trim5",
+  "dateFolder": "250826_tue",
+  "trim": "5",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/5/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/5/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250826_tue/5/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250826_tue/DJI_20250826132143_0006_D - Trim5.MP4"
+ },
+ {
+  "caseId": 6,
+  "encounterId": "250909_tue__trim1",
+  "dateFolder": "250909_tue",
+  "trim": "1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250909_tue/DJI_20250909131539_0016_D - Trim1.MP4"
+ },
+ {
+  "caseId": 7,
+  "encounterId": "250909_tue__trim2",
+  "dateFolder": "250909_tue",
+  "trim": "2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250909_tue/DJI_20250909131539_0016_D - Trim2.MP4"
+ },
+ {
+  "caseId": 8,
+  "encounterId": "250909_tue__trim3",
+  "dateFolder": "250909_tue",
+  "trim": "3",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/3/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/3/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/3/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250909_tue/DJI_20250909131539_0016_D - Trim3.MP4"
+ },
+ {
+  "caseId": 9,
+  "encounterId": "250909_tue__trim4",
+  "dateFolder": "250909_tue",
+  "trim": "4",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/4/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/4/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/4/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250909_tue/DJI_20250909131539_0016_D - Trim4.MP4"
+ },
+ {
+  "caseId": 10,
+  "encounterId": "250909_tue__trim5",
+  "dateFolder": "250909_tue",
+  "trim": "5",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/5/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/5/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/250909_tue/5/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/250909_tue/DJI_20250909131539_0016_D - Trim5.MP4"
+ },
+ {
+  "caseId": 11,
+  "encounterId": "251111_tue__trim1",
+  "dateFolder": "251111_tue",
+  "trim": "1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111132039_0039_D - Trim1.mp4"
+ },
+ {
+  "caseId": 12,
+  "encounterId": "251111_tue__trim2",
+  "dateFolder": "251111_tue",
+  "trim": "2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111132039_0039_D - Trim2.mp4"
+ },
+ {
+  "caseId": 13,
+  "encounterId": "251111_tue__trim3",
+  "dateFolder": "251111_tue",
+  "trim": "3",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/3/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/3/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/3/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111132039_0039_D - Trim3.mp4"
+ },
+ {
+  "caseId": 14,
+  "encounterId": "251111_tue__trim4",
+  "dateFolder": "251111_tue",
+  "trim": "4",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/4/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/4/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/4/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111132039_0039_D - Trim4.mp4"
+ },
+ {
+  "caseId": 15,
+  "encounterId": "251111_tue__trim5-1",
+  "dateFolder": "251111_tue",
+  "trim": "5-1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111132039_0039_D - Trim5-1.mp4"
+ },
+ {
+  "caseId": 16,
+  "encounterId": "251111_tue__trim5-2",
+  "dateFolder": "251111_tue",
+  "trim": "5-2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251111_tue/5-2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251111_tue/DJI_20251111143747_0040_D - Trim5-2.mp4"
+ },
+ {
+  "caseId": 17,
+  "encounterId": "251202_tue__trim1",
+  "dateFolder": "251202_tue",
+  "trim": "1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202132651_0048_D - Trim1.mp4"
+ },
+ {
+  "caseId": 18,
+  "encounterId": "251202_tue__trim2",
+  "dateFolder": "251202_tue",
+  "trim": "2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202132651_0048_D - Trim2.mp4"
+ },
+ {
+  "caseId": 19,
+  "encounterId": "251202_tue__trim3",
+  "dateFolder": "251202_tue",
+  "trim": "3",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/3/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/3/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/3/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202132651_0048_D - Trim3.mp4"
+ },
+ {
+  "caseId": 20,
+  "encounterId": "251202_tue__trim4",
+  "dateFolder": "251202_tue",
+  "trim": "4",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/4/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/4/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/4/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202132651_0048_D - Trim4.mp4"
+ },
+ {
+  "caseId": 21,
+  "encounterId": "251202_tue__trim5",
+  "dateFolder": "251202_tue",
+  "trim": "5",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/5/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/5/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/5/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202132651_0048_D - Trim5.mp4"
+ },
+ {
+  "caseId": 22,
+  "encounterId": "251202_tue__trim6",
+  "dateFolder": "251202_tue",
+  "trim": "6",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/6/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/6/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/6/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202144653_0049_D - Trim6.mp4"
+ },
+ {
+  "caseId": 23,
+  "encounterId": "251202_tue__trim7",
+  "dateFolder": "251202_tue",
+  "trim": "7",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/7/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/7/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251202_tue/7/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251202_tue/DJI_20251202144653_0049_D - Trim7.mp4"
+ },
+ {
+  "caseId": 24,
+  "encounterId": "251216_tue__trim1",
+  "dateFolder": "251216_tue",
+  "trim": "1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216132458_0058_D - Trim1.mp4"
+ },
+ {
+  "caseId": 25,
+  "encounterId": "251216_tue__trim2",
+  "dateFolder": "251216_tue",
+  "trim": "2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216132458_0058_D - Trim2.mp4"
+ },
+ {
+  "caseId": 26,
+  "encounterId": "251216_tue__trim3",
+  "dateFolder": "251216_tue",
+  "trim": "3",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/3/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/3/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/3/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216132458_0058_D - Trim3.mp4"
+ },
+ {
+  "caseId": 27,
+  "encounterId": "251216_tue__trim4",
+  "dateFolder": "251216_tue",
+  "trim": "4",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/4/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/4/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/4/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216132458_0058_D - Trim4.mp4"
+ },
+ {
+  "caseId": 28,
+  "encounterId": "251216_tue__trim5-1",
+  "dateFolder": "251216_tue",
+  "trim": "5-1",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-1/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-1/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-1/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216132458_0058_D - Trim5-1.mp4"
+ },
+ {
+  "caseId": 29,
+  "encounterId": "251216_tue__trim5-2",
+  "dateFolder": "251216_tue",
+  "trim": "5-2",
+  "missingViews": [],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-2/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-2/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/5-2/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216144438_0059_D - Trim5-2.mp4"
+ },
+ {
+  "caseId": 30,
+  "encounterId": "251216_tue__trim6",
+  "dateFolder": "251216_tue",
+  "trim": "6",
+  "missingViews": [
+   "evaluator"
+  ],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/6/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/6/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/6/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216144438_0059_D - Trim6.mp4"
+ },
+ {
+  "caseId": 31,
+  "encounterId": "251216_tue__trim7",
+  "dateFolder": "251216_tue",
+  "trim": "7",
+  "missingViews": [
+   "evaluator"
+  ],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/7/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/7/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/7/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216144438_0059_D - Trim7.mp4"
+ },
+ {
+  "caseId": 32,
+  "encounterId": "251216_tue__trim8",
+  "dateFolder": "251216_tue",
+  "trim": "8",
+  "missingViews": [
+   "evaluator"
+  ],
+  "videoUrls": {
+   "ceiling": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/8/ceiling.mp4",
+   "bed": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/8/bedside.mp4",
+   "evaluator": "https://ace-cpx-videos-2.s3.ap-northeast-2.amazonaws.com/processed/%EB%91%90%ED%86%B5/251216_tue/8/evaluator.mp4"
+  },
+  "sourceCeilingKey": "두통/천장/251216_tue/DJI_20251216144438_0059_D - Trim8.mp4"
+ }
+]

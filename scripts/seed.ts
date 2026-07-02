@@ -40,7 +40,14 @@ const RATERS = [
   { id: "P4", name: "교수4", seed: 404 },
 ];
 
-const CASE_IDS = Array.from({ length: 30 }, (_, i) => i + 1);
+const CASE_IDS = Array.from({ length: 32 }, (_, i) => i + 1);
+
+// case → 3-view video URL map, generated from S3 (scripts/case-video-map.json).
+// Falls back to the local placeholder if the map is absent.
+interface CaseVideoMapRow {
+  caseId: number;
+  videoUrls: { ceiling: string; bed: string; evaluator: string };
+}
 
 // Research team admins for /admin backoffice. Passwords are read from env
 // (ADMIN_SEED_PASSWORD) at seed time — never hard-coded. Re-running never
@@ -77,8 +84,19 @@ async function main() {
   console.log(`Seeded ${ord} checklist items`);
 
   // ── 2. Cases ────────────────────────────────────────────────────────────
-  const videoUrls = { ceiling: "/video1.mp4", bed: "/video1.mp4", evaluator: "/video1.mp4" };
+  const placeholder = { ceiling: "/video1.mp4", bed: "/video1.mp4", evaluator: "/video1.mp4" };
+  let urlByCase = new Map<number, CaseVideoMapRow["videoUrls"]>();
+  try {
+    const mapRows: CaseVideoMapRow[] = JSON.parse(
+      readFileSync(join(process.cwd(), "scripts/case-video-map.json"), "utf-8")
+    );
+    urlByCase = new Map(mapRows.map((m) => [m.caseId, m.videoUrls]));
+    console.log(`Loaded video map for ${urlByCase.size} cases`);
+  } catch {
+    console.log("No case-video-map.json — using placeholder videoUrls");
+  }
   for (const id of CASE_IDS) {
+    const videoUrls = urlByCase.get(id) ?? placeholder;
     await prisma.case.upsert({
       where: { id },
       create: { id, phenotype: "두통", videoUrls },
