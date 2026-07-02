@@ -1,39 +1,14 @@
 import { prisma } from "@/lib/db/client";
 import { buildMatrix, type MatrixRow } from "@/lib/study/matrix";
+import MatrixCell, { type CellData } from "./MatrixCell";
 
 export const dynamic = "force-dynamic";
-
-const STATE_STYLE: Record<string, { bg: string; fg: string; label: string }> = {
-  not_started: { bg: "#f3f4f6", fg: "#9ca3af", label: "·" },
-  in_progress: { bg: "#fef3c7", fg: "#92400e", label: "◐" },
-  submitted: { bg: "#dcfce7", fg: "#166534", label: "✓" },
-  locked: { bg: "#dbeafe", fg: "#1e40af", label: "🔒" },
-};
-
-function Cell({ cell }: { cell?: { mode: string; state: string } }) {
-  const s = STATE_STYLE[cell?.state ?? "not_started"] ?? STATE_STYLE.not_started;
-  return (
-    <td
-      title={cell ? `${cell.mode} · ${cell.state}` : ""}
-      style={{
-        background: s.bg,
-        color: s.fg,
-        textAlign: "center",
-        fontSize: 11,
-        padding: "2px 4px",
-        border: "1px solid #fff",
-        minWidth: 22,
-      }}
-    >
-      {cell ? s.label : ""}
-    </td>
-  );
-}
 
 export default async function MatrixPage() {
   const [assignments, raters] = await Promise.all([
     prisma.assignment.findMany({
       select: {
+        id: true,
         raterId: true,
         caseId: true,
         period: true,
@@ -51,6 +26,11 @@ export default async function MatrixPage() {
     mode: a.mode,
     state: a.progress?.state ?? "not_started",
   }));
+
+  // assignmentId lookup keyed "raterId:caseId:period" so cells can drive unlock.
+  const idByKey = new Map<string, number>(
+    assignments.map((a) => [`${a.raterId}:${a.caseId}:${a.period}`, a.id])
+  );
 
   const matrix = buildMatrix(rows);
   const byRater = new Map(matrix.map((m) => [m.raterId, m.cells]));
@@ -70,7 +50,7 @@ export default async function MatrixPage() {
     <div>
       <h1 style={{ fontSize: 18, marginBottom: 4 }}>진행 매트릭스</h1>
       <p style={{ fontSize: 12, color: "#6b7280", marginBottom: 16 }}>
-        · 미시작 &nbsp; ◐ 진행중 &nbsp; ✓ 제출 &nbsp; 🔒 잠금 &nbsp;— 셀 호버 시 모드/상태 표시
+        · 미시작 &nbsp; ◐ 진행중 &nbsp; ✓ 제출 &nbsp; 🔒 잠금 &nbsp;— 호버 시 모드/상태, ✓ 셀 클릭 시 사유 입력 후 잠금 해제
       </p>
 
       {([1, 2] as const).map((period) => (
@@ -99,9 +79,13 @@ export default async function MatrixPage() {
                       <td style={{ position: "sticky", left: 0, background: "#fff", padding: "2px 8px", whiteSpace: "nowrap" }}>
                         {nameOf.get(rid) ?? rid} <span style={{ color: "#9ca3af" }}>({rid})</span>
                       </td>
-                      {caseIds.map((c) => (
-                        <Cell key={c} cell={cells[`${c}:${period}`]} />
-                      ))}
+                      {caseIds.map((c) => {
+                        const cell = cells[`${c}:${period}`];
+                        const data: CellData | undefined = cell
+                          ? { ...cell, assignmentId: idByKey.get(`${rid}:${c}:${period}`)! }
+                          : undefined;
+                        return <MatrixCell key={c} cell={data} />;
+                      })}
                       <td style={{ padding: "2px 8px", textAlign: "center", fontVariantNumeric: "tabular-nums" }}>
                         {completion(rid, period)}
                       </td>
