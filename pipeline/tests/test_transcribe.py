@@ -1,0 +1,21 @@
+from pipeline.transcribe import normalize_segments
+
+
+def test_normalize_adds_id_and_mmss_timestamp():
+    raw = [
+        {"start": 5.0, "end": 8.2, "text": "머리가 아파요", "speaker": "student"},
+        {"start": 75.0, "end": 78.0, "text": "언제부터요?", "speaker": "sp"},
+    ]
+    out = normalize_segments(raw)
+    assert out[0]["id"] == "seg-0"
+    assert out[0]["timestamp"] == "00:05"
+    assert out[1]["timestamp"] == "01:15"
+    assert out[1]["speaker"] == "sp"
+
+
+def test_normalize_strips_text_and_defaults_speaker_none():
+    raw = [{"start": 0, "end": 1, "text": "  안녕하세요  "}]
+    out = normalize_segments(raw)
+    assert out[0]["text"] == "안녕하세요"
+    assert out[0]["speaker"] is None
+    assert out[0]["timestamp"] == "00:00"
