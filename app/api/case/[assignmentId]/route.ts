@@ -1,27 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth/token";
+import { authActiveSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
-
-async function auth(req: NextRequest) {
-  const cookieStore = await cookies();
-  const sid = cookieStore.get("sid")?.value ?? "";
-  return verifyToken(sid, process.env.SESSION_TOKEN_SECRET!);
-}
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ assignmentId: string }> }
 ) {
-  const claim = await auth(req);
-  if (!claim) return NextResponse.json({ error: "unauth" }, { status: 401 });
+  const cookieStore = await cookies();
+  const sid = cookieStore.get("sid")?.value ?? "";
+  const auth = await authActiveSession(sid);
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
 
   const { assignmentId } = await params;
   const id = Number(assignmentId);
   if (!Number.isInteger(id)) return NextResponse.json({ error: "bad_request" }, { status: 400 });
-  // TODO(Plan 2/3): re-check Session.status === "active" (and window) here — the sid cookie is a non-expiring bearer token, so a rater keeps access after an admin locks the period.
+
   const a = await prisma.assignment.findUnique({ where: { id } });
-  if (!a || a.raterId !== claim.raterId || a.period !== claim.period) {
+  if (!a || a.raterId !== auth.raterId || a.period !== auth.period) {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 

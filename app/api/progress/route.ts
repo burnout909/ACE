@@ -1,21 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth/token";
+import { authActiveSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 import { activeMs } from "@/lib/study/activeTime";
 
-async function auth(_req: NextRequest) {
+export async function GET(req: NextRequest) {
   const cookieStore = await cookies();
   const sid = cookieStore.get("sid")?.value ?? "";
-  return verifyToken(sid, process.env.SESSION_TOKEN_SECRET!);
-}
-
-export async function GET(req: NextRequest) {
-  const claim = await auth(req);
-  if (!claim) return NextResponse.json({ error: "unauth" }, { status: 401 });
+  const auth = await authActiveSession(sid);
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
 
   const assignments = await prisma.assignment.findMany({
-    where: { raterId: claim.raterId, period: claim.period },
+    where: { raterId: auth.raterId, period: auth.period },
     orderBy: { orderIndex: "asc" },
     select: {
       id: true,

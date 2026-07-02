@@ -1,18 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth/token";
+import { authActiveSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 import { Prisma } from "@prisma/client";
 
-async function auth(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const cookieStore = await cookies();
   const sid = cookieStore.get("sid")?.value ?? "";
-  return verifyToken(sid, process.env.SESSION_TOKEN_SECRET!);
-}
-
-export async function POST(req: NextRequest) {
-  const claim = await auth(req);
-  if (!claim) return NextResponse.json({ error: "unauth" }, { status: 401 });
+  const auth = await authActiveSession(sid);
+  if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status });
 
   let events: {
     id: string;
@@ -56,12 +52,12 @@ export async function POST(req: NextRequest) {
     (e) =>
       e.assignmentId === undefined ||
       typeof e.assignmentId !== "number" ||
-      ownerOf.get(e.assignmentId) === claim.raterId
+      ownerOf.get(e.assignmentId) === auth.raterId
   );
 
   const rows = filtered.map((e) => ({
     id: e.id,
-    raterId: claim.raterId,
+    raterId: auth.raterId,
     assignmentId: typeof e.assignmentId === "number" ? e.assignmentId : null,
     type: e.type,
     payload: (e.payload ?? {}) as Prisma.InputJsonValue,
