@@ -2,3 +2,12 @@
 .env*.local
 .next
 /node_modules
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS / build artifacts
+.DS_Store
+tsconfig.tsbuildinfo
