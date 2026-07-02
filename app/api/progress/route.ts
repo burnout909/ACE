@@ -4,7 +4,7 @@ import { authActiveSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 import { activeMs } from "@/lib/study/activeTime";
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const cookieStore = await cookies();
   const sid = cookieStore.get("sid")?.value ?? "";
   const auth = await authActiveSession(sid);
@@ -29,11 +29,11 @@ export async function GET(req: NextRequest) {
 
     const events = await prisma.event.findMany({
       where: { assignmentId: a.id },
-      select: { serverTs: true },
+      select: { serverTs: true, type: true },
       orderBy: { serverTs: "asc" },
     });
 
-    const computed = activeMs(events.map((e) => ({ serverTs: e.serverTs.getTime() })));
+    const computed = activeMs(events.map((e) => ({ serverTs: e.serverTs.getTime(), type: e.type })));
 
     await prisma.caseProgress.update({
       where: { assignmentId: a.id },

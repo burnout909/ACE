@@ -31,17 +31,58 @@ let initialized = false;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = "ace_event_buffer";
+const STORAGE_KEY_BASE = "ace_event_buffer";
 const FLUSH_INTERVAL_MS = 3_000;   // auto-flush every 3 s
 const FLUSH_BATCH_SIZE = 20;       // immediate flush when buffer reaches 20
 const API_URL = "/api/events";
+
+// ── Namespace state ───────────────────────────────────────────────────────────
+
+// Current effective storage key — defaults to the base key until
+// setStorageNamespace() is called with a rater-specific namespace.
+let storageKey = STORAGE_KEY_BASE;
+
+/**
+ * Namespace the localStorage buffer by the current rater's token so that
+ * rater A's stale offline events are never flushed under rater B's session.
+ *
+ * Call this from the g/[token] client flow (CaseRunner mount) before any
+ * logEvent call, passing the URL token as the namespace.
+ *
+ * Behaviour:
+ * - Sets the effective storage key to `ace_event_buffer:<ns>`.
+ * - If already initialised: discards any in-memory buffer that came from a
+ *   different namespace (foreign events are dropped, NOT flushed), then
+ *   restores events persisted under the new namespace key.
+ * - If not yet initialised: the correct key will be used when maybeInit runs.
+ */
+export function setStorageNamespace(ns: string): void {
+  const newKey = `${STORAGE_KEY_BASE}:${ns}`;
+  if (newKey === storageKey) return; // idempotent
+  storageKey = newKey;
+
+  if (initialized) {
+    // Discard anything in the buffer that came from the previous (foreign)
+    // namespace — do NOT flush it to the server.
+    buffer = [];
+    // Restore any events that were persisted under the new namespace key.
+    const stored = loadStored();
+    if (stored.length > 0) {
+      buffer = [...stored];
+      clearStorage();
+      void flush();
+    }
+  }
+  // Not yet initialised: maybeInit() will call loadStored() which will now
+  // use the updated storageKey.
+}
 
 // ── localStorage helpers ──────────────────────────────────────────────────────
 
 function loadStored(): EventRecord[] {
   if (typeof localStorage === "undefined") return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey);
     return raw ? (JSON.parse(raw) as EventRecord[]) : [];
   } catch {
     return [];
@@ -51,7 +92,7 @@ function loadStored(): EventRecord[] {
 function saveToStorage(events: EventRecord[]): void {
   if (typeof localStorage === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+    localStorage.setItem(storageKey, JSON.stringify(events));
   } catch {
     // Quota exceeded or storage unavailable — silently ignore.
   }
@@ -60,7 +101,7 @@ function saveToStorage(events: EventRecord[]): void {
 function clearStorage(): void {
   if (typeof localStorage === "undefined") return;
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(storageKey);
   } catch {
     // ignore
   }
@@ -164,7 +205,7 @@ function beaconFlush(): void {
 
 /**
  * Idempotent browser initialisation.
- * - Recovers events persisted by a previous session.
+ * - Recovers events persisted by a previous session (current namespace only).
  * - Starts the 3-second auto-flush interval.
  * - Registers pagehide / visibilitychange beacon listeners.
  * No-op on the server (typeof window === "undefined").
@@ -175,6 +216,7 @@ function maybeInit(): void {
   initialized = true;
 
   // Recover events that survived a previous crash / unload failure.
+  // Uses the current storageKey, so only the current rater's namespace is loaded.
   const stored = loadStored();
   if (stored.length > 0) {
     buffer = [...stored, ...buffer];

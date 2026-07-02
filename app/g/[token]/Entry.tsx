@@ -50,7 +50,7 @@ export default function Entry({ token }: EntryProps) {
   };
 
   if (status === "grading" && session) {
-    return <CaseRunner />;
+    return <CaseRunner token={token} />;
   }
 
   return (

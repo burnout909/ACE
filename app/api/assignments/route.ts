@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { authActiveSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/db/client";
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const cookieStore = await cookies();
   const sid = cookieStore.get("sid")?.value ?? "";
   const auth = await authActiveSession(sid);

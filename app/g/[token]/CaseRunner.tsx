@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import AceApp from "@/app/components/AceApp";
 import type { CaseVideoUrls, StudyChecklistItem } from "@/lib/types";
-import { logEvent, setEventContext, flush } from "@/lib/events/client";
+import { logEvent, setEventContext, setStorageNamespace, flush } from "@/lib/events/client";
 import ProgressDashboard from "./ProgressDashboard";
 
 type AssignmentSummary = {
@@ -40,12 +40,20 @@ function isDone(state: string): boolean {
   return state === "submitted" || state === "locked";
 }
 
-export default function CaseRunner() {
+export default function CaseRunner({ token }: { token: string }) {
   const [assignments, setAssignments] = useState<AssignmentSummary[]>([]);
   const [currentId, setCurrentId] = useState<number | null>(null);
   const [caseData, setCaseData] = useState<CaseApiResponse | null>(null);
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Namespace the event buffer by rater token so offline events from a
+  // different rater session are never flushed under this one.
+  useEffect(() => {
+    setStorageNamespace(token);
+  // token never changes for the lifetime of this component
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Idle detection refs
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -99,7 +107,6 @@ export default function CaseRunner() {
     logEvent("case_enter", {
       caseId: caseData.case.id,
       assignmentId: caseData.assignment.id,
-      mode: caseData.mode,
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [caseData?.assignment.id]);

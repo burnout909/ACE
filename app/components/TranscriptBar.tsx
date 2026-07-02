@@ -8,8 +8,9 @@ type TranscriptBarProps = {
   segments: TranscriptSegment[];
   currentTime: number;
   onTimestampClick: (seconds: number) => void;
-  /** Mode A/B — used to gate Mode-B-only events. */
-  mode?: "A" | "B";
+  /** Mode A/B — used to gate Mode-B-only events. Required so a caller cannot
+   *  silently disable Mode-B event logging by omitting the prop. */
+  mode: "A" | "B";
 };
 
 export default function TranscriptBar({
