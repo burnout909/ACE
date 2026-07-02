@@ -1,6 +1,7 @@
 import { hmac } from "@noble/hashes/hmac.js";
 import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
+import { safeEqual } from "@/lib/auth/token";
 import { prisma } from "@/lib/db/client";
 
 // Admin session cookie name (distinct from rater "sid").
@@ -28,7 +29,7 @@ export function verifyAdminToken(
   if (lastDot === -1) return null;
   const payload = token.slice(0, lastDot);
   const sig = token.slice(lastDot + 1);
-  if (mac(payload, secret) !== sig) return null;
+  if (!safeEqual(mac(payload, secret), sig)) return null;
   try {
     const { adminId, role } = JSON.parse(
       Buffer.from(payload, "base64url").toString("utf8")

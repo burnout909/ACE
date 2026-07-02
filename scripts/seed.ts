@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import { randomBytes } from "crypto";
 import { join } from "path";
 import { prisma } from "@/lib/db/client";
 import { buildSchedule } from "@/lib/study/schedule";
@@ -187,7 +188,7 @@ async function main() {
         `ADMIN_SEED_PASSWORD is not set — required to seed new admin ${a.id}`
       );
     }
-    const salt = `salt-${a.id}`;
+    const salt = randomBytes(16).toString("hex"); // random per-admin salt
     await prisma.admin.create({
       data: {
         id: a.id,

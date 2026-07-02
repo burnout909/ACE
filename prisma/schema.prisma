@@ -155,14 +155,25 @@ model PinAttempt {
 }
 
 model Admin {
-  id           String     @id
-  email        String     @unique
+  id           String         @id
+  email        String         @unique
   name         String
-  passwordHash String     @map("password_hash")
-  passwordSalt String     @map("password_salt")
+  passwordHash String         @map("password_hash")
+  passwordSalt String         @map("password_salt")
   auditLogs    AuditLog[]
+  attempts     AdminAttempt[]
 
   @@map("admins")
+}
+
+model AdminAttempt {
+  id      Int      @id @default(autoincrement())
+  adminId String   @map("admin_id")
+  at      DateTime @default(now()) @db.Timestamptz(6)
+  admin   Admin    @relation(fields: [adminId], references: [id])
+
+  @@index([adminId, at])
+  @@map("admin_attempts")
 }
 
 model AuditLog {

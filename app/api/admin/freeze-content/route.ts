@@ -43,8 +43,26 @@ export async function POST(req: NextRequest) {
   }
 
   if (action === "freeze") {
-    if (!existing) return NextResponse.json({ error: "no_content" }, { status: 404 });
-    await prisma.caseContent.update({ where: { caseId }, data: { frozen: true } });
+    // Persist the exact content being confirmed BEFORE freezing, so what the
+    // admin sees on screen is what gets served to Mode-B raters. The editor
+    // sends its current content with the freeze call; fall back to whatever is
+    // already stored if none was sent.
+    const content = body.content;
+    if (!content && !existing) {
+      return NextResponse.json({ error: "no_content" }, { status: 404 });
+    }
+    await prisma.caseContent.upsert({
+      where: { caseId },
+      create: {
+        caseId,
+        transcript: content?.transcript ?? [],
+        evidence: content?.evidence ?? [],
+        frozen: true,
+      },
+      update: content
+        ? { transcript: content.transcript, evidence: content.evidence, frozen: true }
+        : { frozen: true },
+    });
     await writeAudit(auth.adminId, "freeze_content", `case:${caseId}`);
     return NextResponse.json({ ok: true, frozen: true });
   }
