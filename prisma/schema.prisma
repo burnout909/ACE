@@ -46,6 +46,7 @@ model Rater {
   scheduleSeed Int          @map("schedule_seed")
   sessions     Session[]
   assignments  Assignment[]
+  events       Event[]
 
   @@map("raters")
 }
@@ -94,6 +95,7 @@ model Assignment {
   case       Case          @relation(fields: [caseId], references: [id])
   progress   CaseProgress?
   answers    Answer[]
+  events     Event[]
 
   @@unique([raterId, caseId, period])
   @@map("assignments")
@@ -121,4 +123,21 @@ model Answer {
 
   @@id([assignmentId, itemId])
   @@map("answers")
+}
+
+model Event {
+  id           String      @id                    // client-generated uuid (crypto.randomUUID), dedup key
+  raterId      String      @map("rater_id")
+  assignmentId Int?        @map("assignment_id")
+  type         String
+  payload      Json        @default("{}")
+  section      String?
+  mode         Mode?
+  clientTs     DateTime?   @map("client_ts") @db.Timestamptz(6)
+  serverTs     DateTime    @default(now()) @map("server_ts") @db.Timestamptz(6)
+  rater        Rater       @relation(fields: [raterId], references: [id])
+  assignment   Assignment? @relation(fields: [assignmentId], references: [id])
+
+  @@index([raterId, assignmentId, serverTs])
+  @@map("events")
 }
