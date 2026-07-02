@@ -1,0 +1,26 @@
+{
+ "issues": [
+  {
+   "dateFolder": "251216_tue",
+   "trim": "6",
+   "missingViews": [
+    "evaluator"
+   ]
+  },
+  {
+   "dateFolder": "251216_tue",
+   "trim": "7",
+   "missingViews": [
+    "evaluator"
+   ]
+  },
+  {
+   "dateFolder": "251216_tue",
+   "trim": "8",
+   "missingViews": [
+    "evaluator"
+   ]
+  }
+ ],
+ "count": 32
+}

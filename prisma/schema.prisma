@@ -57,6 +57,7 @@ model Case {
   videoUrls   Json         @map("video_urls")
   phenotype   String       @default("두통")
   assignments Assignment[]
+  content     CaseContent?
 
   @@map("cases")
 }
@@ -151,4 +152,42 @@ model PinAttempt {
 
   @@index([raterId, at])
   @@map("pin_attempts")
+}
+
+model Admin {
+  id           String     @id
+  email        String     @unique
+  name         String
+  passwordHash String     @map("password_hash")
+  passwordSalt String     @map("password_salt")
+  auditLogs    AuditLog[]
+
+  @@map("admins")
+}
+
+model AuditLog {
+  id      BigInt   @id @default(autoincrement())
+  adminId String   @map("admin_id")
+  action  String
+  target  String?
+  reason  String?
+  ts      DateTime @default(now()) @db.Timestamptz(6)
+  admin   Admin    @relation(fields: [adminId], references: [id])
+
+  @@index([ts])
+  @@map("audit_log")
+}
+
+// Per-case transcript + Mode-B evidence. Populated by Plan 4 (transcript
+// pipeline); reviewed/corrected in /admin, then frozen. Only frozen=true
+// content is served as Mode-B evidence (see app/api/case GET).
+model CaseContent {
+  caseId    Int      @id @map("case_id")
+  transcript Json    @default("[]") // TranscriptSegment[]
+  evidence  Json     @default("[]") // { itemId, quote, ts }[]
+  frozen    Boolean  @default(false)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  case      Case     @relation(fields: [caseId], references: [id])
+
+  @@map("case_content")
 }

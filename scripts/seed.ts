@@ -41,6 +41,14 @@ const RATERS = [
 
 const CASE_IDS = Array.from({ length: 30 }, (_, i) => i + 1);
 
+// Research team admins for /admin backoffice. Passwords are read from env
+// (ADMIN_SEED_PASSWORD) at seed time — never hard-coded. Re-running never
+// rotates an existing admin's password (mirrors rater PIN behaviour).
+const ADMINS = [
+  { id: "A1", name: "송지우", email: "songjiwoo@example.com" },
+  { id: "A2", name: "김민성", email: "ishs24ys@gmail.com" },
+];
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
@@ -159,6 +167,37 @@ async function main() {
     } else {
       console.log(`${rater.id}  (기존 rater — PIN 유지, 재출력 안 함)  S1 URL=/g/${token}`);
     }
+  }
+
+  // ── 4. Admins ───────────────────────────────────────────────────────────
+  const adminPassword = process.env.ADMIN_SEED_PASSWORD;
+  for (const a of ADMINS) {
+    const existing = await prisma.admin.findUnique({ where: { id: a.id } });
+    if (existing) {
+      // Never rotate an existing admin's password; only refresh name/email.
+      await prisma.admin.update({
+        where: { id: a.id },
+        data: { name: a.name, email: a.email.toLowerCase() },
+      });
+      console.log(`${a.id}  ${a.name}  (기존 admin — 비밀번호 유지)`);
+      continue;
+    }
+    if (!adminPassword) {
+      throw new Error(
+        `ADMIN_SEED_PASSWORD is not set — required to seed new admin ${a.id}`
+      );
+    }
+    const salt = `salt-${a.id}`;
+    await prisma.admin.create({
+      data: {
+        id: a.id,
+        name: a.name,
+        email: a.email.toLowerCase(),
+        passwordSalt: salt,
+        passwordHash: hashPin(adminPassword, salt),
+      },
+    });
+    console.log(`${a.id}  ${a.name}  ${a.email}  (비밀번호=ADMIN_SEED_PASSWORD)`);
   }
 
   await prisma.$disconnect();
