@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import AceApp from "@/app/components/AceApp";
 import type { CaseVideoUrls, StudyChecklistItem } from "@/lib/types";
 import { logEvent, setEventContext, flush } from "@/lib/events/client";
+import ProgressDashboard from "./ProgressDashboard";
 
 type AssignmentSummary = {
   id: number;
@@ -211,7 +212,7 @@ export default function CaseRunner() {
 
   if (loadState === "done") {
     return (
-      <div className="flex h-screen items-center justify-center bg-slate-50">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 py-16">
         <div className="absolute inset-0 -z-10 opacity-60" aria-hidden="true">
           <div className="absolute left-10 top-10 h-48 w-48 rounded-full bg-[#f5f0e6] blur-3xl" />
           <div className="absolute right-24 top-8 h-64 w-64 rounded-full bg-[#e1f0ff] blur-3xl" />
@@ -224,6 +225,7 @@ export default function CaseRunner() {
             총 {total}개의 케이스를 모두 채점하셨습니다.
           </p>
         </div>
+        <ProgressDashboard />
       </div>
     );
   }
