@@ -23,11 +23,12 @@ def extract_audio(url, rate=None, window_sec=None):
     window_sec = window_sec or config.SYNC_WINDOW_SEC
     cmd = [
         "ffmpeg", "-nostdin", "-v", "error",
+        "-rw_timeout", "30000000",  # abort on >30s I/O stall (hung HTTP read)
         "-t", str(window_sec), "-i", url,
         "-vn", "-ac", "1", "-ar", str(rate),
         "-f", "f32le", "pipe:1",
     ]
-    out = subprocess.run(cmd, capture_output=True, check=True).stdout
+    out = subprocess.run(cmd, capture_output=True, check=True, timeout=300).stdout
     return np.frombuffer(out, dtype="<f4").copy()
 
 def encounter_offsets(view_urls):

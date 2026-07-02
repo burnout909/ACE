@@ -22,6 +22,9 @@ from pipeline import s3util, sync, encode, config, pairing
 def vt_cmd(url, out, ss, dur):
     return [
         "ffmpeg", "-nostdin", "-v", "error", "-y",
+        # Abort if an HTTP read stalls >30s so a hung S3 stream can't deadlock
+        # the batch (it becomes a skippable per-view failure instead).
+        "-rw_timeout", "30000000",
         "-ss", str(ss), "-i", url, "-t", str(dur),
         "-map", "0:v:0", "-map", "0:a:0",
         "-vf", "crop=1920:1080", "-r", "30000/1001",
@@ -74,7 +77,9 @@ def encode_encounter(enc, s3):
         key = encode.dst_key(date, trim, v)
         with tempfile.TemporaryDirectory() as td:
             out = os.path.join(td, f"{v}.mp4")
-            subprocess.run(vt_cmd(urls[v], out, starts[v], common), check=True)
+            # Backstop timeout: a legit encode streams a multi-GB source, but
+            # 30 min is well beyond that; past it, treat as a hang and fail.
+            subprocess.run(vt_cmd(urls[v], out, starts[v], common), check=True, timeout=1800)
             encode.upload(out, key, s3=s3)
     conf = {v: round(offs.get(v, {}).get("confidence", 1.0), 2) for v in views if v != config.REFERENCE_VIEW}
     note = f" | SKIPPED low-conf: {low_conf}" if low_conf else ""

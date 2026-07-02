@@ -15,9 +15,10 @@ def build_encode_cmd(url, out_path, start_sec, dur_sec):
     )
 
 def probe_duration(url):
-    cmd = ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+    cmd = ["ffprobe", "-v", "error", "-rw_timeout", "30000000",
+           "-show_entries", "format=duration",
            "-of", "default=noprint_wrappers=1:nokey=1", url]
-    return float(subprocess.run(cmd, capture_output=True, text=True, check=True).stdout.strip())
+    return float(subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=120).stdout.strip())
 
 def common_plan(offsets, durations):
     """Given per-view start offsets (may be negative) and source durations, return (starts, common_duration).
