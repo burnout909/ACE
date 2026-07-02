@@ -11,3 +11,7 @@ __pycache__/
 # OS / build artifacts
 .DS_Store
 tsconfig.tsbuildinfo
+
+# Pipeline run artifacts (may contain transcript PHI)
+transcribe_report.json
+sync_report.json
