@@ -49,12 +49,62 @@ def _safe_process(enc, overrides, s3):
         print(f"FAILED {enc['id']} {exc}")
         return {"id": enc["id"], "error": str(exc)}
 
+def transcribe_main(args):
+    """Plan 4: transcribe cases → evidence/verdict → DB (frozen=false).
+
+    --cases-file: JSON [{"caseId":1,"audio":"/path/or/url"}, ...].
+    Runs cases in parallel; each bundle is loaded into case_content + ai_alone
+    unless --dry-run (writes transcribe_report.json instead).
+    """
+    from pipeline.transcribe import transcribe_case
+    from pipeline.adapters import OpenAiAsr, OpenAiEvaluator, DEFAULT_ASR_MODEL, EVIDENCE_MODEL
+    from pipeline import load
+
+    with open(args.cases_file) as f:
+        cases = json.load(f)
+    checklist = load.fetch_checklist()
+    asr, evaluator = OpenAiAsr(), OpenAiEvaluator()
+    model_id = args.model_id or f"{DEFAULT_ASR_MODEL}+{EVIDENCE_MODEL}"
+
+    def one(c):
+        try:
+            bundle = transcribe_case(c["caseId"], c["audio"], checklist, asr, evaluator, model_id)
+            if not args.dry_run:
+                load.load_case(bundle)
+            print(f"done case {c['caseId']} segments={len(bundle['transcript'])} "
+                  f"evidence_items={len(bundle['evidence'])}")
+            return bundle
+        except Exception as exc:  # one failure must not abort the batch
+            print(f"FAILED case {c.get('caseId')} {exc}")
+            return {"caseId": c.get("caseId"), "error": str(exc)}
+
+    results = []
+    with ThreadPoolExecutor(max_workers=args.workers) as ex:
+        results = list(ex.map(one, cases))
+    if args.dry_run:
+        with open("transcribe_report.json", "w") as f:
+            json.dump(results, f, ensure_ascii=False, indent=1)
+        print("dry-run → transcribe_report.json")
+    ok = [r for r in results if "error" not in r]
+    print(f"transcribed {len(ok)}/{len(cases)} cases (model_id={model_id})")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only-pair", action="store_true")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--overrides", default=None)
+    # Plan 4 transcription subcommand
+    ap.add_argument("--transcribe", action="store_true", help="run the transcript pipeline instead of video sync")
+    ap.add_argument("--cases-file", default=None, help="JSON list of {caseId, audio}")
+    ap.add_argument("--model-id", default=None, help="frozen model id recorded on output")
+    ap.add_argument("--dry-run", action="store_true", help="write transcribe_report.json, do not touch DB")
     args = ap.parse_args()
+
+    if args.transcribe:
+        if not args.cases_file:
+            ap.error("--transcribe requires --cases-file")
+        return transcribe_main(args)
 
     s3 = boto3.client("s3", region_name=config.REGION)
     keys = s3util.list_source_keys(s3)

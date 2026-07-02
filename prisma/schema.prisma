@@ -196,9 +196,24 @@ model CaseContent {
   caseId    Int      @id @map("case_id")
   transcript Json    @default("[]") // TranscriptSegment[]
   evidence  Json     @default("[]") // { itemId, quote, ts }[]
+  modelId   String?  @map("model_id") // frozen LLM version for reproducibility
   frozen    Boolean  @default(false)
   updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
   case      Case     @relation(fields: [caseId], references: [id])
 
   @@map("case_content")
+}
+
+// AI Yes/No verdicts, isolated from rater-facing content (study design forbids
+// exposing the AI verdict to evaluators). Used only for the GS-vs-AI-alone
+// accuracy analysis. Written by the Plan 4 pipeline, never served to raters.
+model AiAlone {
+  caseId    Int      @map("case_id")
+  itemId    String   @map("item_id")
+  verdict   String?
+  modelId   String   @map("model_id")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@id([caseId, itemId])
+  @@map("ai_alone")
 }
