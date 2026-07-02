@@ -48,7 +48,15 @@ export default async function MatrixPage() {
 
   return (
     <div>
-      <h1 style={{ fontSize: 18, marginBottom: 4 }}>진행 매트릭스</h1>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 4 }}>
+        <h1 style={{ fontSize: 18 }}>진행 매트릭스</h1>
+        <span style={{ marginLeft: "auto", fontSize: 12, color: "#6b7280" }}>익스포트:</span>
+        {(["answers", "progress", "events"] as const).map((k) => (
+          <a key={k} href={`/api/admin/export?kind=${k}`} style={{ fontSize: 13 }}>
+            {k}.csv
+          </a>
+        ))}
+      </div>
       <p style={{ fontSize: 12, color: "#6b7280", marginBottom: 16 }}>
         · 미시작 &nbsp; ◐ 진행중 &nbsp; ✓ 제출 &nbsp; 🔒 잠금 &nbsp;— 호버 시 모드/상태, ✓ 셀 클릭 시 사유 입력 후 잠금 해제
       </p>
