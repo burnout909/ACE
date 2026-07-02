@@ -19,6 +19,19 @@ import boto3
 from pipeline import s3util, sync, encode, config, pairing
 
 
+# Encoder is configurable so the same script runs on a Mac (VideoToolbox) or an
+# EC2 Linux box (libx264 / NVENC). Set VIDEO_ENCODER=libx264|h264_nvenc|h264_videotoolbox.
+_ENCODER = os.environ.get("VIDEO_ENCODER", "h264_videotoolbox")
+
+
+def _codec_args():
+    if _ENCODER == "libx264":
+        return ["-c:v", "libx264", "-preset", "medium", "-crf", "20"]
+    if _ENCODER == "h264_nvenc":
+        return ["-c:v", "h264_nvenc", "-preset", "p4", "-b:v", "8M"]
+    return ["-c:v", "h264_videotoolbox", "-b:v", "8M"]  # default: Apple VideoToolbox
+
+
 def vt_cmd(url, out, ss, dur):
     return [
         "ffmpeg", "-nostdin", "-v", "error", "-y",
@@ -28,7 +41,7 @@ def vt_cmd(url, out, ss, dur):
         "-ss", str(ss), "-i", url, "-t", str(dur),
         "-map", "0:v:0", "-map", "0:a:0",
         "-vf", "crop=1920:1080", "-r", "30000/1001",
-        "-c:v", "h264_videotoolbox", "-b:v", "8M", "-movflags", "+faststart",
+        *_codec_args(), "-movflags", "+faststart",
         "-c:a", "aac", "-b:a", "128k",
         out,
     ]
