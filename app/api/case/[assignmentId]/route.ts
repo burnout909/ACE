@@ -41,5 +41,18 @@ export async function GET(
     ? prog.state
     : "in_progress";
 
-  return NextResponse.json({ assignment: a, case: c, items, answers, mode: a.mode, state });
+  // Mode B serves transcript + evidence — but ONLY once the content is frozen
+  // (admin-reviewed). Unfrozen or Mode A → empty, so unfinished/uncorrected
+  // content is never exposed to raters.
+  let transcript: unknown[] = [];
+  let evidence: unknown[] = [];
+  if (a.mode === "B") {
+    const content = await prisma.caseContent.findUnique({ where: { caseId: a.caseId } });
+    if (content?.frozen) {
+      transcript = content.transcript as unknown[];
+      evidence = content.evidence as unknown[];
+    }
+  }
+
+  return NextResponse.json({ assignment: a, case: c, items, answers, mode: a.mode, state, transcript, evidence });
 }

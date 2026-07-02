@@ -32,6 +32,7 @@ export default async function AdminDashLayout({
         <nav style={{ display: "flex", gap: 16, fontSize: 14 }}>
           <Link href="/admin">진행 매트릭스</Link>
           <Link href="/admin/sessions">Session 2 승인</Link>
+          <Link href="/admin/transcripts">전사문 교정</Link>
         </nav>
         <span style={{ marginLeft: "auto", fontSize: 13, color: "#666" }}>
           {admin?.name}
