@@ -1,0 +1,95 @@
+"""Batch-encode all encounters to processed 3-view (or 2-view) with VideoToolbox.
+
+- Encodes every present view of an encounter TOGETHER (single xcorr-synced common
+  trim) so angles stay consistent; skips an encounter only when all its target
+  views already exist.
+- 251111_tue evaluator is excluded (its source is a different date — bad data).
+- Resumable: re-run to fill gaps. Per-encounter errors don't abort the batch.
+
+Usage: python -m scripts.encode_all [workers]
+"""
+import os
+import subprocess
+import sys
+import tempfile
+from concurrent.futures import ThreadPoolExecutor
+
+import boto3
+
+from pipeline import s3util, sync, encode, config, pairing
+
+
+def vt_cmd(url, out, ss, dur):
+    return [
+        "ffmpeg", "-nostdin", "-v", "error", "-y",
+        "-ss", str(ss), "-i", url, "-t", str(dur),
+        "-map", "0:v:0", "-map", "0:a:0",
+        "-vf", "crop=1920:1080", "-r", "30000/1001",
+        "-c:v", "h264_videotoolbox", "-b:v", "8M", "-movflags", "+faststart",
+        "-c:a", "aac", "-b:a", "128k",
+        out,
+    ]
+
+
+def target_views(enc):
+    views = [v for v in ("ceiling", "bedside", "evaluator") if v in (enc.get("views") or {})]
+    if enc["dateFolder"] == "251111_tue" and "evaluator" in views:
+        views.remove("evaluator")  # wrong-date source
+    return views
+
+
+def encode_encounter(enc, s3):
+    date, trim = enc["dateFolder"], enc["trim"]
+    views = target_views(enc)
+    if not views:
+        return f"{enc['id']}: no usable views"
+    if all(encode.exists_with_size(encode.dst_key(date, trim, v), s3=s3) for v in views):
+        return f"{enc['id']}: already done, skip"
+
+    urls = {v: s3util.presign(enc["views"][v], s3) for v in views}
+    offs = sync.encounter_offsets(urls) if config.REFERENCE_VIEW in urls and len(urls) > 1 else {}
+    offsets = {config.REFERENCE_VIEW: 0.0}
+    for v in urls:
+        if v != config.REFERENCE_VIEW:
+            offsets[v] = offs.get(v, {}).get("offset", 0.0)
+    durations = {v: encode.probe_duration(urls[v]) for v in urls}
+    starts, common = encode.common_plan(offsets, durations)
+
+    for v in views:
+        key = encode.dst_key(date, trim, v)
+        with tempfile.TemporaryDirectory() as td:
+            out = os.path.join(td, f"{v}.mp4")
+            subprocess.run(vt_cmd(urls[v], out, starts[v], common), check=True)
+            encode.upload(out, key, s3=s3)
+    conf = {v: round(offs.get(v, {}).get("confidence", 1.0), 2) for v in views if v != config.REFERENCE_VIEW}
+    return f"{enc['id']}: encoded {views} ({common:.0f}s, conf={conf})"
+
+
+def _safe(enc, s3):
+    try:
+        r = encode_encounter(enc, s3)
+        print(r, flush=True)
+        return r
+    except Exception as exc:
+        print(f"FAILED {enc['id']} {exc}", flush=True)
+        return None
+
+
+def main():
+    workers = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+    s3 = boto3.client("s3", region_name=config.REGION)
+    encs, _ = pairing.build_encounters(s3util.list_source_keys(s3))
+    date_order = {d: i for i, d in enumerate(config.DATES)}
+
+    def tk(t):
+        return tuple(int(p) if str(p).isdigit() else p for p in str(t).split("-"))
+
+    encs.sort(key=lambda e: (date_order.get(e["dateFolder"], 99), tk(e["trim"])))
+    print(f"encoding {len(encs)} encounters, workers={workers}", flush=True)
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        list(ex.map(lambda e: _safe(e, s3), encs))
+    print("ENCODE BATCH DONE", flush=True)
+
+
+if __name__ == "__main__":
+    main()
