@@ -23,9 +23,12 @@ const VIEW_META: { id: keyof CaseVideoUrls; label: string }[] = [
 // seek mirror + >0.15s drift correction). Clicking a thumbnail promotes it to
 // master without interrupting playback (all elements stay mounted).
 export default function MultiViewPanel({ videoUrls, onTimeUpdate, registerSeek }: MultiViewPanelProps) {
-  const views = VIEW_META.filter((v) => !!videoUrls[v.id]);
+  // Always show all three slots; a view with no URL renders a placeholder.
+  const views = VIEW_META;
+  const present = (id: keyof CaseVideoUrls) => !!videoUrls[id];
+  const firstPresent = VIEW_META.find((v) => present(v.id))?.id ?? "ceiling";
   const refs = useRef<Record<string, HTMLVideoElement | null>>({});
-  const [activeId, setActiveId] = useState<string>(views[0]?.id ?? "ceiling");
+  const [activeId, setActiveId] = useState<string>(firstPresent);
 
   // Re-bind sync + event logging whenever the master (active view) changes.
   useEffect(() => {
@@ -88,31 +91,43 @@ export default function MultiViewPanel({ videoUrls, onTimeUpdate, registerSeek }
       style={{ gridTemplateColumns: "1fr 240px", gridTemplateRows: `repeat(${thumbRows}, 1fr)` }}
     >
       {views.map((v) => {
-        const isActive = v.id === activeId;
+        const has = present(v.id);
+        const isActive = has && v.id === activeId;
         const placement: React.CSSProperties = isActive
           ? { gridColumn: 1, gridRow: "1 / -1" }
           : { gridColumn: 2, gridRow: `${++thumbSeen}` };
+        const promotable = has && !isActive;
         return (
           <figure
             key={v.id}
             style={placement}
             className={`relative m-0 min-h-0 overflow-hidden rounded-xl bg-slate-950 ${
-              isActive ? "" : "cursor-pointer ring-1 ring-slate-200 hover:ring-2 hover:ring-yonsei-400"
+              promotable ? "cursor-pointer ring-1 ring-slate-200 hover:ring-2 hover:ring-yonsei-400" : ""
             }`}
-            onClick={isActive ? undefined : () => swapTo(v.id)}
+            onClick={promotable ? () => swapTo(v.id) : undefined}
           >
             <span className="absolute left-2 top-2 z-10 rounded-md bg-black/50 px-2 py-0.5 text-xs font-medium text-white">
               {v.label}
             </span>
-            <video
-              ref={(el) => { refs.current[v.id] = el; }}
-              src={videoUrls[v.id]}
-              className="h-full w-full object-cover"
-              controls={isActive}
-              muted={!isActive}
-              playsInline
-              preload="metadata"
-            />
+            {has ? (
+              <video
+                ref={(el) => { refs.current[v.id] = el; }}
+                src={videoUrls[v.id]}
+                className="h-full w-full object-cover"
+                controls={isActive}
+                muted={!isActive}
+                playsInline
+                preload="metadata"
+              />
+            ) : (
+              <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-slate-500">
+                <svg viewBox="0 0 24 24" className="h-7 w-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="3" />
+                  <path d="M3 8h18M9 12l4 2-4 2v-4z" />
+                </svg>
+                <span className="text-xs">영상 없음</span>
+              </div>
+            )}
           </figure>
         );
       })}
