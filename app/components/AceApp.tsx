@@ -137,7 +137,7 @@ export default function AceApp({
   }, [answers, onSubmit]);
 
   return (
-    <main className="relative h-screen overflow-hidden">
+    <main className="relative h-screen overflow-hidden pt-11">
       <div className="absolute inset-0 -z-10 opacity-80" aria-hidden="true">
         <div className="absolute left-10 top-10 h-48 w-48 rounded-full bg-[#f5f0e6] blur-3xl" />
         <div className="absolute right-24 top-8 h-64 w-64 rounded-full bg-[#e1f0ff] blur-3xl" />
