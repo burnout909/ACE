@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import MultiViewPanel from "./MultiViewPanel";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
@@ -27,7 +27,8 @@ export default function AceApp({
   transcript = [],
   evidence = [],
 }: AceAppProps) {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  // Seek fn into the active master video, registered by MultiViewPanel.
+  const seekRef = useRef<((seconds: number) => void) | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
   // Group Mode-B evidence by checklist item id for per-question display.
@@ -51,31 +52,8 @@ export default function AceApp({
   const [leftWidthPct, setLeftWidthPct] = useState(60);
   const [topHeightPct, setTopHeightPct] = useState(55);
 
-  // Attach video event listeners to emit play/pause/seek/ratechange_attempt.
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onPlay = () => logEvent("play", { currentTime: video.currentTime });
-    const onPause = () => logEvent("pause", { currentTime: video.currentTime });
-    const onSeeked = () => logEvent("seek", { seekedTo: video.currentTime });
-    const onRateChange = () =>
-      logEvent("ratechange_attempt", { rate: video.playbackRate });
-
-    video.addEventListener("play", onPlay);
-    video.addEventListener("pause", onPause);
-    video.addEventListener("seeked", onSeeked);
-    video.addEventListener("ratechange", onRateChange);
-
-    return () => {
-      video.removeEventListener("play", onPlay);
-      video.removeEventListener("pause", onPause);
-      video.removeEventListener("seeked", onSeeked);
-      video.removeEventListener("ratechange", onRateChange);
-    };
-  // videoRef is stable; run once after mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // play/pause/seek/ratechange logging now lives in MultiViewPanel (it owns the
+  // video elements and follows the active master view).
 
   const handleHorizontalDrag = useCallback((delta: number) => {
     const container = containerRef.current;
@@ -101,11 +79,7 @@ export default function AceApp({
   const isComplete = totalQuestions > 0 && answeredCount === totalQuestions;
 
   const handleTimestampClick = useCallback((seconds: number) => {
-    const video = videoRef.current;
-    if (video) {
-      video.currentTime = seconds;
-      video.play().catch(() => undefined);
-    }
+    seekRef.current?.(seconds);
     // Mode B only: emit timestamp_jump on any transcript/evidence click.
     if (mode === "B") {
       logEvent("timestamp_jump", { seconds });
@@ -153,8 +127,8 @@ export default function AceApp({
             <div className="h-full p-3">
               <MultiViewPanel
                 videoUrls={videoUrls}
-                masterRef={videoRef}
                 onTimeUpdate={setCurrentTime}
+                registerSeek={(fn) => { seekRef.current = fn; }}
               />
             </div>
           </div>
