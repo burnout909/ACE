@@ -4,6 +4,8 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import type { StudyChecklistItem, TranscriptSegment } from "@/lib/types";
 import { logEvent } from "@/lib/events/client";
 
+type EvidenceEntry = { quote: string; ts?: number | null };
+
 type ChecklistQuestionProps = {
   item: StudyChecklistItem;
   answer?: number;
@@ -11,7 +13,7 @@ type ChecklistQuestionProps = {
   mode: "A" | "B";
   onTimestampClick?: (seconds: number) => void;
   transcript: TranscriptSegment[];
-  evidence?: string[];
+  evidence?: EvidenceEntry[];
 };
 
 // Scale-aware button config
@@ -145,33 +147,36 @@ export default function ChecklistQuestion({
                 <span className="ml-2 text-slate-500">없음</span>
               ) : (
                 <div className="mt-1 space-y-1.5">
-                  {evidence.map((stamp) => (
-                    <div key={stamp} className="flex items-baseline gap-2 rounded-md px-2 py-1">
-                      <button
-                        type="button"
-                        disabled={!onTimestampClick}
-                        onClick={() => {
-                          if (onTimestampClick) {
-                            // Parse timestamp string to seconds (assume "MM:SS" or pure seconds)
-                            const parts = stamp.split(":").map(Number);
-                            const seconds =
-                              parts.length === 2
-                                ? parts[0] * 60 + parts[1]
-                                : parts[0] ?? 0;
-                            // Apply −10s correction
-                            onTimestampClick(Math.max(0, seconds - 10));
-                          }
-                        }}
-                        className={
-                          onTimestampClick
-                            ? "text-[13px] font-semibold text-yonsei-500 underline hover:text-yonsei-700"
-                            : "text-[13px] font-semibold text-slate-400"
-                        }
-                      >
-                        {stamp}
-                      </button>
-                    </div>
-                  ))}
+                  {evidence.map((e, i) => {
+                    const hasTs = e.ts !== undefined && e.ts !== null;
+                    const mmss = hasTs
+                      ? `${String(Math.floor((e.ts as number) / 60)).padStart(2, "0")}:${String(
+                          Math.floor((e.ts as number) % 60)
+                        ).padStart(2, "0")}`
+                      : null;
+                    return (
+                      <div key={i} className="flex items-baseline gap-2 rounded-md px-2 py-1">
+                        {mmss && (
+                          <button
+                            type="button"
+                            disabled={!onTimestampClick}
+                            onClick={() => {
+                              // Apply −10s correction so playback starts just before the quote.
+                              if (onTimestampClick) onTimestampClick(Math.max(0, (e.ts as number) - 10));
+                            }}
+                            className={
+                              onTimestampClick
+                                ? "shrink-0 text-[13px] font-semibold text-yonsei-500 underline hover:text-yonsei-700"
+                                : "shrink-0 text-[13px] font-semibold text-slate-400"
+                            }
+                          >
+                            {mmss}
+                          </button>
+                        )}
+                        <span className="text-[13px] text-slate-700">{e.quote}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

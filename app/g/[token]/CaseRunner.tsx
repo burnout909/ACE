@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import AceApp from "@/app/components/AceApp";
-import type { CaseVideoUrls, StudyChecklistItem } from "@/lib/types";
+import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment, EvidenceItem } from "@/lib/types";
 import { logEvent, setEventContext, setStorageNamespace, flush } from "@/lib/events/client";
 import ProgressDashboard from "./ProgressDashboard";
 
@@ -32,6 +32,8 @@ type CaseApiResponse = {
   answers: { itemId: string; value: number }[];
   mode: "A" | "B";
   state: string;
+  transcript?: TranscriptSegment[];
+  evidence?: EvidenceItem[];
 };
 
 type LoadState = "loading" | "ready" | "done" | "error";
@@ -273,6 +275,8 @@ export default function CaseRunner({ token }: { token: string }) {
         items={caseData.items}
         initialAnswers={caseData.answers}
         onSubmit={handleSubmit}
+        transcript={caseData.transcript}
+        evidence={caseData.evidence}
       />
     </div>
   );

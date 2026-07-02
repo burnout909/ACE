@@ -49,3 +49,10 @@ export type AiEvaluation = {
   questionId: string;
   evidence: string[];
 };
+
+// Mode-B per-item evidence served by the case API (from frozen CaseContent).
+export type EvidenceItem = {
+  itemId: string;
+  quote: string;
+  ts?: number | null;
+};

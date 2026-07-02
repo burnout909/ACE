@@ -5,7 +5,7 @@ import ViewGrid from "./ViewGrid";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
 import DragHandle from "./DragHandle";
-import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment } from "@/lib/types";
+import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment, EvidenceItem } from "@/lib/types";
 import { formatTimestamp } from "@/lib/time";
 import { logEvent } from "@/lib/events/client";
 
@@ -15,6 +15,8 @@ export type AceAppProps = {
   items: StudyChecklistItem[];
   initialAnswers: { itemId: string; value: number }[];
   onSubmit: (answers: { itemId: string; value: number }[]) => Promise<void> | void;
+  transcript?: TranscriptSegment[];
+  evidence?: EvidenceItem[];
 };
 
 export default function AceApp({
@@ -23,14 +25,22 @@ export default function AceApp({
   items,
   initialAnswers,
   onSubmit,
+  transcript = [],
+  evidence = [],
 }: AceAppProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [activeView, setActiveView] = useState("view1");
   const [lastSynced, setLastSynced] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
 
-  // No transcript in Plan 1 (Plan 4 will wire evidence/transcript)
-  const transcript: TranscriptSegment[] = [];
+  // Group Mode-B evidence by checklist item id for per-question display.
+  const evidenceByItem = useMemo(() => {
+    const map: Record<string, { quote: string; ts?: number | null }[]> = {};
+    for (const e of evidence) {
+      (map[e.itemId] ??= []).push({ quote: e.quote, ts: e.ts });
+    }
+    return map;
+  }, [evidence]);
 
   const [answers, setAnswers] = useState<Record<string, number>>(() => {
     const map: Record<string, number> = {};
@@ -185,6 +195,7 @@ export default function AceApp({
             isComplete={isComplete}
             onTimestampClick={handleTimestampClick}
             transcript={transcript}
+            evidenceByItem={evidenceByItem}
           />
         </div>
       </div>

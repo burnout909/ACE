@@ -6,6 +6,8 @@ import EvaluationTabs from "./EvaluationTabs";
 import ChecklistQuestion from "./ChecklistQuestion";
 import { logEvent } from "@/lib/events/client";
 
+type EvidenceEntry = { quote: string; ts?: number | null };
+
 type EvaluationPanelProps = {
   mode: "A" | "B";
   items: StudyChecklistItem[];
@@ -15,6 +17,7 @@ type EvaluationPanelProps = {
   isComplete: boolean;
   onTimestampClick?: (seconds: number) => void;
   transcript: TranscriptSegment[];
+  evidenceByItem?: Record<string, EvidenceEntry[]>;
 };
 
 const SECTION_TABS = [
@@ -32,6 +35,7 @@ export default function EvaluationPanel({
   isComplete,
   onTimestampClick,
   transcript,
+  evidenceByItem,
 }: EvaluationPanelProps) {
   const [activeSection, setActiveSection] = useState<string>("Hx");
 
@@ -68,6 +72,7 @@ export default function EvaluationPanel({
                 mode={mode}
                 onTimestampClick={onTimestampClick}
                 transcript={transcript}
+                evidence={mode === "B" ? evidenceByItem?.[item.id] ?? [] : undefined}
               />
             ))}
           </div>
