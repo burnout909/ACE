@@ -48,6 +48,21 @@ def encode_encounter(enc, s3):
 
     urls = {v: s3util.presign(enc["views"][v], s3) for v in views}
     offs = sync.encounter_offsets(urls) if config.REFERENCE_VIEW in urls and len(urls) > 1 else {}
+
+    # Guard: a non-reference view whose audio xcorr confidence is below the
+    # threshold is likely mispaired (wrong recording) — skip it rather than
+    # silently encode a mismatched angle. Report it for manual review.
+    low_conf = [
+        v for v in urls
+        if v != config.REFERENCE_VIEW
+        and offs.get(v, {}).get("confidence", 1.0) < config.SYNC_CONFIDENCE_MIN
+    ]
+    for v in low_conf:
+        del urls[v]
+        views = [x for x in views if x != v]
+    if not views:
+        return f"{enc['id']}: all views low-confidence, skipped (review): {low_conf}"
+
     offsets = {config.REFERENCE_VIEW: 0.0}
     for v in urls:
         if v != config.REFERENCE_VIEW:
@@ -62,7 +77,8 @@ def encode_encounter(enc, s3):
             subprocess.run(vt_cmd(urls[v], out, starts[v], common), check=True)
             encode.upload(out, key, s3=s3)
     conf = {v: round(offs.get(v, {}).get("confidence", 1.0), 2) for v in views if v != config.REFERENCE_VIEW}
-    return f"{enc['id']}: encoded {views} ({common:.0f}s, conf={conf})"
+    note = f" | SKIPPED low-conf: {low_conf}" if low_conf else ""
+    return f"{enc['id']}: encoded {views} ({common:.0f}s, conf={conf}){note}"
 
 
 def _safe(enc, s3):
