@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import AceApp from "@/app/components/AceApp";
 import type { CaseVideoUrls, StudyChecklistItem } from "@/lib/types";
+import { logEvent, setEventContext, flush } from "@/lib/events/client";
 
 type AssignmentSummary = {
   id: number;
@@ -45,6 +46,11 @@ export default function CaseRunner() {
   const [loadState, setLoadState] = useState<LoadState>("loading");
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Idle detection refs
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isIdleRef = useRef(false);
+  const IDLE_THRESHOLD_MS = 60_000;
+
   const fetchAssignments = useCallback(async (): Promise<AssignmentSummary[]> => {
     const res = await fetch("/api/assignments");
     if (!res.ok) throw new Error("assignments fetch failed");
@@ -85,10 +91,73 @@ export default function CaseRunner() {
     return () => { cancelled = true; };
   }, [fetchAssignments, loadNextCase]);
 
+  // Emit case_enter when a new case loads; update ambient event context.
+  useEffect(() => {
+    if (!caseData) return;
+    setEventContext({ assignmentId: caseData.assignment.id });
+    logEvent("case_enter", {
+      caseId: caseData.case.id,
+      assignmentId: caseData.assignment.id,
+      mode: caseData.mode,
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [caseData?.assignment.id]);
+
+  // Heartbeat every 30 s while a case is open.
+  useEffect(() => {
+    if (!caseData) return;
+    const interval = setInterval(() => {
+      logEvent("heartbeat");
+    }, 30_000);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [caseData?.assignment.id]);
+
+  // Idle detection: emit idle_start after 60 s of no interaction; idle_end on resume.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const resetIdle = () => {
+      if (isIdleRef.current) {
+        isIdleRef.current = false;
+        logEvent("idle_end");
+      }
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = setTimeout(() => {
+        isIdleRef.current = true;
+        logEvent("idle_start");
+      }, IDLE_THRESHOLD_MS);
+    };
+
+    const interactionEvents = ["mousemove", "keydown", "touchstart", "click"] as const;
+    for (const evt of interactionEvents) {
+      window.addEventListener(evt, resetIdle, { passive: true });
+    }
+    resetIdle(); // start the first timer
+
+    return () => {
+      for (const evt of interactionEvents) {
+        window.removeEventListener(evt, resetIdle);
+      }
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+    };
+  // Run once — idle detection is global for the session lifetime
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Flush any buffered events on unmount.
+  useEffect(() => {
+    return () => { void flush(); };
+  }, []);
+
   const handleSubmit = useCallback(
     async (answers: { itemId: string; value: number }[]) => {
       if (!currentId) return;
       setSubmitError(null);
+
+      // Record the submit intent before the API call.
+      logEvent("case_submit", { assignmentId: currentId, answerCount: answers.length });
+
       try {
         const res = await fetch(`/api/case/${currentId}/submit`, {
           method: "POST",
@@ -99,6 +168,11 @@ export default function CaseRunner() {
         if (!res.ok && res.status !== 409) {
           throw new Error("submit failed");
         }
+
+        // Case is leaving; flush buffered events before advancing.
+        logEvent("case_exit", { assignmentId: currentId });
+        await flush();
+
         setLoadState("loading");
         setCaseData(null);
         const updatedList = await fetchAssignments();

@@ -1,12 +1,13 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ViewGrid from "./ViewGrid";
 import TranscriptBar from "./TranscriptBar";
 import EvaluationPanel from "./EvaluationPanel";
 import DragHandle from "./DragHandle";
 import type { CaseVideoUrls, StudyChecklistItem, TranscriptSegment } from "@/lib/types";
 import { formatTimestamp } from "@/lib/time";
+import { logEvent } from "@/lib/events/client";
 
 export type AceAppProps = {
   mode: "A" | "B";
@@ -43,6 +44,32 @@ export default function AceApp({
   const [leftWidthPct, setLeftWidthPct] = useState(60);
   const [topHeightPct, setTopHeightPct] = useState(55);
 
+  // Attach video event listeners to emit play/pause/seek/ratechange_attempt.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onPlay = () => logEvent("play", { currentTime: video.currentTime });
+    const onPause = () => logEvent("pause", { currentTime: video.currentTime });
+    const onSeeked = () => logEvent("seek", { seekedTo: video.currentTime });
+    const onRateChange = () =>
+      logEvent("ratechange_attempt", { rate: video.playbackRate });
+
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+    video.addEventListener("seeked", onSeeked);
+    video.addEventListener("ratechange", onRateChange);
+
+    return () => {
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+      video.removeEventListener("seeked", onSeeked);
+      video.removeEventListener("ratechange", onRateChange);
+    };
+  // videoRef is stable; run once after mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleHorizontalDrag = useCallback((delta: number) => {
     const container = containerRef.current;
     if (!container) return;
@@ -74,7 +101,11 @@ export default function AceApp({
     }
     setActiveView("view1");
     setLastSynced(formatTimestamp(seconds));
-  }, []);
+    // Mode B only: emit timestamp_jump on any transcript/evidence click.
+    if (mode === "B") {
+      logEvent("timestamp_jump", { seconds });
+    }
+  }, [mode]);
 
   const handleAnswer = useCallback((id: string, value: number) => {
     setAnswers((prev) => {
@@ -135,6 +166,7 @@ export default function AceApp({
                 segments={transcript}
                 currentTime={currentTime}
                 onTimestampClick={handleTimestampClick}
+                mode={mode}
               />
             </div>
           </div>

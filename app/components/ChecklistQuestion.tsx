@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import type { StudyChecklistItem, TranscriptSegment } from "@/lib/types";
+import { logEvent } from "@/lib/events/client";
 
 type ChecklistQuestionProps = {
   item: StudyChecklistItem;
@@ -44,6 +45,37 @@ export default function ChecklistQuestion({
     }
   }, [expanded, evidence]);
 
+  /** Toggle expansion; emit item_focus when opening, evidence_view (Mode B) if evidence is visible. */
+  const handleToggleExpand = useCallback(() => {
+    if (!expanded) {
+      // Expanding — emit item_focus
+      logEvent("item_focus", { itemId: item.id }, { section: item.section });
+      // Mode B + evidence present: emit evidence_view
+      if (mode === "B" && evidence !== undefined && evidence.length > 0) {
+        logEvent("evidence_view", { itemId: item.id, evidenceCount: evidence.length }, { section: item.section });
+      }
+    }
+    setExpanded((prev) => !prev);
+  }, [expanded, item.id, item.section, mode, evidence]);
+
+  /** Wrap onAnswer to emit item_decide / item_revise. */
+  const handleAnswerWithTracking = useCallback(
+    (value: number) => {
+      if (answer === undefined) {
+        // First selection
+        logEvent("item_decide", { itemId: item.id, value }, { section: item.section });
+      } else if (answer === value) {
+        // Deselect (toggle-off same button)
+        logEvent("item_revise", { itemId: item.id, from: answer, to: null }, { section: item.section });
+      } else {
+        // Switch to a different value
+        logEvent("item_revise", { itemId: item.id, from: answer, to: value }, { section: item.section });
+      }
+      onAnswer(item.id, value);
+    },
+    [answer, item.id, item.section, onAnswer],
+  );
+
   const buttons = item.scale === "binary" ? BINARY_BUTTONS : TRIPLE_BUTTONS;
 
   return (
@@ -52,11 +84,11 @@ export default function ChecklistQuestion({
       <div
         role="button"
         tabIndex={0}
-        onClick={() => setExpanded((prev) => !prev)}
+        onClick={handleToggleExpand}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            setExpanded((prev) => !prev);
+            handleToggleExpand();
           }
         }}
         className="flex cursor-pointer items-center justify-between gap-4 px-4 py-2.5"
@@ -80,7 +112,7 @@ export default function ChecklistQuestion({
           {buttons.map(({ value, label }) => (
             <button
               key={value}
-              onClick={() => onAnswer(item.id, value)}
+              onClick={() => handleAnswerWithTracking(value)}
               className={`min-w-[44px] rounded-lg border-2 px-2.5 py-0.5 text-sm font-bold transition-all ${
                 answer === value
                   ? "border-yonsei-500 bg-yonsei-500 text-white hover:bg-yonsei-800 active:bg-yonsei-900"

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { StudyChecklistItem, TranscriptSegment } from "@/lib/types";
 import EvaluationTabs from "./EvaluationTabs";
 import ChecklistQuestion from "./ChecklistQuestion";
+import { logEvent } from "@/lib/events/client";
 
 type EvaluationPanelProps = {
   mode: "A" | "B";
@@ -34,6 +35,11 @@ export default function EvaluationPanel({
 }: EvaluationPanelProps) {
   const [activeSection, setActiveSection] = useState<string>("Hx");
 
+  const handleSectionSelect = useCallback((id: string) => {
+    setActiveSection(id);
+    logEvent("section_enter", { section: id }, { section: id });
+  }, []);
+
   const sectionItems = items.filter((item) => item.section === activeSection);
 
   return (
@@ -42,7 +48,7 @@ export default function EvaluationPanel({
         <EvaluationTabs
           tabs={SECTION_TABS}
           activeTabId={activeSection}
-          onSelect={setActiveSection}
+          onSelect={handleSectionSelect}
         />
       </div>
 

@@ -2,17 +2,21 @@
 
 import { useMemo, useRef } from "react";
 import type { TranscriptSegment } from "@/lib/types";
+import { logEvent } from "@/lib/events/client";
 
 type TranscriptBarProps = {
   segments: TranscriptSegment[];
   currentTime: number;
   onTimestampClick: (seconds: number) => void;
+  /** Mode A/B — used to gate Mode-B-only events. */
+  mode?: "A" | "B";
 };
 
 export default function TranscriptBar({
   segments,
   currentTime,
-  onTimestampClick
+  onTimestampClick,
+  mode,
 }: TranscriptBarProps) {
   const itemRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -40,7 +44,16 @@ export default function TranscriptBar({
                   ref={(el) => {
                     itemRefs.current[index] = el;
                   }}
-                  onClick={() => onTimestampClick(segment.start)}
+                  onClick={() => {
+                    if (mode === "B") {
+                      logEvent("transcript_reveal", {
+                        segmentId: segment.id,
+                        start: segment.start,
+                        speaker: segment.speaker,
+                      });
+                    }
+                    onTimestampClick(segment.start);
+                  }}
                   className={`w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors ${
                     isActive
                       ? "border-yonsei-200 bg-yonsei-50"
